@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASTRONEX // Deep Space Observatory & Exoplanet Telemetry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Outfit:wght@300;400;600;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Interactive 3D Starfield / Galaxy Canvas -->
+  <canvas id="spaceCanvas"></canvas>
+
+  <!-- HUD Telemetry Vignette -->
+  <div class="space-vignette"></div>
+
+  <!-- Navigation -->
+  <nav class="space-nav">
+    <div class="nav-brand">
+      <div class="brand-radar">
+        <span class="radar-sweep"></span>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">ASTRONEX</span>
+        <span class="brand-coord">RA 19h 50m / DEC +08° 52′</span>
+      </div>
+    </div>
+
+    <div class="nav-links">
+      <a href="#observatory" class="space-link">OBSERVATORY</a>
+      <a href="#simulator" class="space-link">ORBITAL_SIM</a>
+      <a href="#exoplanets" class="space-link">EXOPLANETS</a>
+      <a href="#telemetry" class="space-link">SPECTROGRAPH</a>
+    </div>
+
+    <div class="nav-actions">
+      <button class="space-btn" id="pulsarAudioBtn" title="Deep Space Resonance Drone">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;">
+          <path d="M4 11a9 9 0 0 1 9 9"></path>
+          <path d="M4 4a16 16 0 0 1 16 16"></path>
+          <circle cx="5" cy="19" r="1"></circle>
+        </svg>
+        <span class="btn-label">PULSAR: OFF</span>
+      </button>
+      <a href="../index.html" class="portal-back-btn">
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+        </svg>
+        HUB
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="space-hero" id="observatory">
+    <div class="hud-status-badge">
+      <span class="status-indicator"></span>
+      <span>DEEP SPACE ARRAY // ARRAY 09 ONLINE</span>
+      <span class="status-coord">APERTURE: 30.5M</span>
+    </div>
+
+    <h1 class="hero-title">
+      UNVEILING THE <br>
+      <span class="cosmic-gradient">OUTER RIM WORLDS</span>
+    </h1>
+
+    <p class="hero-desc">
+      Mapping terrestrial exoplanets, atmospheric biosignatures, and gravitational wave echoes across the Perseus Arm with autonomous interferometer satellites.
+    </p>
+
+    <div class="hero-controls">
+      <a href="#simulator" class="glow-btn">ENTER ORBITAL SIMULATOR</a>
+      <button class="ghost-btn" id="galaxyWarpBtn">HYPERDRIVE JUMP</button>
+    </div>
+
+    <!-- Live Telemetry Bar -->
+    <div class="telemetry-hud-strip">
+      <div class="hud-stat">
+        <span class="stat-tag">OBSERVED EXOPLANETS</span>
+        <span class="stat-num" id="planetCount">5,632</span>
+      </div>
+      <div class="hud-stat">
+        <span class="stat-tag">COSMIC BACKGROUND NOISE</span>
+        <span class="stat-num">2.725 K</span>
+      </div>
+      <div class="hud-stat">
+        <span class="stat-tag">REDSHIFT PARAMETER (z)</span>
+        <span class="stat-num" id="redshiftVal">1.482</span>
+      </div>
+      <div class="hud-stat">
+        <span class="stat-tag">LIGHT-YEAR RANGE</span>
+        <span class="stat-num">12,400 LY</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive Kepler Orbital System Simulator -->
+  <section class="section-container" id="simulator">
+    <div class="section-header">
+      <div class="sec-badge">INTERACTIVE ASTROPHYSICS LABORATORY</div>
+      <h2>Kepler Exoplanetary Orbital Engine</h2>
+      <p>Control gravitational parameters, orbital velocity, and inspect planetary atmospheres in real time.</p>
+    </div>
+
+    <div class="simulator-wrapper">
+      <!-- 2D Canvas Orbital Model -->
+      <div class="sim-canvas-box">
+        <canvas id="orbitSimCanvas" width="600" height="460"></canvas>
+        <div class="sim-hint">Drag or click planets to focus spectral analysis</div>
+      </div>
+
+      <!-- Controls Panel -->
+      <div class="sim-controls-panel">
+        <div class="sim-panel-title">SYSTEM PARAMETERS</div>
+
+        <div class="control-row">
+          <label>
+            <span>ORBITAL SPEED MULTIPLIER</span>
+            <span id="speedVal">1.0x</span>
+          </label>
+          <input type="range" id="speedSlider" min="0.2" max="3" step="0.1" value="1.0" class="space-slider">
+        </div>
+
+        <div class="control-row">
+          <label>
+            <span>STELLAR GRAVITY FORCE</span>
+            <span id="gravVal">1.0 G</span>
+          </label>
+          <input type="range" id="gravSlider" min="0.5" max="2" step="0.1" value="1.0" class="space-slider">
+        </div>
+
+        <div class="planet-focus-info" id="planetInfoBox">
+          <div class="focus-title" id="focusPlanetName">TRAPPIST-1e</div>
+          <div class="focus-type" id="focusPlanetType">TERRESTRIAL / HABITABLE ZONE</div>
+          <p class="focus-desc" id="focusPlanetDesc">
+            High probability of liquid oceans. Atmospheric spectrum reveals strong nitrogen-carbon dioxide equilibrium with protective magnetosphere.
+          </p>
+          <div class="composition-bars">
+            <div class="comp-item">
+              <span>NITROGEN (N₂)</span>
+              <div class="mini-bar"><div class="mini-fill" style="width: 78%"></div></div>
+            </div>
+            <div class="comp-item">
+              <span>WATER VAPOR (H₂O)</span>
+              <div class="mini-bar"><div class="mini-fill cyan" style="width: 18%"></div></div>
+            </div>
+            <div class="comp-item">
+              <span>CARBON DIOXIDE (CO₂)</span>
+              <div class="mini-bar"><div class="mini-fill amber" style="width: 4%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exoplanet Catalog Grid with Space Telescope Photography -->
+  <section class="section-container" id="exoplanets">
+    <div class="section-header">
+      <div class="sec-badge">SPECTRAL ARCHIVE</div>
+      <h2>Prime Target Exoworlds</h2>
+      <p>High-resolution interferometric captures processed by our orbital space telemetry array.</p>
+    </div>
+
+    <div class="exoplanet-grid">
+      <!-- Planet 1 -->
+      <div class="planet-card" data-planet="kepler">
+        <div class="planet-photo-wrapper">
+          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" alt="Kepler-452b Atmospheric Telemetry" class="planet-img" loading="lazy">
+          <div class="planet-img-halo"></div>
+        </div>
+        <div class="planet-badge">EARTH'S COUSIN // G-STAR</div>
+        <h3>Kepler-452b</h3>
+        <p>Orbits a G2-type star identical to our Sun. 1.6x Earth radius with geological activity and dense cloud formations.</p>
+        <div class="planet-stats">
+          <div class="p-stat"><span>DISTANCE</span><strong>1,400 LY</strong></div>
+          <div class="p-stat"><span>PERIOD</span><strong>385 DAYS</strong></div>
+          <div class="p-stat"><span>MASS</span><strong>5.0 M⊕</strong></div>
+        </div>
+      </div>
+
+      <!-- Planet 2 -->
+      <div class="planet-card" data-planet="trappist">
+        <div class="planet-photo-wrapper">
+          <img src="https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=600&q=80" alt="TRAPPIST-1e Deep Space Nebula" class="planet-img" loading="lazy">
+          <div class="planet-img-halo blue"></div>
+        </div>
+        <div class="planet-badge habitable">GOLDILOCKS ZONE</div>
+        <h3>TRAPPIST-1e</h3>
+        <p>Ultra-compact 7-planet red dwarf system. Receives comparable stellar flux to Earth with potential temperate climate.</p>
+        <div class="planet-stats">
+          <div class="p-stat"><span>DISTANCE</span><strong>39.5 LY</strong></div>
+          <div class="p-stat"><span>PERIOD</span><strong>6.1 DAYS</strong></div>
+          <div class="p-stat"><span>MASS</span><strong>0.77 M⊕</strong></div>
+        </div>
+      </div>
+
+      <!-- Planet 3 -->
+      <div class="planet-card" data-planet="proxima">
+        <div class="planet-photo-wrapper">
+          <img src="https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=600&q=80" alt="Proxima Centauri b Rocky Exoplanet" class="planet-img" loading="lazy">
+          <div class="planet-img-halo red"></div>
+        </div>
+        <div class="planet-badge">CLOSEST EXOPLANET</div>
+        <h3>Proxima Centauri b</h3>
+        <p>Our nearest interstellar neighbor. Tidally locked rocky world subjected to periodic high-energy stellar flares.</p>
+        <div class="planet-stats">
+          <div class="p-stat"><span>DISTANCE</span><strong>4.24 LY</strong></div>
+          <div class="p-stat"><span>PERIOD</span><strong>11.2 DAYS</strong></div>
+          <div class="p-stat"><span>MASS</span><strong>1.17 M⊕</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="space-footer" id="telemetry">
+    <div class="footer-wrap">
+      <div class="footer-col brand-col">
+        <span class="footer-logo">ASTRONEX</span>
+        <p>Interferometric Astrophysics Observatory & Deep Space Planetary Research Initiative.</p>
+        <div class="telemetry-ping">ARRAY STATUS: LOCKED TO SAGITTARIUS A*</div>
+      </div>
+
+      <div class="footer-col">
+        <h4>OBSERVATORY STATIONS</h4>
+        <p>Atacama Sub-Millimeter Array, Chile</p>
+        <p>Mauna Kea High Summit, Hawaii</p>
+        <p>Orbital Lagrange L2 Satellite Grid</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>DATA PROTOCOLS</h4>
+        <a href="#!">FITS Image Stream</a>
+        <a href="#!">AstroPy Public Endpoints</a>
+        <a href="#!">Radial Velocity Telemetry</a>
+      </div>
+    </div>
+    <div class="footer-sub">
+      <p>© 2026 ASTRONEX DEEP SPACE INITIATIVE. SEARCHING FOR LIFE AMONG THE STARS.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

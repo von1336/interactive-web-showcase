@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUMINA BOTANICA // Biophilic Architecture & Haute Floristry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Custom Magnetic Cursor Follower -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"><span class="cursor-text"></span></div>
+
+  <!-- Ambient Organic Particle Canvas -->
+  <canvas id="botanicalCanvas"></canvas>
+
+  <!-- Navigation -->
+  <header class="editorial-nav">
+    <div class="nav-brand">
+      <span class="brand-monogram">LB</span>
+      <div class="brand-titles">
+        <span class="brand-name">LUMINA BOTANICA</span>
+        <span class="brand-sub">ATELIER D'ART & NATURE</span>
+      </div>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="#philosophy" class="nav-link">PHILOSOPHY</a>
+      <a href="#herbarium" class="nav-link">HERBARIUM</a>
+      <a href="#spaces" class="nav-link">SANCTUARIES</a>
+      <a href="#contact" class="nav-link">COMMISSIONS</a>
+    </nav>
+
+    <div class="nav-right">
+      <div class="mood-selector">
+        <button class="mood-btn active" data-mood="day" title="Verdant Dawn">DAWN</button>
+        <button class="mood-btn" data-mood="dusk" title="Golden Sunset">DUSK</button>
+        <button class="mood-btn" data-mood="night" title="Nocturne Garden">NOCTURNE</button>
+      </div>
+      <button class="audio-btn" id="audioToggle" title="Organic Soundscape">
+        <svg class="audio-svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 3v18M8 7v10M16 9v6M4 11v2M20 11v2"/>
+        </svg>
+        <span class="audio-text">CHIMES</span>
+      </button>
+      <a href="../index.html" class="portal-back-btn">
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+        </svg>
+        HUB
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Editorial Section -->
+  <main>
+    <section class="hero-editorial">
+      <div class="hero-content">
+        <div class="editorial-tag">VOL. XXIII — THE BIOPHILIC LIVING COLLECTION</div>
+        <h1 class="hero-heading">
+          Where Living Flora <br>
+          <em>Meets Sculptural Form</em>
+        </h1>
+        <p class="hero-text">
+          Lumina Botanica curates bespoke living ecosystems, botanical installations, and sensory botanical architecture for discerning residences, museums, and private sanctuaries worldwide.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#herbarium" class="btn-primary" data-cursor="EXPLORE">EXPLORE SPECIMENS</a>
+          <button class="btn-secondary" id="bloomTrigger" data-cursor="BLOOM">TRIGGER BLOOM</button>
+        </div>
+      </div>
+
+      <div class="hero-art-frame" data-cursor="VIEW">
+        <div class="art-visual-wrapper">
+          <div class="art-ornament-circle"></div>
+          <div class="art-photo-container">
+            <img src="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&w=700&q=80" alt="Monstera Deliciosa Variegata" class="art-photo" id="heroBotanicalPhoto" loading="lazy">
+            <div class="art-photo-glow"></div>
+          </div>
+          <div class="art-card-inner">
+            <div class="art-badge">N° 084 // HERITAGE</div>
+            <div class="art-botanical-name">Monstera Deliciosa Variegata</div>
+            <div class="art-caption">Cultivated under micro-climate glasshouse chambers in Kyoto</div>
+            <div class="growth-meter">
+              <span>VITALITY RATING</span>
+              <span class="val">99.4% OPTIMAL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Botanical Philosophy & Metrics -->
+    <section class="philosophy-section" id="philosophy">
+      <div class="editorial-divider">
+        <span class="line"></span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="divider-icon">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+        </svg>
+        <span class="line"></span>
+      </div>
+
+      <div class="philosophy-grid">
+        <div class="philosophy-quote">
+          <blockquote>
+            “To design with nature is not merely to bring green indoors, but to honor the quiet, slow cadence of the living earth.”
+          </blockquote>
+          <cite>— Astrid Vance, Master Botanist & Founder</cite>
+        </div>
+
+        <div class="metrics-column">
+          <div class="metric-card">
+            <div class="metric-num">3,400+</div>
+            <div class="metric-label">Heritage Species Preserved</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-num">100%</div>
+            <div class="metric-label">Regenerative Soil Systems</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-num">18</div>
+            <div class="metric-label">Global Architectural Sanctuaries</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Herbarium Catalog Section -->
+    <section class="herbarium-section" id="herbarium">
+      <div class="section-title-wrap">
+        <div class="sub-label">ARCHIVE & SELECTIONS</div>
+        <h2 class="section-heading">The Curated Herbarium</h2>
+      </div>
+
+      <div class="filter-pills">
+        <button class="filter-pill active" data-filter="all">ALL COLLECTIONS</button>
+        <button class="filter-pill" data-filter="flora">RARE FLORA</button>
+        <button class="filter-pill" data-filter="foliage">SCULPTURAL FOLIAGE</button>
+        <button class="filter-pill" data-filter="aromatic">SACRED AROMATICS</button>
+      </div>
+
+      <div class="specimen-grid">
+        <!-- Item 1 -->
+        <article class="specimen-card" data-category="foliage" data-cursor="DISCOVER">
+          <div class="card-photo-box">
+            <img src="https://images.unsplash.com/photo-1509423350716-97f9360b4e09?auto=format&fit=crop&w=600&q=80" alt="Strelitzia Reginae" class="specimen-img" loading="lazy">
+            <div class="photo-vignette"></div>
+          </div>
+          <div class="specimen-info">
+            <span class="specimen-code">SPECIMEN // 01</span>
+            <h3 class="specimen-title">Strelitzia Reginae 'Alba'</h3>
+            <p class="specimen-desc">Architectural white bird of paradise featuring statuesque emerald fronds and pure crystalline bracts.</p>
+            <div class="specimen-meta">
+              <span>ORIGIN: SOUTH AFRICA</span>
+              <span class="accent-tag">RARE SEEDLING</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Item 2 -->
+        <article class="specimen-card" data-category="flora" data-cursor="DISCOVER">
+          <div class="card-photo-box">
+            <img src="https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?auto=format&fit=crop&w=600&q=80" alt="Phalaenopsis Bellina Orchid" class="specimen-img" loading="lazy">
+            <div class="photo-vignette"></div>
+          </div>
+          <div class="specimen-info">
+            <span class="specimen-code">SPECIMEN // 02</span>
+            <h3 class="specimen-title">Phalaenopsis Bellina Orchid</h3>
+            <p class="specimen-desc">Wild scented orchid exhibiting magenta petals with gradient citrus-lime margins and intoxicating fragrance.</p>
+            <div class="specimen-meta">
+              <span>ORIGIN: BORNEO</span>
+              <span class="accent-tag">FRAGRANT</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Item 3 -->
+        <article class="specimen-card" data-category="aromatic" data-cursor="DISCOVER">
+          <div class="card-photo-box">
+            <img src="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=600&q=80" alt="Santalum Album Sandalwood Forest" class="specimen-img" loading="lazy">
+            <div class="photo-vignette"></div>
+          </div>
+          <div class="specimen-info">
+            <span class="specimen-code">SPECIMEN // 03</span>
+            <h3 class="specimen-title">Santalum Album (Sandalwood)</h3>
+            <p class="specimen-desc">Sustainably propagated sacred sandalwood trees producing meditative, balsamic heartwood oils.</p>
+            <div class="specimen-meta">
+              <span>ORIGIN: SOUTHERN INDIA</span>
+              <span class="accent-tag">HERITAGE</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Item 4 -->
+        <article class="specimen-card" data-category="flora" data-cursor="DISCOVER">
+          <div class="card-photo-box">
+            <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80" alt="Nelumbo Nucifera Celestial Lotus" class="specimen-img" loading="lazy">
+            <div class="photo-vignette"></div>
+          </div>
+          <div class="specimen-info">
+            <span class="specimen-code">SPECIMEN // 04</span>
+            <h3 class="specimen-title">Nelumbo Nucifera 'Celestial'</h3>
+            <p class="specimen-desc">Sacred aquatic lotus revered for its self-cleaning superhydrophobic leaves and multi-layered petals.</p>
+            <div class="specimen-meta">
+              <span>ORIGIN: MEKONG DELTA</span>
+              <span class="accent-tag">AQUATIC</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Interactive Sanctuary Room Preview -->
+    <section class="sanctuary-preview" id="spaces">
+      <div class="sanctuary-box">
+        <div class="sanctuary-content">
+          <span class="sanctuary-tag">BESPOKE ARCHITECTURAL INSTALLATIONS</span>
+          <h2>Bring Ancient Forests Into High Architecture</h2>
+          <p>
+            Our horticultural architects blend indoor microclimates, automated nutrient misting, and museum-grade circadian illumination to sustain thriving vertical forests in private penthouses and cultural foundations.
+          </p>
+          <div class="quote-form">
+            <input type="email" placeholder="Enter your email for private portfolio access..." class="editorial-input">
+            <button class="btn-primary" id="subscribeBtn">REQUEST INQUIRY</button>
+          </div>
+          <div class="confirm-message" id="confirmMsg"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Editorial Footer -->
+  <footer class="editorial-footer" id="contact">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="brand-monogram lg">LB</span>
+        <h3>LUMINA BOTANICA</h3>
+        <p>Horticultural Atelier & Biophilic Architecture</p>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>ATELIERS</h4>
+        <p>14 Rue de l'Université, Paris</p>
+        <p>Kokusai-dori 8, Kyoto</p>
+        <p>76 Franklin St, Tribeca NYC</p>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>EDITIONS</h4>
+        <a href="#!">The Biophilic Journal</a>
+        <a href="#!">Conservation Monograph</a>
+        <a href="#!">Rare Seed Register</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 LUMINA BOTANICA ATELIER. DEDICATED TO PRESERVING EARTH'S BOTANICAL TREASURES.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

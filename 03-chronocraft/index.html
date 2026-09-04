@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHRONOCRAFT // Haute Horlogerie Suisse — Geneva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Precision Technical Grid Overlay -->
+  <div class="dial-grid-bg"></div>
+
+  <!-- Header / Navigation -->
+  <nav class="horology-nav">
+    <div class="nav-brand">
+      <svg class="brand-crest-svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="16" cy="16" r="14" stroke="#dfb17b"/>
+        <circle cx="16" cy="16" r="6" stroke="#dfb17b"/>
+        <line x1="16" y1="2" x2="16" y2="30" stroke="#dfb17b"/>
+        <line x1="2" y1="16" x2="30" y2="16" stroke="#dfb17b"/>
+        <circle cx="16" cy="16" r="2" fill="#dfb17b"/>
+      </svg>
+      <div class="brand-info">
+        <span class="brand-title">CHRONOCRAFT</span>
+        <span class="brand-origin">GENÈVE • MANUFACTURE 1888</span>
+      </div>
+    </div>
+
+    <div class="nav-links">
+      <a href="#movement" class="h-link">CALIBRE 01</a>
+      <a href="#complications" class="h-link">COMPLICATIONS</a>
+      <a href="#chronometer" class="h-link">CHRONOMETER</a>
+      <a href="#atelier" class="h-link">L'ATELIER</a>
+    </div>
+
+    <div class="nav-actions">
+      <button class="sound-toggle" id="horologyAudioBtn" title="Mechanical Escapement Sound">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        <span class="sound-text">TICK: OFF</span>
+      </button>
+      <a href="../index.html" class="portal-back-btn">
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+        </svg>
+        HUB
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero Section with Live Animated Tourbillon Movement Canvas -->
+  <header class="horology-hero" id="movement">
+    <div class="hero-left">
+      <div class="chronometer-badge">
+        <span class="badge-gold">COSC CERTIFIED</span>
+        <span class="badge-text">SUPERLATIVE CHRONOMETER</span>
+      </div>
+
+      <h1 class="hero-title">
+        The Architecture <br>
+        <span class="gold-shimmer">Of Infinite Time</span>
+      </h1>
+
+      <p class="hero-description">
+        Forged in Grade-5 titanium and 18K honey gold. Hand-beveled anglage, triple-axis tourbillon, and an escapement vibrating at 28,800 beats per hour.
+      </p>
+
+      <div class="specs-mini-grid">
+        <div class="spec-item">
+          <span class="spec-label">CALIBRE</span>
+          <span class="spec-val">CC-9800 S</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">POWER RESERVE</span>
+          <span class="spec-val">120 HOURS</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">JEWELS</span>
+          <span class="spec-val">48 RUBIES</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">FREQUENCY</span>
+          <span class="spec-val">4 HZ / 28.8K VPH</span>
+        </div>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#chronometer" class="gold-button">TEST CHRONOMETER</a>
+        <button class="ghost-button" id="movementExplodeBtn">EXPLODE CALIBRE</button>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="watch-chassis-container">
+        <!-- Live HTML5 Canvas Watch Movement -->
+        <canvas id="watchCanvas" width="460" height="460"></canvas>
+        <div class="chassis-ring"></div>
+        <div class="bezel-markers"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Complications & Timepiece Selector Section -->
+  <section class="section-wrapper" id="complications">
+    <div class="section-headline">
+      <span class="sub-head">MASTERPIECES // COLLECTION 2026</span>
+      <h2>The Haute Horlogerie Trilogy</h2>
+    </div>
+
+    <!-- Dial Switcher Pills -->
+    <div class="edition-tabs">
+      <button class="edition-tab active" data-edition="skeleton">01. TITANIUM SKELETON</button>
+      <button class="edition-tab" data-edition="moonphase">02. CELESTIAL MOONPHASE</button>
+      <button class="edition-tab" data-edition="stealth">03. OBSIDIAN CERAMIC</button>
+    </div>
+
+    <div class="collection-showcase">
+      <!-- Card 1 -->
+      <div class="timepiece-card" data-tilt>
+        <div class="card-edition-badge">LIMITED TO 25 PIECES</div>
+        <div class="timepiece-photo-wrap">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80" alt="ChronoCraft Grand Tourbillon S" class="timepiece-img" loading="lazy">
+          <div class="timepiece-img-vignette"></div>
+        </div>
+        <h3 class="timepiece-name">ChronoCraft Grand Tourbillon S</h3>
+        <p class="timepiece-sub">Full sapphire crystal bridge showing the pulsating balance wheel and gold balance weights.</p>
+        <div class="timepiece-price">CHF 184,000</div>
+        <button class="inquire-btn">CONFIGURE TIMEPIECE</button>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="timepiece-card" data-tilt>
+        <div class="card-edition-badge">METEORITE DIAL</div>
+        <div class="timepiece-photo-wrap">
+          <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=600&q=80" alt="Astronomia Perpetual Moonphase" class="timepiece-img" loading="lazy">
+          <div class="timepiece-img-vignette"></div>
+        </div>
+        <h3 class="timepiece-name">Astronomia Perpetual Moonphase</h3>
+        <p class="timepiece-sub">Carved from genuine Gibeon meteorite with an accurate 122-year astronomical moonphase aperture.</p>
+        <div class="timepiece-price">CHF 245,000</div>
+        <button class="inquire-btn">CONFIGURE TIMEPIECE</button>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="timepiece-card" data-tilt>
+        <div class="card-edition-badge">SCRATCH-PROOF CERAMIC</div>
+        <div class="timepiece-photo-wrap">
+          <img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=600&q=80" alt="Nocturne Chronograph Flyback" class="timepiece-img" loading="lazy">
+          <div class="timepiece-img-vignette"></div>
+        </div>
+        <h3 class="timepiece-name">Nocturne Chronograph Flyback</h3>
+        <p class="timepiece-sub">Matte black zirconium dioxide ceramic casing with luminescent Super-LumiNova BGW9 indices.</p>
+        <div class="timepiece-price">CHF 128,000</div>
+        <button class="inquire-btn">CONFIGURE TIMEPIECE</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Precision Swiss Chronometer Utility Section -->
+  <section class="section-wrapper" id="chronometer">
+    <div class="chronometer-console">
+      <div class="console-header">
+        <span class="console-indicator">● LIVE LABORATORY BENCH</span>
+        <h3>Swiss Precision Chronometer Tester</h3>
+        <p>Experience real-time sub-second measurement engineered with precision time-dilation smoothing.</p>
+      </div>
+
+      <div class="timer-display">
+        <div class="timer-digits" id="stopwatchDigits">00:00:00.<span class="millis">00</span></div>
+      </div>
+
+      <div class="timer-controls">
+        <button class="timer-btn start" id="timerStartBtn">START</button>
+        <button class="timer-btn stop" id="timerStopBtn" disabled>STOP</button>
+        <button class="timer-btn lap" id="timerLapBtn" disabled>SPLIT / LAP</button>
+        <button class="timer-btn reset" id="timerResetBtn">RESET</button>
+      </div>
+
+      <div class="laps-container" id="lapsContainer">
+        <div class="laps-title">RECORDED SPLIT INTERVALS:</div>
+        <ul class="laps-list" id="lapsList">
+          <li class="lap-empty">No splits recorded yet. Press "START" and "SPLIT".</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Horology Footer -->
+  <footer class="horology-footer" id="atelier">
+    <div class="footer-inner">
+      <div class="f-brand">
+        <svg class="brand-crest-svg lg" viewBox="0 0 32 32" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="16" cy="16" r="14" stroke="#dfb17b"/>
+          <circle cx="16" cy="16" r="6" stroke="#dfb17b"/>
+          <line x1="16" y1="2" x2="16" y2="30" stroke="#dfb17b"/>
+          <line x1="2" y1="16" x2="30" y2="16" stroke="#dfb17b"/>
+          <circle cx="16" cy="16" r="2" fill="#dfb17b"/>
+        </svg>
+        <h3>CHRONOCRAFT GENÈVE</h3>
+        <p>Haute Horlogerie Traditionnelle • Poinçon de Genève</p>
+      </div>
+      <div class="f-col">
+        <h4>ATELIER DU TEMPS</h4>
+        <p>Rue du Rhône 42, 1204 Genève, Switzerland</p>
+        <p>Tel: +41 22 819 88 00</p>
+      </div>
+      <div class="f-col">
+        <h4>MANUFACTURE</h4>
+        <p>Val-de-Travers Calibre Facility</p>
+        <p>COSC Observatory Precision Test Bench</p>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <p>© 2026 CHRONOCRAFT SA. ALL MOVEMENTS CRAFTED AND FINISHED IN GENEVA.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

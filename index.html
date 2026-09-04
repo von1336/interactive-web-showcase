@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THEMATIC WEB LAB // 5 Distinct Interactive Worlds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Cinzel:wght@600&family=Orbitron:wght@700&family=Archivo+Black&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f17;
+      --card-bg: rgba(22, 29, 44, 0.7);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.25);
+      --font-main: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    .master-container {
+      position: relative;
+      z-index: 10;
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    /* Header */
+    .master-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 0.35rem 1rem;
+      border-radius: 30px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      color: #a5b4fc;
+      margin-bottom: 1.5rem;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 10px #22c55e;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .master-title {
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 1.25rem;
+    }
+
+    .gradient-title {
+      background: linear-gradient(135deg, #a5b4fc 0%, #38bdf8 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .master-desc {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      max-width: 750px;
+      margin: 0 auto 2.5rem;
+      font-weight: 400;
+    }
+
+    .shortcut-hint {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: #64748b;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: inline-block;
+      padding: 0.4rem 1.25rem;
+      border-radius: 8px;
+    }
+
+    .shortcut-hint kbd {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.75rem;
+    }
+
+    /* Gallery Grid */
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 2.25rem;
+    }
+
+    .showcase-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.4s;
+      position: relative;
+    }
+
+    .showcase-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Custom Themes */
+    .card-cyber:hover { border-color: #00f3ff; box-shadow: 0 20px 40px rgba(0, 243, 255, 0.2); }
+    .card-botanica:hover { border-color: #2d5a45; box-shadow: 0 20px 40px rgba(45, 90, 69, 0.25); }
+    .card-horology:hover { border-color: #dfb17b; box-shadow: 0 20px 40px rgba(223, 177, 123, 0.25); }
+    .card-pop:hover { border-color: #ffde59; box-shadow: 0 20px 40px rgba(255, 222, 89, 0.25); }
+    .card-space:hover { border-color: #38bdf8; box-shadow: 0 20px 40px rgba(56, 189, 248, 0.25); }
+
+    /* Card Banner */
+    .card-banner {
+      height: 220px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .banner-bg-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+      filter: brightness(0.65) contrast(1.1);
+    }
+
+    .showcase-card:hover .banner-bg-img {
+      transform: scale(1.08);
+      filter: brightness(0.85) contrast(1.2);
+    }
+
+    .banner-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .overlay-cyber {
+      background: linear-gradient(180deg, rgba(0, 243, 255, 0.2) 0%, rgba(7, 8, 12, 0.85) 100%);
+      border-bottom: 2px solid #00f3ff;
+    }
+    .overlay-botanica {
+      background: linear-gradient(180deg, rgba(45, 90, 69, 0.2) 0%, rgba(26, 36, 30, 0.85) 100%);
+      border-bottom: 2px solid #2d5a45;
+    }
+    .overlay-horology {
+      background: linear-gradient(180deg, rgba(223, 177, 123, 0.2) 0%, rgba(8, 9, 12, 0.85) 100%);
+      border-bottom: 2px solid #dfb17b;
+    }
+    .overlay-pop {
+      background: linear-gradient(180deg, rgba(255, 222, 89, 0.25) 0%, rgba(18, 18, 18, 0.85) 100%);
+      border-bottom: 3px solid #ffde59;
+    }
+    .overlay-space {
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.2) 0%, rgba(3, 7, 18, 0.85) 100%);
+      border-bottom: 2px solid #38bdf8;
+    }
+
+    .banner-vector-badge {
+      position: relative;
+      z-index: 2;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .showcase-card:hover .banner-vector-badge {
+      transform: scale(1.15);
+    }
+
+    .site-number {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      z-index: 3;
+    }
+
+    .site-type {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      z-index: 3;
+    }
+
+    /* Card Content */
+    .card-body {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .site-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .site-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.5px;
+    }
+
+    .site-desc {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      margin-bottom: 1.75rem;
+      flex: 1;
+    }
+
+    .features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 2rem;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    .feat-item {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .feat-item span.dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    /* Launch Button */
+    .launch-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      transition: all 0.2s ease;
+      background: #ffffff;
+      color: #0b0f17;
+    }
+
+    .launch-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-cyber { background: #00f3ff; color: #07080c; }
+    .btn-cyber:hover { box-shadow: 0 8px 20px rgba(0, 243, 255, 0.4); }
+
+    .btn-botanica { background: #2d5a45; color: #ffffff; }
+    .btn-botanica:hover { box-shadow: 0 8px 20px rgba(45, 90, 69, 0.4); }
+
+    .btn-horology { background: linear-gradient(135deg, #fce0ad, #dfb17b); color: #08090c; }
+    .btn-horology:hover { box-shadow: 0 8px 20px rgba(223, 177, 123, 0.4); }
+
+    .btn-pop { background: #121212; color: #ffde59; border: 2px solid #ffde59; }
+    .btn-pop:hover { background: #ffde59; color: #121212; box-shadow: 0 8px 20px rgba(255, 222, 89, 0.4); }
+
+    .btn-space { background: linear-gradient(135deg, #38bdf8, #818cf8); color: #030712; }
+    .btn-space:hover { box-shadow: 0 8px 20px rgba(56, 189, 248, 0.4); }
+
+    /* Footer */
+    .master-footer {
+      text-align: center;
+      margin-top: 6rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 768px) {
+      .showcase-grid { grid-template-columns: 1fr; }
+      .master-container { padding: 3rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Ambient Floating Grid Canvas -->
+  <canvas id="bgCanvas"></canvas>
+
+  <div class="master-container">
+    <!-- Header -->
+    <header class="master-header">
+      <div class="badge-pill">
+        <span class="pulse"></span>
+        <span>EXPERIMENTATION LAB // 5 COMPLETED BUILDS</span>
+      </div>
+
+      <h1 class="master-title">
+        Thematic Web Laboratory <br>
+        <span class="gradient-title">Five Distinct Digital Worlds</span>
+      </h1>
+
+      <p class="master-desc">
+        Explore five completely different web applications engineered from scratch with unique aesthetics, custom physics, interactive HTML5 canvases, Web Audio sound synthesis, and bespoke animations.
+      </p>
+
+      <div class="shortcut-hint">
+        Quick Navigation: Press keys <kbd>1</kbd> through <kbd>5</kbd> on your keyboard to immediately open any website.
+      </div>
+    </header>
+
+    <!-- 5 Showcase Cards Grid with Photography Banners -->
+    <div class="showcase-grid">
+
+      <!-- Website 1: Neo-Nexus -->
+      <article class="showcase-card card-cyber">
+        <div class="card-banner">
+          <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=700&q=80" alt="Neo-Nexus Cyberpunk" class="banner-bg-img" loading="lazy">
+          <div class="banner-overlay overlay-cyber"></div>
+          <span class="site-number">01</span>
+          <span class="site-type">CYBERPUNK</span>
+          <div class="banner-vector-badge" style="background: rgba(0, 243, 255, 0.15); border-color: #00f3ff;">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00f3ff" stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="2"></rect>
+              <line x1="9" y1="2" x2="9" y2="22"></line>
+              <line x1="15" y1="2" x2="15" y2="22"></line>
+              <line x1="2" y1="9" x2="22" y2="9"></line>
+              <line x1="2" y1="15" x2="22" y2="15"></line>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <h2 class="site-title" style="font-family: 'Orbitron', sans-serif;">NEO-NEXUS</h2>
+          <div class="site-tagline">// QUANTUM NEURAL AUGMENTATION</div>
+          <p class="site-desc">
+            Dark dystopian cyberpunk tech hub with CRT scanlines, a 3D particle warp speed canvas, an interactive hacker CLI terminal modal, and real-time audio drone synthesis.
+          </p>
+          <div class="features-list">
+            <div class="feat-item"><span class="dot"></span> 3D Particle Warp Tunnel (Mouse reactive)</div>
+            <div class="feat-item"><span class="dot"></span> Interactive Neural CLI Terminal (`help`, `matrix`)</div>
+            <div class="feat-item"><span class="dot"></span> Web Audio Synth Drone & Cyber SFX</div>
+            <div class="feat-item"><span class="dot"></span> Text Decryption Scrambler Effect</div>
+          </div>
+          <a href="01-neon-nexus/index.html" class="launch-btn btn-cyber">
+            LAUNCH NEO-NEXUS
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M7 17l9.2-9.2M17 17V7H7"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Website 2: Lumina Botanica -->
+      <article class="showcase-card card-botanica">
+        <div class="card-banner">
+          <img src="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&w=700&q=80" alt="Lumina Botanica Editorial" class="banner-bg-img" loading="lazy">
+          <div class="banner-overlay overlay-botanica"></div>
+          <span class="site-number">02</span>
+          <span class="site-type">BIOPHILIC LUXURY</span>
+          <div class="banner-vector-badge" style="background: rgba(45, 90, 69, 0.25); border-color: #2d5a45;">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#a7f3d0" stroke-width="1.8">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <h2 class="site-title" style="font-family: 'Cinzel', serif; color: #faf8f5;">LUMINA BOTANICA</h2>
+          <div class="site-tagline">// HAUTE FLORISTRY & ARCHITECTURE</div>
+          <p class="site-desc">
+            High-fashion organic editorial experience with warm linen textures, floating botanical pollen physics, a magnetic expanding cursor, and interactive Dawn/Dusk/Nocturne moods.
+          </p>
+          <div class="features-list">
+            <div class="feat-item"><span class="dot"></span> Organic Spore & Seed Physics Canvas</div>
+            <div class="feat-item"><span class="dot"></span> Magnetic Cursor with Dynamic Text Badges</div>
+            <div class="feat-item"><span class="dot"></span> Mood Switcher (Dawn, Dusk, Nocturne)</div>
+            <div class="feat-item"><span class="dot"></span> Solfeggio Wind Chime Audio Synthesizer</div>
+          </div>
+          <a href="02-lumina-botanica/index.html" class="launch-btn btn-botanica">
+            LAUNCH LUMINA BOTANICA
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M7 17l9.2-9.2M17 17V7H7"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Website 3: ChronoCraft -->
+      <article class="showcase-card card-horology">
+        <div class="card-banner">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80" alt="ChronoCraft Horology" class="banner-bg-img" loading="lazy">
+          <div class="banner-overlay overlay-horology"></div>
+          <span class="site-number">03</span>
+          <span class="site-type">SWISS HOROLOGY</span>
+          <div class="banner-vector-badge" style="background: rgba(223, 177, 123, 0.2); border-color: #dfb17b;">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#dfb17b" stroke-width="1.8">
+              <circle cx="12" cy="12" r="9"/>
+              <polyline points="12 7 12 12 15 15"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <h2 class="site-title" style="font-family: 'Cinzel', serif; color: #dfb17b;">CHRONOCRAFT</h2>
+          <div class="site-tagline">// HAUTE HORLOGERIE GENÈVE</div>
+          <p class="site-desc">
+            Precision Swiss watchmaker atelier featuring an active HTML5 Canvas tourbillon escapement simulation (oscillating at 28,800 bph), a precision laboratory stopwatch, and mechanical tick audio.
+          </p>
+          <div class="features-list">
+            <div class="feat-item"><span class="dot"></span> Real-time Mechanical Tourbillon Canvas</div>
+            <div class="feat-item"><span class="dot"></span> Functional Swiss Stopwatch with Split/Lap Log</div>
+            <div class="feat-item"><span class="dot"></span> 4Hz Escapement Pallet Strike Audio Synthesizer</div>
+            <div class="feat-item"><span class="dot"></span> 3D Perspective Timepiece Card Tilt</div>
+          </div>
+          <a href="03-chronocraft/index.html" class="launch-btn btn-horology">
+            LAUNCH CHRONOCRAFT
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M7 17l9.2-9.2M17 17V7H7"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Website 4: NeoPop Creative -->
+      <article class="showcase-card card-pop">
+        <div class="card-banner">
+          <img src="https://images.unsplash.com/photo-1564982752979-3f7bc974d29a?auto=format&fit=crop&w=700&q=80" alt="NeoPop Creative Studio" class="banner-bg-img" loading="lazy">
+          <div class="banner-overlay overlay-pop"></div>
+          <span class="site-number" style="background: #121212;">04</span>
+          <span class="site-type" style="background: #121212; color: #ffde59;">NEO-BRUTALIST</span>
+          <div class="banner-vector-badge" style="background: #ffde59; border-color: #121212;">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="#121212">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <h2 class="site-title" style="font-family: 'Archivo Black', sans-serif; color: #ffde59;">NEOPOP* STUDIO</h2>
+          <div class="site-tagline">// PLAYFUL DIGITAL AGENCY</div>
+          <p class="site-desc">
+            Irreverent, loud neo-brutalist creative studio with draggable physics stickers you can fling across the viewport, bento grid tilt, interactive project budget calculator, and 8-bit sound effects.
+          </p>
+          <div class="features-list">
+            <div class="feat-item"><span class="dot"></span> Draggable Physics Stickers with Toss Velocity</div>
+            <div class="feat-item"><span class="dot"></span> Fullscreen Confetti Particle Explosions</div>
+            <div class="feat-item"><span class="dot"></span> Interactive Project Budget & Scope Calculator</div>
+            <div class="feat-item"><span class="dot"></span> Web Audio 8-bit Retro Pops, Boings & Blips</div>
+          </div>
+          <a href="04-neopop-creative/index.html" class="launch-btn btn-pop">
+            LAUNCH NEOPOP*
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M7 17l9.2-9.2M17 17V7H7"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Website 5: Astronex Space -->
+      <article class="showcase-card card-space">
+        <div class="card-banner">
+          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=700&q=80" alt="Astronex Deep Space" class="banner-bg-img" loading="lazy">
+          <div class="banner-overlay overlay-space"></div>
+          <span class="site-number">05</span>
+          <span class="site-type">ASTROPHYSICS</span>
+          <div class="banner-vector-badge" style="background: rgba(56, 189, 248, 0.15); border-color: #38bdf8;">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#38bdf8" stroke-width="1.8">
+              <circle cx="12" cy="12" r="10"/>
+              <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(30 12 12)"/>
+              <circle cx="12" cy="12" r="3" fill="#38bdf8"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <h2 class="site-title" style="font-family: 'Syncopate', sans-serif; font-size: 1.35rem; color: #38bdf8;">ASTRONEX DEEP SPACE</h2>
+          <div class="site-tagline">// INTERFEROMETRIC OBSERVATORY</div>
+          <p class="site-desc">
+            Deep cosmic space observatory featuring an interactive 3D rotatable and zoomable starfield galaxy, Kepler orbital multi-planet physics simulator with speed/gravity sliders, and pulsar audio drone.
+          </p>
+          <div class="features-list">
+            <div class="feat-item"><span class="dot"></span> 3D Interactive Rotatable Starfield (Drag to Orbit)</div>
+            <div class="feat-item"><span class="dot"></span> Kepler Planetary Orbit Simulator with Speed Controls</div>
+            <div class="feat-item"><span class="dot"></span> Interactive Exoplanet Atmospheric Spectroscopy</div>
+            <div class="feat-item"><span class="dot"></span> Web Audio Deep Space Pulsar Drone Synthesizer</div>
+          </div>
+          <a href="05-astronex-space/index.html" class="launch-btn btn-space">
+            LAUNCH ASTRONEX
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M7 17l9.2-9.2M17 17V7H7"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Master Footer -->
+    <footer class="master-footer">
+      <p>© 2026 THEMATIC WEB LABORATORY. ALL 5 WEBSITES BUILT WITH ZERO EXTERNAL BUILD TOOLS • 100% STANDALONE & ACCESSIBLE.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Keyboard shortcuts to jump into sites
+    window.addEventListener('keydown', (e) => {
+      if (e.key === '1') window.location.href = '01-neon-nexus/index.html';
+      if (e.key === '2') window.location.href = '02-lumina-botanica/index.html';
+      if (e.key === '3') window.location.href = '03-chronocraft/index.html';
+      if (e.key === '4') window.location.href = '04-neopop-creative/index.html';
+      if (e.key === '5') window.location.href = '05-astronex-space/index.html';
+    });
+
+    // Background Canvas Waves
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    let step = 0;
+    function renderBg() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = 'rgba(99, 102, 241, 0.08)';
+      ctx.lineWidth = 1;
+
+      step += 0.01;
+      for (let x = 0; x < width; x += 60) {
+        ctx.beginPath();
+        for (let y = 0; y < height; y += 40) {
+          const offset = Math.sin(step + (x + y) * 0.005) * 15;
+          ctx.lineTo(x + offset, y);
+        }
+        ctx.stroke();
+      }
+      requestAnimationFrame(renderBg);
+    }
+    renderBg();
+  </script>
+</body>
+</html>

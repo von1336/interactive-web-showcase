@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZENITH // 3D Interactive Tilda Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Aurora Glow Canvas -->
+  <canvas id="auroraCanvas"></canvas>
+
+  <!-- Noise Texture Overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="zenith-nav">
+    <div class="nav-brand">
+      <a href="../index.html" class="portal-back-btn" title="Вернуться в Хаб">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span id="txtBackToHub">ХАБ</span>
+      </a>
+      <span class="nav-divider">/</span>
+      <span class="nav-logo-text">ZENITH<span class="brand-accent">.3D</span></span>
+    </div>
+
+    <div class="nav-links">
+      <a href="#philosophy" class="nav-link" id="navLink1">Философия</a>
+      <a href="#bento" class="nav-link" id="navLink2">Проекты</a>
+      <a href="#services" class="nav-link" id="navLink3">Услуги</a>
+      <a href="#estimator" class="nav-link" id="navLink4">Оценка</a>
+    </div>
+
+    <div class="nav-actions">
+      <!-- SFX Audio Toggle -->
+      <button class="icon-toggle-btn" id="sfxToggleBtn" title="Включить / выключить звук">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path id="sfxWaves" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+        <span id="sfxLabel">SFX: ON</span>
+      </button>
+
+      <!-- Language Switcher -->
+      <button class="lang-pill-btn" id="langToggleBtn" title="Сменить язык / Switch language">
+        <span class="lang-item active" data-lang="ru">RU</span>
+        <span class="lang-slash">/</span>
+        <span class="lang-item" data-lang="en">EN</span>
+      </button>
+
+      <a href="#estimator" class="btn-nav-cta" id="btnNavCta">Обсудить проект</a>
+    </div>
+  </nav>
+
+  <!-- Sticky Companion Avatar in corner when scrolled -->
+  <div class="sticky-companion" id="stickyCompanion">
+    <div class="companion-bubble" id="companionBubble">Пока-пока! 👋</div>
+    <div class="companion-avatar-wrap" id="companionClickable" title="Нажми на меня!">
+      <canvas id="miniAvatarCanvas" width="90" height="90"></canvas>
+    </div>
+  </div>
+
+  <!-- Hero Section with Primary 3D Character -->
+  <header class="hero-section">
+    <div class="hero-container">
+      <div class="hero-copy">
+        <div class="badge-pill">
+          <span class="pulse-dot"></span>
+          <span id="heroBadge">06 // ZERO-BLOCK 3D EXPERIENCE</span>
+        </div>
+
+        <h1 class="hero-title" id="heroTitle">
+          Цифровой опыт <br>
+          <span class="text-gradient">будущего поколения.</span>
+        </h1>
+
+        <p class="hero-subtitle" id="heroSubtitle">
+          Создаем премиальные веб-интерфейсы в эстетике Tilda Zero-Block и Awwwards: кинематографичная 3D-анимация, живые интерактивные персонажи и бескомпромиссная скорость.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#bento" class="btn-primary" id="btnExplore">
+            <span id="txtBtnExplore">Смотреть работы</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+          <a href="#estimator" class="btn-secondary" id="btnCalculate">
+            <span id="txtBtnCalculate">Рассчитать смету</span>
+          </a>
+        </div>
+
+        <!-- Metric Counter Pills -->
+        <div class="hero-metrics">
+          <div class="metric-item">
+            <span class="metric-val" data-target="99" data-suffix=".9%">99.9%</span>
+            <span class="metric-lbl" id="mLabel1">Оценка производительности</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-item">
+            <span class="metric-val" data-target="15" data-suffix="+">15+</span>
+            <span class="metric-lbl" id="mLabel2">Международных наград</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-item">
+            <span class="metric-val" data-target="0" data-suffix="ms">0ms</span>
+            <span class="metric-lbl" id="mLabel3">Задержка 3D-рендеринга</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D Interactive Avatar Stage -->
+      <div class="hero-stage">
+        <div class="stage-backdrop-ring"></div>
+        <div class="character-speech-bubble" id="heroSpeechBubble">
+          <div class="bubble-arrow"></div>
+          <span id="speechText">Привет! Я твой 3D-гид. Прокрути вниз! 👇</span>
+        </div>
+        <canvas id="heroAvatarCanvas" width="460" height="460"></canvas>
+        <div class="stage-hint">
+          <span class="hint-icon">👆</span>
+          <span id="stageHintText">Двигай курсор или нажми на меня для прыжка!</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Scroll Down Indicator -->
+  <div class="scroll-down-wrap">
+    <div class="mouse-icon">
+      <div class="wheel"></div>
+    </div>
+    <span class="scroll-text" id="txtScrollDown">КРУТИТЕ ВНИЗ</span>
+  </div>
+
+  <!-- Section 1: Design Philosophy (Tilda Storytelling Style) -->
+  <section class="section-wrap" id="philosophy">
+    <div class="container">
+      <div class="section-label">
+        <span class="label-num">// 01</span>
+        <span class="label-name" id="sec1Label">ФИЛОСОФИЯ И ПОДХОД</span>
+      </div>
+
+      <h2 class="section-heading" id="sec1Head">
+        Как мы стираем грань между <br>
+        <span class="text-gradient-cyan">дизайном и чистым кодом.</span>
+      </h2>
+
+      <div class="story-grid">
+        <div class="story-card" data-tilt>
+          <div class="story-num">01</div>
+          <h3 class="story-title" id="st1Title">Живая 3D-мимика</h3>
+          <p class="story-desc" id="st1Desc">
+            Персонажи и объекты на сайте чувствуют действия пользователя: реагируют на скролл, провожают курсор взглядом и прощаются при завершении чтения.
+          </p>
+          <div class="story-tag">CANVAS 3D ENGINE</div>
+        </div>
+
+        <div class="story-card" data-tilt>
+          <div class="story-num">02</div>
+          <h3 class="story-title" id="st2Title">Zero-Block Типографика</h3>
+          <p class="story-desc" id="st2Desc">
+            Свободная швейцарская сетка с крупными акцентными заголовками, адаптивным кернингом и плавной анимацией масок при попадании во вьюпорт.
+          </p>
+          <div class="story-tag">EDITORIAL LAYOUT</div>
+        </div>
+
+        <div class="story-card" data-tilt>
+          <div class="story-num">03</div>
+          <h3 class="story-title" id="st3Title">Тактильный Звук</h3>
+          <p class="story-desc" id="st3Desc">
+            Каждое взаимодействие озвучивается процедурным синтезатором Web Audio API. Приятный клик и мягкий резонанс погружают глубже, чем статичный экран.
+          </p>
+          <div class="story-tag">WEB AUDIO SYNTH</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: 3D Bento Grid (21st.dev / Tilda Style) -->
+  <section class="section-wrap" id="bento">
+    <div class="container">
+      <div class="section-label">
+        <span class="label-num">// 02</span>
+        <span class="label-name" id="sec2Label">ИЗБРАННЫЕ КЕЙСЫ</span>
+      </div>
+
+      <div class="section-header-flex">
+        <h2 class="section-heading" id="sec2Head">
+          Интерфейсы, завоевавшие <br>
+          <span class="text-gradient">внимание сотен тысяч людей.</span>
+        </h2>
+        <div class="bento-category-tag">FEATURED WORK</div>
+      </div>
+
+      <div class="zenith-bento">
+        <!-- Bento 1: Large Featured -->
+        <article class="zb-card zb-large" data-tilt>
+          <div class="zb-top">
+            <span class="zb-badge badge-cyan">FINTECH 3D</span>
+            <span class="zb-year">2026</span>
+          </div>
+          <div class="zb-content">
+            <h3 class="zb-title">Aura Crypto Banking</h3>
+            <p class="zb-desc" id="zb1Desc">Интерактивный 3D-кошелек нового поколения: вращающиеся карты, динамическое преломление света и биометрия.</p>
+            <div class="zb-tags">
+              <span>Three.js</span>
+              <span>Web Audio</span>
+              <span>Tailwind</span>
+              <span>PWA</span>
+            </div>
+          </div>
+          <div class="zb-visual-art zb-art-1"></div>
+        </article>
+
+        <!-- Bento 2 -->
+        <article class="zb-card zb-medium" data-tilt>
+          <div class="zb-top">
+            <span class="zb-badge badge-pink">AI PLATFORM</span>
+            <span class="zb-year">2026</span>
+          </div>
+          <div class="zb-content">
+            <h3 class="zb-title">Synthetix Intelligence</h3>
+            <p class="zb-desc" id="zb2Desc">Нейросетевая платформа с генерацией UI на лету и визуализацией эмбеддингов в реальном времени.</p>
+            <div class="zb-tags">
+              <span>FastAPI</span>
+              <span>SSE</span>
+              <span>WebGL</span>
+            </div>
+          </div>
+          <div class="zb-visual-art zb-art-2"></div>
+        </article>
+
+        <!-- Bento 3 -->
+        <article class="zb-card zb-medium" data-tilt>
+          <div class="zb-top">
+            <span class="zb-badge badge-amber">E-COMMERCE</span>
+            <span class="zb-year">2026</span>
+          </div>
+          <div class="zb-content">
+            <h3 class="zb-title">Lumina Chrono Flagship</h3>
+            <p class="zb-desc" id="zb3Desc">Флагманский магазин премиальных часов с интерактивным разбором механизма по слоям.</p>
+            <div class="zb-tags">
+              <span>Canvas 2D</span>
+              <span>Z-Index 3D</span>
+              <span>SVG</span>
+            </div>
+          </div>
+          <div class="zb-visual-art zb-art-3"></div>
+        </article>
+
+        <!-- Bento 4: Wide Highlight -->
+        <article class="zb-card zb-wide" data-tilt>
+          <div class="zb-top">
+            <span class="zb-badge badge-emerald">SYSTEMS & ARCHITECTURE</span>
+            <span class="zb-year">2026</span>
+          </div>
+          <div class="zb-content">
+            <h3 class="zb-title">Autonomous Microservices Hub</h3>
+            <p class="zb-desc" id="zb4Desc">Высоконагруженная экосистема из 23+ микросервисов: real-time брокеры сообщений, WebSockets и Celery кластеры.</p>
+            <div class="zb-tags">
+              <span>Python 3.12</span>
+              <span>Redis Pub/Sub</span>
+              <span>PostgreSQL</span>
+              <span>Docker</span>
+            </div>
+          </div>
+          <div class="zb-visual-art zb-art-4"></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Interactive Project Estimator (Tilda Style) -->
+  <section class="section-wrap" id="estimator">
+    <div class="container">
+      <div class="section-label">
+        <span class="label-num">// 03</span>
+        <span class="label-name" id="sec3Label">КАЛЬКУЛЯТОР ПРОЕКТА</span>
+      </div>
+
+      <h2 class="section-heading" id="sec3Head">
+        Рассчитайте бюджет запуска <br>
+        <span class="text-gradient">за пару кликов в реальном времени.</span>
+      </h2>
+
+      <div class="estimator-box">
+        <div class="estimator-controls">
+          <!-- Parameter 1 -->
+          <div class="est-group">
+            <label class="est-label" id="estLbl1">1. Масштаб и тип сайта:</label>
+            <div class="pill-selector" id="scopeSelector">
+              <button class="pill-btn active" data-cost="2500" data-days="7" id="scopeOpt1">Промо / Лендинг (3D)</button>
+              <button class="pill-btn" data-cost="4800" data-days="14" id="scopeOpt2">Корпоративный сайт</button>
+              <button class="pill-btn" data-cost="7500" data-days="25" id="scopeOpt3">Веб-сервис / Платформа</button>
+            </div>
+          </div>
+
+          <!-- Parameter 2 -->
+          <div class="est-group">
+            <label class="est-label" id="estLbl2">2. Уровень 3D и интерактива:</label>
+            <div class="pill-selector" id="depthSelector">
+              <button class="pill-btn" data-cost="800" data-days="2" id="depthOpt1">Базовый (Parallax)</button>
+              <button class="pill-btn active" data-cost="1800" data-days="5" id="depthOpt2">3D-Персонаж + Скролл</button>
+              <button class="pill-btn" data-cost="3200" data-days="9" id="depthOpt3">Полная 3D-Сцена WebGL</button>
+            </div>
+          </div>
+
+          <!-- Addons Checkboxes -->
+          <div class="est-group">
+            <label class="est-label" id="estLbl3">3. Дополнительные модули:</label>
+            <div class="checkbox-grid">
+              <label class="check-item">
+                <input type="checkbox" id="addonSound" checked data-cost="600" data-days="2">
+                <span class="checkmark"></span>
+                <span id="addonTxt1">Процедурный саунд-дизайн Web Audio (+$600)</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" id="addonBackend" checked data-cost="1400" data-days="4">
+                <span class="checkmark"></span>
+                <span id="addonTxt2">FastAPI / Telegram Бот интеграция (+$1,400)</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" id="addonMultilang" data-cost="500" data-days="1">
+                <span class="checkmark"></span>
+                <span id="addonTxt3">Мультиязычность RU / EN (+$500)</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result Summary Card -->
+        <div class="estimator-summary">
+          <div class="summary-top">
+            <span class="summary-badge">ПРЕДВАРИТЕЛЬНАЯ СМЕТА</span>
+            <div class="summary-price" id="totalPrice">$6,300</div>
+            <div class="summary-timeline">
+              <span id="txtEstTimeline">Срок разработки:</span>
+              <strong id="totalDays">18 рабочих дней</strong>
+            </div>
+          </div>
+
+          <div class="summary-features">
+            <div class="s-feat">✓ 100% Zero-Block кастомный дизайн</div>
+            <div class="s-feat">✓ Интерактивный 3D-персонаж с реакцией на скролл</div>
+            <div class="s-feat">✓ Адаптив под iOS, Android и десктоп</div>
+            <div class="s-feat">✓ Оптимизация Google PageSpeed 95+</div>
+          </div>
+
+          <button class="btn-order-full" id="btnOrderEstimate">
+            <span id="txtBtnOrder">Оформить заявку</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Cinematic Curtain Footer (Where avatar waves goodbye) -->
+  <footer class="zenith-footer">
+    <div class="footer-curtain-glow"></div>
+    <div class="container footer-content">
+      <div class="footer-farewell-box">
+        <div class="farewell-avatar-wrap">
+          <canvas id="footerAvatarCanvas" width="180" height="180"></canvas>
+        </div>
+        <div class="farewell-text-area">
+          <h2 class="farewell-title" id="txtFarewellTitle">Спасибо за внимание! До новых встреч! 👋</h2>
+          <p class="farewell-desc" id="txtFarewellDesc">
+            Вы долистали до самого конца. Наш 3D-персонаж машет вам рукой на прощание и желает великолепных проектов. Возвращайтесь в общий хаб, чтобы изучить остальные лаборатории!
+          </p>
+          <div class="farewell-actions">
+            <a href="../index.html" class="btn-primary" id="btnReturnHub">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+              </svg>
+              <span id="txtReturnHub">Вернуться в Хаб</span>
+            </a>
+            <a href="https://github.com/von1336" target="_blank" class="btn-secondary">
+              <span>GitHub @von1336</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-meta-row">
+        <div class="f-copy">© 2026 ZENITH STUDIO // DESIGNED IN TILDA ZERO-BLOCK AESTHETIC</div>
+        <div class="f-badge">ZERO EXTERNAL DEPENDENCIES · PURE VANILLA</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

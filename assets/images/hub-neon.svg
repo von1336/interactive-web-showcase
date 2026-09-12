@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgCyber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050811" />
+      <stop offset="50%" stop-color="#0a1226" />
+      <stop offset="100%" stop-color="#180424" />
+    </linearGradient>
+    <linearGradient id="cyanGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f3ff" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#ff0055" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="neonBlur">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="700" height="450" fill="url(#bgCyber)"/>
+  <!-- Perspective Grid Floor -->
+  <g stroke="#00f3ff" stroke-opacity="0.25" stroke-width="1.5">
+    <line x1="350" y1="180" x2="-100" y2="450"/>
+    <line x1="350" y1="180" x2="50" y2="450"/>
+    <line x1="350" y1="180" x2="200" y2="450"/>
+    <line x1="350" y1="180" x2="350" y2="450"/>
+    <line x1="350" y1="180" x2="500" y2="450"/>
+    <line x1="350" y1="180" x2="650" y2="450"/>
+    <line x1="350" y1="180" x2="800" y2="450"/>
+    <line x1="0" y1="260" x2="700" y2="260"/>
+    <line x1="0" y1="310" x2="700" y2="310"/>
+    <line x1="0" y1="370" x2="700" y2="370"/>
+    <line x1="0" y1="440" x2="700" y2="440"/>
+  </g>
+  <!-- Cyber City Skyline Silhouette -->
+  <path d="M50 250 L50 170 L90 170 L90 250 M110 250 L110 130 L160 130 L160 250 M180 250 L180 190 L220 190 L220 250 M480 250 L480 150 L530 150 L530 250 M550 250 L550 110 L600 110 L600 250 M620 250 L620 180 L660 180 L660 250" fill="#040714" stroke="#00f3ff" stroke-opacity="0.4" stroke-width="1.5"/>
+  <!-- Central Neural Hologram Sphere -->
+  <circle cx="350" cy="180" r="85" fill="none" stroke="url(#cyanGlow)" stroke-width="3" filter="url(#neonBlur)"/>
+  <circle cx="350" cy="180" r="50" fill="none" stroke="#00f3ff" stroke-dasharray="8 6" stroke-width="2"/>
+  <circle cx="350" cy="180" r="25" fill="#ff0055" fill-opacity="0.3" stroke="#ff0055" stroke-width="2"/>
+  <!-- HUD Reticles and Coordinates -->
+  <text x="350" y="185" text-anchor="middle" fill="#00f3ff" font-family="monospace" font-size="12" letter-spacing="3">NEO-NEXUS 01</text>
+  <text x="60" y="60" fill="#ff0055" font-family="monospace" font-size="11" letter-spacing="2">SYS_ONLINE // 99.8%</text>
+  <text x="640" y="60" text-anchor="end" fill="#00f3ff" font-family="monospace" font-size="11">CORTEX_LINK: ESTABLISHED</text>
+  <line x1="60" y1="75" x2="220" y2="75" stroke="#ff0055" stroke-width="1.5"/>
+  <line x1="480" y1="75" x2="640" y2="75" stroke="#00f3ff" stroke-width="1.5"/>
+</svg>

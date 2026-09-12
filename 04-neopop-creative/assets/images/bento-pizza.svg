@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="100%" height="100%">
+  <rect width="1000" height="500" fill="#22c55e"/>
+  <!-- Pizza Slice Vector -->
+  <g transform="translate(500, 230)">
+    <polygon points="0,-130 140,90 -140,90" fill="#000"/>
+    <polygon points="0,-140 135,75 -135,75" fill="#ffde59" stroke="#000" stroke-width="6"/>
+    <!-- Pepperonis -->
+    <circle cx="-30" cy="-10" r="18" fill="#ef4444" stroke="#000" stroke-width="3"/>
+    <circle cx="40" cy="20" r="22" fill="#ef4444" stroke="#000" stroke-width="3"/>
+    <circle cx="-10" cy="40" r="16" fill="#ef4444" stroke="#000" stroke-width="3"/>
+    <!-- Crust -->
+    <path d="M-145 75 Q0 120 145 75" fill="#d97706" stroke="#000" stroke-width="6"/>
+  </g>
+  <text x="500" y="440" text-anchor="middle" fill="#000" font-family="'Archivo Black', sans-serif" font-size="26">SLICE CLUB TOKYO ARTISAN PIZZA</text>
+</svg>

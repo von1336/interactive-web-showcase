@@ -4,24 +4,27 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initParticleCanvas();
+  initLanguage();
   initTextScramble();
   initTelemetryTicker();
   initTerminal();
   initAudioSystem();
   initMatrixMode();
+  initCardScrollReveal();
 });
 
 // ------------------------------------------
 // 1. 3D Particle Warp Canvas
 // ------------------------------------------
+let warpSpeedMultiplier = 1;
+
 function initParticleCanvas() {
   const canvas = document.getElementById('cyberCanvas');
   const ctx = canvas.getContext('2d');
   let width, height;
   let particles = [];
-  const numParticles = 140;
+  const numParticles = 150;
   let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
-  let speedMult = 1;
 
   function resize() {
     width = canvas.width = window.innerWidth;
@@ -48,7 +51,7 @@ function initParticleCanvas() {
     }
     update() {
       this.pz = this.z;
-      this.z -= 4 * speedMult;
+      this.z -= 4 * warpSpeedMultiplier;
       if (this.z <= 1) {
         this.reset();
       }
@@ -101,18 +104,17 @@ function initParticleCanvas() {
   const warpBtn = document.getElementById('warpBtn');
   if (warpBtn) {
     warpBtn.addEventListener('click', () => {
-      speedMult = 8;
+      warpSpeedMultiplier = 6;
       playSound('warp');
       setTimeout(() => {
-        speedMult = 1;
-      }, 1400);
+        warpSpeedMultiplier = 1;
+      }, 1500);
     });
   }
 
-  // Scan Network Button Trigger
-  const scanBtn = document.getElementById('scanNetBtn');
-  if (scanBtn) {
-    scanBtn.addEventListener('click', () => {
+  const scanNetBtn = document.getElementById('scanNetBtn');
+  if (scanNetBtn) {
+    scanNetBtn.addEventListener('click', () => {
       playSound('beep');
       triggerDiagnosticScan();
     });
@@ -120,45 +122,340 @@ function initParticleCanvas() {
 }
 
 // ------------------------------------------
-// 2. Text Scrambler / Decrypt Animation
+// 2. Language Switcher (RU / EN)
 // ------------------------------------------
-function initTextScramble() {
-  const chars = '!<>-_\\/[]{}—=+*^?#________01010101';
-  const elements = document.querySelectorAll('[data-scramble]');
+const i18n = {
+  ru: {
+    docTitle: "NEO-NEXUS // Кибернетические системы нового поколения",
+    sysVersion: "SYS_V2.08.4 // НЕЙРО_ЛИНК",
+    navCore: "СИСТ_ЯДРО",
+    navAug: "АУГМЕНТЫ",
+    navTelem: "ТЕЛЕМЕТРИЯ",
+    navGrid: "НЕЙРОСЕТЬ",
+    audioOff: "ЗВУК: ВЫКЛ",
+    audioOn: "ЗВУК: ВКЛ",
+    termBtn: "CLI_ТЕРМИНАЛ",
+    hub: "ХАБ",
+    heroBadgeText: "КВАНТОВЫЙ НЕЙРОИНТЕРФЕЙС В СЕТИ",
+    heroBadgeTag: "УР_БЕЗ_9",
+    heroTitle: "ПРЕОДОЛЕЙ <br><span class='gradient-text glitch-element' data-text='СИНТЕТИЧЕСКУЮ РЕАЛЬНОСТЬ'>СИНТЕТИЧЕСКУЮ РЕАЛЬНОСТЬ</span>",
+    heroSubtitle: "Военные нейроимпланты, субмиллисекундные синаптические мосты и архитектуры био-цифровых аугментаций для экстремальной жизни Нео-Токио.",
+    warpBtn: "ВАРП-СКОРОСТЬ",
+    scanNetBtn: "ДИАГНОСТИКА СЕТИ",
+    lblLatency: "ЗАДЕРЖКА СИНАПСА",
+    lblLoad: "НАГРУЗКА СЕТИ",
+    lblEnc: "ПРОТОКОЛ ШИФРОВАНИЯ",
+    lblNodes: "АКТИВНЫЕ УЗЛЫ",
+    secCode: "// 01_КАТАЛОГ_АУГМЕНТАЦИЙ",
+    secTitle: "СПЕЦИФИКАЦИИ НЕЙРО-ОБОРУДОВАНИЯ",
+    secDesc: "Кибернетические улучшения IV ранга для тактического боя, когнитивного разгона и цифрового проникновения.",
+    c1Badge: "MK-VII КОРТЕКС",
+    c1Desc: "Ускоряет нейронную обработку в десять раз. Открывает сенсорное предвидение с субатомными полями замедления времени.",
+    c1S1Lbl: "ТАКТОВАЯ ЧАСТОТА",
+    c1S2Lbl: "РАССЕИВАНИЕ ТЕПЛА",
+    c2Badge: "СПЕКТРАЛЬНАЯ ОПТИКА",
+    c2Desc: "Мультиспектральная визуальная телеметрия с инфракрасным диапазоном, расшифровкой электромагнитных волн и баллистическим HUD.",
+    c2S1Lbl: "СПЕКТРАЛЬНОЕ РАЗРЕШЕНИЕ",
+    c2S2Lbl: "ОПТИЧЕСКИЙ ЗУМ",
+    c3Badge: "АКТИВНЫЙ СТЕЛС",
+    c3Desc: "Преломляет волны фотонов вокруг корпуса. Стирает электронные тепловые следы во всех диапазонах наблюдения.",
+    c3S1Lbl: "ОПТИЧЕСКИЙ КАМУФЛЯЖ",
+    c3S2Lbl: "РАДИОЛОКАЦИОННАЯ ЭПР",
+    c4Badge: "КИБЕР-ВОЙНА",
+    c4Desc: "Автономная платформа запуска демонов, способная за секунды нейтрализовать военные файрволы и узлы подсетей.",
+    c4S1Lbl: "ПРОПУСКНАЯ СПОСОБНОСТЬ",
+    c4S2Lbl: "ПОТОКИ ДЕМОНОВ",
+    deployBtn: "АКТИВИРОВАТЬ ПРОТОКОЛ",
+    termStatus: "СТАТУС: ЗАЩИЩЕНО",
+    termWelcome1: "   NEO-NEXUS НЕЙРО-ТЕРМИНАЛ v2.08 [ЯДРО СБОРКА 77]   ",
+    termWelcome2: "Введите <span class='cyan-text'>'помощь'</span> или <span class='cyan-text'>'help'</span> для списка команд.",
+    termWelcome3: "Введите <span class='cyan-text'>'matrix'</span> для взлома цифрового потока.",
+    termPlaceholder: "введите команду...",
+    ftDesc: "Передовые кибернетические архитектуры и тактические нейроаугментации.",
+    ftH1: "КАНАЛЫ_СВЯЗИ",
+    ftH2: "ДИАГНОСТИКА_СИСТЕМЫ",
+    ftPill1: "РАЗГОН: АКТИВЕН",
+    ftPill2: "ФАЙРВОЛ: ЦЕЛ",
+    ftCopy: "© 2084 КОРПОРАЦИЯ NEO-NEXUS. ВСЕ ПРАВА ЗАЩИЩЕНЫ. ЗА ГРАНЯМИ ЭВОЛЮЦИИ ЧЕЛОВЕКА."
+  },
+  en: {
+    docTitle: "NEO-NEXUS // Next-Gen Cybernetic Systems",
+    sysVersion: "SYS_V2.08.4 // NEURAL_LINK",
+    navCore: "SYS_CORE",
+    navAug: "AUGMENTS",
+    navTelem: "TELEMETRY",
+    navGrid: "NEURAL_GRID",
+    audioOff: "AUDIO: OFF",
+    audioOn: "AUDIO: ON",
+    termBtn: "CLI_TERMINAL",
+    hub: "HUB",
+    heroBadgeText: "QUANTUM NEURAL INTERFACE ONLINE",
+    heroBadgeTag: "SEC_LVL_9",
+    heroTitle: "TRANSCEND <br><span class='gradient-text glitch-element' data-text='SYNTHETIC REALITY'>SYNTHETIC REALITY</span>",
+    heroSubtitle: "Military-grade neural implants, sub-millisecond synaptic bridges, and bio-digital augmentation architectures engineered for Neo-Tokyo's high-octane edge.",
+    warpBtn: "INITIALIZE WARP SPEED",
+    scanNetBtn: "DIAGNOSTIC SCAN",
+    lblLatency: "SYNAPSE LATENCY",
+    lblLoad: "GRID LOAD",
+    lblEnc: "ENCRYPTION PROTOCOL",
+    lblNodes: "ACTIVE NODES",
+    secCode: "// 01_AUGMENTATION_CATALOG",
+    secTitle: "NEURAL HARDWARE SPECIFICATIONS",
+    secDesc: "Tier-IV cybernetic enhancements calibrated for tactical combat, cognitive overclocking, and digital infiltration.",
+    c1Badge: "MK-VII CORTEX",
+    c1Desc: "Accelerates neural processing tenfold. Unlocks sensory pre-cognition with sub-atomic time dilation fields.",
+    c1S1Lbl: "CLOCK FREQUENCY",
+    c1S2Lbl: "HEAT DISSIPATION",
+    c2Badge: "SPECTRAL_OPTICS",
+    c2Desc: "Multi-spectrum visual telemetry with infrared, electromagnetic wave deciphering, and ballistic trajectory HUD.",
+    c2S1Lbl: "SPECTRAL RESOLUTION",
+    c2S2Lbl: "ZOOM MULTIPLIER",
+    c3Badge: "ACTIVE_STEALTH",
+    c3Desc: "Bends photon wavelengths around host chassis. Erases electronic heat signatures across all surveillance bands.",
+    c3S1Lbl: "OPTICAL CAMOUFLAGE",
+    c3S2Lbl: "RADAR CROSS-SECTION",
+    c4Badge: "CYBER_WARFARE",
+    c4Desc: "Autonomous daemon deployment platform capable of neutralizing military firewalls and subnet nodes in seconds.",
+    c4S1Lbl: "INTRUSION BANDWIDTH",
+    c4S2Lbl: "DAEMON THREADS",
+    deployBtn: "DEPLOY PROTOCOL",
+    termStatus: "STATUS: SECURE",
+    termWelcome1: "   NEO-NEXUS NEURAL TERMINAL v2.08 [KERNEL BUILD 77]   ",
+    termWelcome2: "Type <span class='cyan-text'>'help'</span> to see available cyber commands.",
+    termWelcome3: "Type <span class='cyan-text'>'matrix'</span> for stream breach.",
+    termPlaceholder: "enter command...",
+    ftDesc: "Advanced Cybernetic Architectures & Tactical Neural Augmentation.",
+    ftH1: "COMMUNICATION_CHANNELS",
+    ftH2: "SYSTEM_DIAGNOSTICS",
+    ftPill1: "OVERCLOCK: ACTIVE",
+    ftPill2: "FIREWALL: UNBREACHED",
+    ftCopy: "© 2084 NEO-NEXUS CORP. ALL RIGHTS RESERVED. BEYOND HUMAN EVOLUTION."
+  }
+};
 
-  elements.forEach(el => {
-    const originalText = el.getAttribute('data-scramble') || el.innerText;
-    el.addEventListener('mouseenter', () => scramble(el, originalText));
+let currentLang = localStorage.getItem('site_lang') || 'ru';
+
+function applyLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('site_lang', lang);
+  document.documentElement.lang = lang;
+
+  const d = i18n[lang] || i18n.ru;
+  document.title = d.docTitle;
+
+  const sysVer = document.getElementById('sysVersion');
+  if (sysVer) sysVer.textContent = d.sysVersion;
+
+  const nCore = document.getElementById('navCore');
+  if (nCore) { nCore.textContent = d.navCore; nCore.dataset.scramble = d.navCore; }
+  const nAug = document.getElementById('navAug');
+  if (nAug) { nAug.textContent = d.navAug; nAug.dataset.scramble = d.navAug; }
+  const nTelem = document.getElementById('navTelem');
+  if (nTelem) { nTelem.textContent = d.navTelem; nTelem.dataset.scramble = d.navTelem; }
+  const nGrid = document.getElementById('navGrid');
+  if (nGrid) { nGrid.textContent = d.navGrid; nGrid.dataset.scramble = d.navGrid; }
+
+  const sndLbl = document.getElementById('soundLabel');
+  if (sndLbl) sndLbl.textContent = isAudioActive ? d.audioOn : d.audioOff;
+
+  const termLbl = document.getElementById('termBtnLabel');
+  if (termLbl) termLbl.textContent = d.termBtn;
+
+  const hubLbl = document.getElementById('hubLabel');
+  if (hubLbl) hubLbl.textContent = d.hub;
+
+  const hBadge = document.getElementById('heroBadgeText');
+  if (hBadge) hBadge.textContent = d.heroBadgeText;
+  const hTag = document.getElementById('heroBadgeTag');
+  if (hTag) hTag.textContent = d.heroBadgeTag;
+
+  const hTitle = document.getElementById('heroTitle');
+  if (hTitle) hTitle.innerHTML = d.heroTitle;
+
+  const hSub = document.getElementById('heroSubtitle');
+  if (hSub) hSub.textContent = d.heroSubtitle;
+
+  const wBtn = document.getElementById('warpBtnText');
+  if (wBtn) { wBtn.textContent = d.warpBtn; wBtn.dataset.scramble = d.warpBtn; }
+  const sBtn = document.getElementById('scanNetBtnText');
+  if (sBtn) { sBtn.textContent = d.scanNetBtn; sBtn.dataset.scramble = d.scanNetBtn; }
+
+  const lLat = document.getElementById('lblLatency');
+  if (lLat) lLat.textContent = d.lblLatency;
+  const lLoad = document.getElementById('lblLoad');
+  if (lLoad) lLoad.textContent = d.lblLoad;
+  const lEnc = document.getElementById('lblEnc');
+  if (lEnc) lEnc.textContent = d.lblEnc;
+  const lNodes = document.getElementById('lblNodes');
+  if (lNodes) lNodes.textContent = d.lblNodes;
+
+  const sCode = document.getElementById('secCode');
+  if (sCode) sCode.textContent = d.secCode;
+  const sTitle = document.getElementById('secTitle');
+  if (sTitle) sTitle.textContent = d.secTitle;
+  const sDesc = document.getElementById('secDesc');
+  if (sDesc) sDesc.textContent = d.secDesc;
+
+  const c1B = document.getElementById('c1Badge');
+  if (c1B) c1B.textContent = d.c1Badge;
+  const c1D = document.getElementById('c1Desc');
+  if (c1D) c1D.textContent = d.c1Desc;
+  const c1S1 = document.getElementById('c1S1Lbl');
+  if (c1S1) c1S1.textContent = d.c1S1Lbl;
+  const c1S2 = document.getElementById('c1S2Lbl');
+  if (c1S2) c1S2.textContent = d.c1S2Lbl;
+
+  const c2B = document.getElementById('c2Badge');
+  if (c2B) c2B.textContent = d.c2Badge;
+  const c2D = document.getElementById('c2Desc');
+  if (c2D) c2D.textContent = d.c2Desc;
+  const c2S1 = document.getElementById('c2S1Lbl');
+  if (c2S1) c2S1.textContent = d.c2S1Lbl;
+  const c2S2 = document.getElementById('c2S2Lbl');
+  if (c2S2) c2S2.textContent = d.c2S2Lbl;
+
+  const c3B = document.getElementById('c3Badge');
+  if (c3B) c3B.textContent = d.c3Badge;
+  const c3D = document.getElementById('c3Desc');
+  if (c3D) c3D.textContent = d.c3Desc;
+  const c3S1 = document.getElementById('c3S1Lbl');
+  if (c3S1) c3S1.textContent = d.c3S1Lbl;
+  const c3S2 = document.getElementById('c3S2Lbl');
+  if (c3S2) c3S2.textContent = d.c3S2Lbl;
+
+  const c4B = document.getElementById('c4Badge');
+  if (c4B) c4B.textContent = d.c4Badge;
+  const c4D = document.getElementById('c4Desc');
+  if (c4D) c4D.textContent = d.c4Desc;
+  const c4S1 = document.getElementById('c4S1Lbl');
+  if (c4S1) c4S1.textContent = d.c4S1Lbl;
+  const c4S2 = document.getElementById('c4S2Lbl');
+  if (c4S2) c4S2.textContent = d.c4S2Lbl;
+
+  document.querySelectorAll('.card-btn').forEach(btn => {
+    btn.textContent = d.deployBtn;
   });
 
-  function scramble(el, text) {
-    let iteration = 0;
-    const interval = setInterval(() => {
-      el.innerText = text.split('').map((letter, index) => {
-        if (index < iteration) return text[index];
-        return chars[Math.floor(Math.random() * chars.length)];
-      }).join('');
+  const tStatus = document.getElementById('termStatus');
+  if (tStatus) tStatus.textContent = d.termStatus;
+  const tW1 = document.getElementById('termWelcome1');
+  if (tW1) tW1.textContent = d.termWelcome1;
+  const tW2 = document.getElementById('termWelcome2');
+  if (tW2) tW2.innerHTML = d.termWelcome2;
+  const tW3 = document.getElementById('termWelcome3');
+  if (tW3) tW3.innerHTML = d.termWelcome3;
+  const tInp = document.getElementById('termInput');
+  if (tInp) tInp.placeholder = d.termPlaceholder;
 
-      if (iteration >= text.length) {
-        clearInterval(interval);
-      }
-      iteration += 1 / 2;
-    }, 25);
+  const ftD = document.getElementById('ftDesc');
+  if (ftD) ftD.textContent = d.ftDesc;
+  const ft1 = document.getElementById('ftH1');
+  if (ft1) ft1.textContent = d.ftH1;
+  const ft2 = document.getElementById('ftH2');
+  if (ft2) ft2.textContent = d.ftH2;
+  const ftP1 = document.getElementById('ftPill1');
+  if (ftP1) ftP1.textContent = d.ftPill1;
+  const ftP2 = document.getElementById('ftPill2');
+  if (ftP2) ftP2.textContent = d.ftPill2;
+  const ftC = document.getElementById('ftCopy');
+  if (ftC) ftC.textContent = d.ftCopy;
+
+  document.querySelectorAll('#langToggle .lang-opt').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.langOpt === lang);
+  });
+}
+
+function initLanguage() {
+  const toggleBtn = document.getElementById('langToggle');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      applyLanguage(currentLang === 'ru' ? 'en' : 'ru');
+      playSound('beep');
+    });
   }
+  applyLanguage(currentLang);
 }
 
 // ------------------------------------------
-// 3. Web Audio Ambient Synthesizer & SFX
+// 3. Scroll Reveal for Cyber Cards
+// ------------------------------------------
+function initCardScrollReveal() {
+  const targets = document.querySelectorAll('.cyber-card, .terminal-preview, .section-header, .specs-grid, .faq-item, .cyber-footer');
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach(c => {
+      c.classList.add('revealed');
+      c.classList.add('is-revealed');
+    });
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        entry.target.classList.add('is-revealed');
+        
+        // Trigger scramble effect on any header inside
+        const scrambleEl = entry.target.querySelector('[data-scramble]');
+        if (scrambleEl && window.triggerScramble) {
+          window.triggerScramble(scrambleEl);
+        }
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  targets.forEach(t => {
+    t.classList.add('scroll-reveal-cyber');
+    observer.observe(t);
+  });
+}
+
+// ------------------------------------------
+// 4. Text Scrambler Effect
+// ------------------------------------------
+function initTextScramble() {
+  const chars = '!<>-_\\/[]{}—=+*^?#________';
+  const scrambleElements = document.querySelectorAll('[data-scramble]');
+
+  scrambleElements.forEach(el => {
+    const originalText = el.dataset.scramble || el.innerText;
+    let interval = null;
+
+    el.addEventListener('mouseenter', () => {
+      let iteration = 0;
+      clearInterval(interval);
+
+      interval = setInterval(() => {
+        el.innerText = originalText
+          .split('')
+          .map((letter, index) => {
+            if (index < iteration) {
+              return originalText[index];
+            }
+            return chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join('');
+
+        if (iteration >= originalText.length) {
+          clearInterval(interval);
+        }
+        iteration += 1 / 2;
+      }, 30);
+    });
+  });
+}
+
+// ------------------------------------------
+// 5. Procedural Web Audio Synthesis
 // ------------------------------------------
 let audioCtx = null;
 let isAudioActive = false;
-let droneOsc1 = null;
-let droneOsc2 = null;
-let droneGain = null;
+let droneOsc1, droneOsc2, droneGain;
 
 function initAudioSystem() {
   const soundBtn = document.getElementById('soundToggle');
-  if (!soundBtn) return;
+  const soundLabel = document.getElementById('soundLabel');
+  const equalizer = document.getElementById('cyberEqualizer');
 
   soundBtn.addEventListener('click', () => {
     if (!audioCtx) {
@@ -170,19 +467,21 @@ function initAudioSystem() {
 
     isAudioActive = !isAudioActive;
     if (isAudioActive) {
-      startAmbientDrone();
-      soundBtn.querySelector('.btn-label').innerText = 'AUDIO: ON';
+      soundLabel.innerText = currentLang === 'ru' ? 'ЗВУК: ВКЛ' : 'AUDIO: ON';
       soundBtn.classList.add('accent');
+      if (equalizer) equalizer.classList.add('playing');
+      startAmbientDrone();
+      playSound('beep');
     } else {
-      stopAmbientDrone();
-      soundBtn.querySelector('.btn-label').innerText = 'AUDIO: OFF';
+      soundLabel.innerText = currentLang === 'ru' ? 'ЗВУК: ВЫКЛ' : 'AUDIO: OFF';
       soundBtn.classList.remove('accent');
+      if (equalizer) equalizer.classList.remove('playing');
+      stopAmbientDrone();
     }
   });
 
-  // Attach button click sounds
-  document.querySelectorAll('button, .cyber-link, .card-btn').forEach(item => {
-    item.addEventListener('click', () => {
+  document.querySelectorAll('[data-sound]').forEach(btn => {
+    btn.addEventListener('click', () => {
       playSound('click');
     });
   });
@@ -191,12 +490,12 @@ function initAudioSystem() {
 function startAmbientDrone() {
   if (!audioCtx) return;
   droneGain = audioCtx.createGain();
-  droneGain.gain.setValueAtTime(0.01, audioCtx.currentTime);
-  droneGain.gain.exponentialRampToValueAtTime(0.08, audioCtx.currentTime + 3);
+  droneGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+  droneGain.gain.exponentialRampToValueAtTime(0.08, audioCtx.currentTime + 1.5);
 
   droneOsc1 = audioCtx.createOscillator();
   droneOsc1.type = 'sawtooth';
-  droneOsc1.frequency.setValueAtTime(55, audioCtx.currentTime); // Low A
+  droneOsc1.frequency.setValueAtTime(55, audioCtx.currentTime);
 
   droneOsc2 = audioCtx.createOscillator();
   droneOsc2.type = 'sine';
@@ -272,7 +571,7 @@ function playSound(type) {
 }
 
 // ------------------------------------------
-// 4. Telemetry Real-time Updates
+// 6. Telemetry Real-time Updates
 // ------------------------------------------
 function initTelemetryTicker() {
   const valLatency = document.getElementById('valLatency');
@@ -307,7 +606,7 @@ function triggerDiagnosticScan() {
 }
 
 // ------------------------------------------
-// 5. Interactive Cyber Terminal CLI
+// 7. Interactive Cyber Terminal CLI (RU & EN)
 // ------------------------------------------
 function initTerminal() {
   const modal = document.getElementById('terminalModal');
@@ -321,6 +620,7 @@ function initTerminal() {
   toggleBtn.addEventListener('click', () => {
     modal.classList.add('active');
     input.focus();
+    playSound('beep');
   });
 
   closeBtn?.addEventListener('click', () => {
@@ -349,109 +649,128 @@ function initTerminal() {
 
   function executeCommand(cmd) {
     printLine(`<span class="prompt">guest@nexus:~$</span> ${cmd}`);
+    playSound('click');
 
-    switch (cmd) {
-      case 'help':
-        printLine('Available protocols:');
-        printLine(' - <span class="cyan-text">status</span> : System diagnostics');
-        printLine(' - <span class="cyan-text">scan</span>   : Deep port diagnostic scan');
-        printLine(' - <span class="cyan-text">matrix</span> : Enter high-bandwidth raw data stream');
-        printLine(' - <span class="cyan-text">audio</span>  : Toggle atmospheric soundscape');
-        printLine(' - <span class="cyan-text">clear</span>  : Flush terminal buffer');
-        break;
-      case 'status':
-        printLine('SYS_STATUS: OPTIMAL | KERNEL: 5.19.8-rt-cyber | FIREWALL: ARMORED');
-        printLine('ACTIVE DAEMONS: 1,024 | SYNAPTIC CHATTER: 0.12ms');
-        break;
-      case 'scan':
-        printLine('Initiating network probe on sub-octets...');
-        triggerDiagnosticScan();
-        setTimeout(() => printLine('[200 OK] 4 nodes verified. Zero security vulnerabilities found.', 'welcome'), 800);
-        break;
-      case 'matrix':
-        printLine('LAUNCHING MATRIX STREAM... Click canvas or press ESC to abort.');
-        modal.classList.remove('active');
-        toggleMatrixMode(true);
-        break;
-      case 'audio':
-        document.getElementById('soundToggle')?.click();
-        printLine('Audio toggled.');
-        break;
-      case 'clear':
-        output.innerHTML = '';
-        break;
-      case '':
-        break;
-      default:
-        printLine(`Command not recognized: "${cmd}". Type <span class="cyan-text">'help'</span> for instructions.`);
+    const isRu = (currentLang === 'ru');
+
+    if (!cmd) return;
+
+    if (cmd === 'help' || cmd === 'помощь') {
+      if (isRu) {
+        printLine('ДОСТУПНЫЕ ДИРЕКТИВЫ ЯДРА:');
+        printLine('  <span class="cyan-text">статус / status</span>    - диагностика ядра системы');
+        printLine('  <span class="cyan-text">инвентарь / inventory</span> - список нейро-аугментаций');
+        printLine('  <span class="cyan-text">скан / scan</span>      - запуск оптической диагностики сети');
+        printLine('  <span class="cyan-text">варп / warp</span>      - инициализация гипер-варп скорости');
+        printLine('  <span class="cyan-text">matrix / матрица</span>  - перехват видеопотока матрицы');
+        printLine('  <span class="cyan-text">очистить / clear</span>  - очистить буфер консоли');
+      } else {
+        printLine('AVAILABLE SYSTEM CORE DIRECTIVES:');
+        printLine('  <span class="cyan-text">status / статус</span>   - run system core diagnostics');
+        printLine('  <span class="cyan-text">inventory / инвентарь</span>- list available neuro-implants');
+        printLine('  <span class="cyan-text">scan / скан</span>      - trigger network optical scan');
+        printLine('  <span class="cyan-text">warp / варп</span>      - engage particle warp burst');
+        printLine('  <span class="cyan-text">matrix / матрица</span>  - breach real-time matrix stream');
+        printLine('  <span class="cyan-text">clear / очистить</span>  - purge terminal buffer');
+      }
+    } else if (cmd === 'status' || cmd === 'статус') {
+      if (isRu) {
+        printLine('СИСТЕМНЫЙ СТАТУС: В СЕТИ [ОПТИМАЛЬНО]');
+        printLine('НЕЙРО-ЯДРО: 4.8 GHz // ЗАГРУЗКА: 94.8%');
+        printLine('ЗАДЕРЖКА СИНАПСА: 0.14 ms // КРИПТО: HYPER-SHA512');
+        printLine('АКТИВНЫХ УЗЛОВ: 14,208 ПО ВСЕМУ НЕО-ТОКИО');
+      } else {
+        printLine('SYSTEM STATUS: ONLINE [OPTIMAL]');
+        printLine('NEURAL CORE: 4.8 GHz // LOAD: 94.8%');
+        printLine('SYNAPSE LATENCY: 0.14 ms // CRYPTO: HYPER-SHA512');
+        printLine('ACTIVE NODES: 14,208 ACROSS NEO-TOKYO');
+      }
+    } else if (cmd === 'inventory' || cmd === 'инвентарь') {
+      if (isRu) {
+        printLine('СПИСОК ДОСТУПНОГО НЕЙРО-ОБОРУДОВАНИЯ:');
+        printLine('  [01] Synaptic Overdrive 9000 (Когнитивный разгон)');
+        printLine('  [02] Kiroshi Quantum Retinals (Мультиспектр 16K)');
+        printLine('  [03] Ghost Phantom Sub-Matrix (Оптический камуфляж 99.9%)');
+        printLine('  [04] Valkyrie ICEbreaker Core (Взлом файрволов 100 Tb/s)');
+      } else {
+        printLine('MOUNTED NEURAL HARDWARE INVENTORY:');
+        printLine('  [01] Synaptic Overdrive 9000 (Cognitive Overclock)');
+        printLine('  [02] Kiroshi Quantum Retinals (16K Multispectral)');
+        printLine('  [03] Ghost Phantom Sub-Matrix (99.9% Optical Stealth)');
+        printLine('  [04] Valkyrie ICEbreaker Core (100 Tb/s Firewall Breach)');
+      }
+    } else if (cmd === 'scan' || cmd === 'скан') {
+      printLine(isRu ? 'ИНИЦИАЛИЗАЦИЯ СКАНИРОВАНИЯ...' : 'INITIALIZING DIAGNOSTIC SCAN...');
+      triggerDiagnosticScan();
+      playSound('beep');
+    } else if (cmd === 'warp' || cmd === 'варп') {
+      printLine(isRu ? 'ВАРП-ДВИГАТЕЛЬ АКТИВИРОВАН!' : 'WARP ENGINE ENGAGED!');
+      warpSpeedMultiplier = 6;
+      playSound('warp');
+      setTimeout(() => { warpSpeedMultiplier = 1; }, 1500);
+    } else if (cmd === 'matrix' || cmd === 'матрица') {
+      printLine(isRu ? 'ПЕРЕХВАТ ЦИФРОВОГО ПОТОКА...' : 'BREACHING MATRIX STREAM...');
+      modal.classList.remove('active');
+      toggleMatrixMode();
+    } else if (cmd === 'clear' || cmd === 'очистить') {
+      output.innerHTML = '';
+    } else {
+      printLine(isRu ? `Команда не найдена: '${cmd}'. Введите 'помощь' для справки.` : `Command not recognized: '${cmd}'. Type 'help' for directory.`, 'error');
     }
   }
 }
 
 // ------------------------------------------
-// 6. Matrix Code Rain Canvas
+// 8. Interactive Matrix Rain Mode
 // ------------------------------------------
-let matrixAnimationId = null;
-
 function initMatrixMode() {
   const canvas = document.getElementById('matrixCanvas');
-  if (!canvas) return;
-
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !canvas.classList.contains('hidden')) {
-      toggleMatrixMode(false);
-    }
-  });
-
-  canvas.addEventListener('click', () => {
-    toggleMatrixMode(false);
-  });
-}
-
-function toggleMatrixMode(show) {
-  const canvas = document.getElementById('matrixCanvas');
-  if (!canvas) return;
-
-  if (show) {
-    canvas.classList.remove('hidden');
-    startMatrixRain(canvas);
-  } else {
-    canvas.classList.add('hidden');
-    if (matrixAnimationId) {
-      cancelAnimationFrame(matrixAnimationId);
-      matrixAnimationId = null;
-    }
-  }
-}
-
-function startMatrixRain(canvas) {
   const ctx = canvas.getContext('2d');
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  let width, height;
+  let columns;
+  let drops = [];
+  const matrixChars = '0123456789ABCDEFｦｱｳｴｵｶｷｹｺｻｼｽｾｿﾀﾂﾃﾅﾆﾇﾈﾊﾋﾎﾏﾐﾑﾒﾓﾔﾕﾗﾘﾜ';
+  let animationId = null;
 
-  const characters = 'アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ01010101';
-  const fontSize = 16;
-  const columns = Math.floor(canvas.width / fontSize);
-  const drops = Array(columns).fill(1);
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    columns = Math.floor(width / 18);
+    drops = Array(columns).fill(1);
+  }
 
-  function draw() {
-    ctx.fillStyle = 'rgba(4, 7, 10, 0.12)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  function drawMatrix() {
+    ctx.fillStyle = 'rgba(4, 7, 10, 0.08)';
+    ctx.fillRect(0, 0, width, height);
 
-    ctx.fillStyle = '#00ff66';
-    ctx.font = fontSize + 'px monospace';
+    ctx.fillStyle = '#00f3ff';
+    ctx.font = '15px monospace';
 
     for (let i = 0; i < drops.length; i++) {
-      const text = characters.charAt(Math.floor(Math.random() * characters.length));
-      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+      ctx.fillText(text, i * 18, drops[i] * 18);
 
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+      if (drops[i] * 18 > height && Math.random() > 0.975) {
         drops[i] = 0;
       }
       drops[i]++;
     }
-
-    matrixAnimationId = requestAnimationFrame(draw);
+    animationId = requestAnimationFrame(drawMatrix);
   }
-  draw();
+
+  window.toggleMatrixMode = function() {
+    if (canvas.classList.contains('hidden')) {
+      canvas.classList.remove('hidden');
+      resize();
+      drawMatrix();
+      playSound('beep');
+    } else {
+      canvas.classList.add('hidden');
+      cancelAnimationFrame(animationId);
+    }
+  };
+
+  canvas.addEventListener('click', () => {
+    window.toggleMatrixMode();
+  });
 }

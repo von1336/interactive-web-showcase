@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="100%" height="100%">
+  <rect width="600" height="450" fill="#090a0e"/>
+  <!-- Grand Tourbillon S Skeleton Watch Face -->
+  <circle cx="300" cy="220" r="140" fill="#12151f" stroke="#dfb17b" stroke-width="4"/>
+  <circle cx="300" cy="220" r="120" fill="none" stroke="#64748b" stroke-width="2"/>
+  <!-- Skeleton Bridge Cutouts -->
+  <path d="M230 140 L370 140 L340 220 L260 220 Z" fill="#1e2433" stroke="#dfb17b" stroke-width="2"/>
+  <!-- Tourbillon Cage at 6 o'clock -->
+  <circle cx="300" cy="280" r="35" fill="#0f172a" stroke="#dfb17b" stroke-width="3"/>
+  <line x1="270" y1="280" x2="330" y2="280" stroke="#fef08a" stroke-width="2"/>
+  <line x1="300" y1="250" x2="300" y2="310" stroke="#fef08a" stroke-width="2"/>
+  <!-- Hands -->
+  <line x1="300" y1="220" x2="350" y2="170" stroke="#fef08a" stroke-width="4" stroke-linecap="round"/>
+  <line x1="300" y1="220" x2="250" y2="190" stroke="#dfb17b" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="300" cy="220" r="7" fill="#dfb17b"/>
+  <text x="300" y="395" text-anchor="middle" fill="#dfb17b" font-family="serif" font-size="13" letter-spacing="4">GRAND TOURBILLON S // TITANIUM</text>
+</svg>

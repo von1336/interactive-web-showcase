@@ -823,3 +823,91 @@ body.mood-night .editorial-nav {
   .footer-top { grid-template-columns: 1fr; }
   .quote-form { flex-direction: column; }
 }
+
+/* Language Switcher Pill */
+.lang-pill-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 0.4rem 0.85rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.lang-pill-btn:hover {
+  border-color: var(--accent-sage);
+  background: rgba(45, 90, 69, 0.08);
+}
+
+.lang-pill-btn .lang-opt {
+  opacity: 0.45;
+  transition: opacity 0.2s, color 0.2s;
+}
+
+.lang-pill-btn .lang-opt.active {
+  opacity: 1;
+  color: var(--accent-clay);
+  font-weight: 700;
+}
+
+.lang-pill-btn .lang-sep {
+  opacity: 0.3;
+}
+
+/* Breathing Flora Animation */
+.art-visual-wrapper {
+  animation: botanicalBreathe 7s ease-in-out infinite alternate;
+}
+
+@keyframes botanicalBreathe {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-8px) scale(1.015); }
+}
+
+/* Silky Editorial Scroll Reveal */
+.specimen-card, .philosophy-quote, .metric-card, .sanctuary-box {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.specimen-card.revealed, .philosophy-quote.revealed, .metric-card.revealed, .sanctuary-box.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Biophilic Soft Scroll-Down Reveal */
+.scroll-reveal-botanica {
+  opacity: 0;
+  transform: translateY(45px);
+  filter: blur(8px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+  will-change: transform, opacity, filter;
+}
+
+.scroll-reveal-botanica.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.specimen-grid .specimen-card:nth-child(1) { transition-delay: 0.1s; }
+.specimen-grid .specimen-card:nth-child(2) { transition-delay: 0.22s; }
+.specimen-grid .specimen-card:nth-child(3) { transition-delay: 0.34s; }
+.specimen-grid .specimen-card:nth-child(4) { transition-delay: 0.46s; }
+
+/* Image hover gentle zoom */
+.specimen-img, .art-photo {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+}
+.specimen-card:hover .specimen-img, .art-frame:hover .art-photo {
+  transform: scale(1.05);
+}

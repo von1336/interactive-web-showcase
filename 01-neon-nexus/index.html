@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NEO-NEXUS // Next-Gen Cybernetic Systems</title>
+  <title id="docTitle">NEO-NEXUS // Кибернетические системы нового поколения</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- CRT & Grid Overlays -->
+  <!-- Laser Scanline & CRT & Grid Overlays -->
+  <div class="laser-scanline"></div>
   <div class="crt-overlay"></div>
   <div class="vignette"></div>
 
@@ -21,84 +22,99 @@
   <nav class="cyber-nav">
     <div class="nav-brand">
       <div class="brand-glitch" data-text="NEO-NEXUS">NEO-NEXUS</div>
-      <span class="sys-version">SYS_V2.08.4 // NEURAL_LINK</span>
+      <span class="sys-version" id="sysVersion">SYS_V2.08.4 // НЕЙРО_ЛИНК</span>
     </div>
 
     <div class="nav-links">
-      <a href="#about" class="cyber-link" data-scramble="SYS_CORE">SYS_CORE</a>
-      <a href="#augmentations" class="cyber-link" data-scramble="AUGMENTS">AUGMENTS</a>
-      <a href="#telemetry" class="cyber-link" data-scramble="TELEMETRY">TELEMETRY</a>
-      <a href="#matrix" class="cyber-link" data-scramble="NEURAL_GRID">NEURAL_GRID</a>
+      <a href="#about" class="cyber-link" id="navCore" data-scramble="СИСТ_ЯДРО">СИСТ_ЯДРО</a>
+      <a href="#augmentations" class="cyber-link" id="navAug" data-scramble="АУГМЕНТЫ">АУГМЕНТЫ</a>
+      <a href="#telemetry" class="cyber-link" id="navTelem" data-scramble="ТЕЛЕМЕТРИЯ">ТЕЛЕМЕТРИЯ</a>
+      <a href="#matrix" class="cyber-link" id="navGrid" data-scramble="НЕЙРОСЕТЬ">НЕЙРОСЕТЬ</a>
     </div>
 
     <div class="nav-actions">
+      <!-- Language Switcher -->
+      <button id="langToggle" class="cyber-btn sm" title="RU / EN">
+        <span class="btn-label">
+          <span class="lang-opt active" data-lang-opt="ru">RU</span> / <span class="lang-opt" data-lang-opt="en">EN</span>
+        </span>
+      </button>
+
+      <!-- Audio Toggle with Equalizer Bars -->
       <button id="soundToggle" class="cyber-btn sm" title="Toggle Synth Audio">
         <svg class="btn-svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
           <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
           <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
         </svg>
-        <span class="btn-label">AUDIO: OFF</span>
+        <span class="btn-label" id="soundLabel">ЗВУК: ВЫКЛ</span>
+        <div class="cyber-equalizer" id="cyberEqualizer">
+          <span class="eq-bar"></span>
+          <span class="eq-bar"></span>
+          <span class="eq-bar"></span>
+          <span class="eq-bar"></span>
+        </div>
       </button>
+
       <button id="terminalToggle" class="cyber-btn sm accent">
         <svg class="btn-svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="4 17 10 11 4 5"></polyline>
           <line x1="12" y1="19" x2="20" y2="19"></line>
         </svg>
-        <span class="btn-label">CLI_TERMINAL</span>
+        <span class="btn-label" id="termBtnLabel">CLI_ТЕРМИНАЛ</span>
       </button>
       <a href="../index.html" class="portal-back-btn">
         <svg class="btn-svg" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
         </svg>
-        HUB
+        <span id="hubLabel">ХАБ</span>
       </a>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <header class="hero-section">
+  <header class="hero-section" id="about">
     <div class="hero-badge">
       <span class="pulse-dot"></span>
-      <span>QUANTUM NEURAL INTERFACE ONLINE</span>
-      <span class="badge-tag">SEC_LVL_9</span>
+      <span id="heroBadgeText">КВАНТОВЫЙ НЕЙРОИНТЕРФЕЙС В СЕТИ</span>
+      <span class="badge-tag" id="heroBadgeTag">УР_БЕЗ_9</span>
     </div>
 
-    <h1 class="hero-title">
-      TRANSCEND <br>
-      <span class="gradient-text glitch-element" data-text="SYNTHETIC REALITY">SYNTHETIC REALITY</span>
+    <h1 class="hero-title" id="heroTitle">
+      ПРЕОДОЛЕЙ <br>
+      <span class="gradient-text glitch-element" id="heroTitleGlitch" data-text="СИНТЕТИЧЕСКУЮ РЕАЛЬНОСТЬ">СИНТЕТИЧЕСКУЮ РЕАЛЬНОСТЬ</span>
     </h1>
 
-    <p class="hero-subtitle">
-      Military-grade neural implants, sub-millisecond synaptic bridges, and bio-digital augmentation architectures engineered for Neo-Tokyo's high-octane edge.
+    <p class="hero-subtitle" id="heroSubtitle">
+      Военные нейроимпланты, субмиллисекундные синаптические мосты и архитектуры био-цифровых аугментаций для экстремальной жизни Нео-Токио.
     </p>
 
     <div class="hero-cta-group">
       <button class="cyber-btn lg primary" id="warpBtn">
         <span class="btn-border"></span>
-        <span class="btn-text" data-scramble="INITIALIZE WARP SPEED">INITIALIZE WARP SPEED</span>
+        <span class="btn-text" id="warpBtnText" data-scramble="ВАРП-СКОРОСТЬ">ВАРП-СКОРОСТЬ</span>
       </button>
       <button class="cyber-btn lg outline" id="scanNetBtn">
         <span class="btn-border"></span>
-        <span class="btn-text" data-scramble="DIAGNOSTIC SCAN">DIAGNOSTIC SCAN</span>
+        <span class="btn-text" id="scanNetBtnText" data-scramble="ДИАГНОСТИКА СЕТИ">ДИАГНОСТИКА СЕТИ</span>
       </button>
     </div>
 
-    <div class="hero-telemetry-bar">
+    <div class="hero-telemetry-bar" id="telemetry">
       <div class="telem-cell">
-        <span class="telem-label">SYNAPSE LATENCY</span>
+        <span class="telem-label" id="lblLatency">ЗАДЕРЖКА СИНАПСА</span>
         <span class="telem-val" id="valLatency">0.14 ms</span>
       </div>
       <div class="telem-cell">
-        <span class="telem-label">GRID LOAD</span>
+        <span class="telem-label" id="lblLoad">НАГРУЗКА СЕТИ</span>
         <span class="telem-val" id="valLoad">94.8%</span>
       </div>
       <div class="telem-cell">
-        <span class="telem-label">ENCRYPTION PROTOCOL</span>
+        <span class="telem-label" id="lblEnc">ПРОТОКОЛ ШИФРОВАНИЯ</span>
         <span class="telem-val">HYPER-SHA512</span>
       </div>
       <div class="telem-cell">
-        <span class="telem-label">ACTIVE NODES</span>
+        <span class="telem-label" id="lblNodes">АКТИВНЫЕ УЗЛЫ</span>
         <span class="telem-val" id="valNodes">14,208</span>
       </div>
     </div>
@@ -107,9 +123,9 @@
   <!-- Cyberware Augmentations Grid -->
   <section class="section-container" id="augmentations">
     <div class="section-header">
-      <div class="section-code">// 01_AUGMENTATION_CATALOG</div>
-      <h2 class="section-title">NEURAL HARDWARE SPECIFICATIONS</h2>
-      <p class="section-desc">Tier-IV cybernetic enhancements calibrated for tactical combat, cognitive overclocking, and digital infiltration.</p>
+      <div class="section-code" id="secCode">// 01_КАТАЛОГ_АУГМЕНТАЦИЙ</div>
+      <h2 class="section-title" id="secTitle">СПЕЦИФИКАЦИИ НЕЙРО-ОБОРУДОВАНИЯ</h2>
+      <p class="section-desc" id="secDesc">Кибернетические улучшения IV ранга для тактического боя, когнитивного разгона и цифрового проникновения.</p>
     </div>
 
     <div class="cyber-grid">
@@ -118,26 +134,26 @@
         <div class="card-corner tr"></div>
         <div class="card-corner bl"></div>
         <div class="card-img-wrap">
-          <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80" alt="Synaptic Overdrive 9000 Microarchitecture" class="card-img" loading="lazy">
+          <img src="assets/images/implant-cortex.svg" alt="Synaptic Overdrive 9000 Microarchitecture" class="card-img" loading="lazy">
           <div class="card-img-overlay"></div>
-          <span class="card-img-badge">MK-VII CORTEX</span>
+          <span class="card-img-badge" id="c1Badge">MK-VII КОРТЕКС</span>
         </div>
         <div class="card-content-area">
           <h3 class="card-title">Synaptic Overdrive 9000</h3>
-          <p class="card-desc">Accelerates neural processing tenfold. Unlocks sensory pre-cognition with sub-atomic time dilation fields.</p>
+          <p class="card-desc" id="c1Desc">Ускоряет нейронную обработку в десять раз. Открывает сенсорное предвидение с субатомными полями замедления времени.</p>
           <div class="stat-bar-group">
             <div class="stat-row">
-              <span>CLOCK FREQUENCY</span>
+              <span id="c1S1Lbl">ТАКТОВАЯ ЧАСТОТА</span>
               <span>4.8 GHz</span>
             </div>
             <div class="meter"><div class="meter-fill" style="width: 92%"></div></div>
             <div class="stat-row">
-              <span>HEAT DISSIPATION</span>
+              <span id="c1S2Lbl">РАССЕИВАНИЕ ТЕПЛА</span>
               <span>0.04 W</span>
             </div>
             <div class="meter"><div class="meter-fill magenta" style="width: 85%"></div></div>
           </div>
-          <button class="cyber-btn sm outline card-btn" data-sound="select">DEPLOY PROTOCOL</button>
+          <button class="cyber-btn sm outline card-btn" data-sound="select" id="c1DeployBtn">АКТИВИРОВАТЬ ПРОТОКОЛ</button>
         </div>
       </div>
 
@@ -146,26 +162,26 @@
         <div class="card-corner tr"></div>
         <div class="card-corner bl"></div>
         <div class="card-img-wrap">
-          <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=600&q=80" alt="Kiroshi Quantum Retinals" class="card-img" loading="lazy">
+          <img src="assets/images/implant-optics.svg" alt="Kiroshi Quantum Retinals" class="card-img" loading="lazy">
           <div class="card-img-overlay"></div>
-          <span class="card-img-badge">SPECTRAL_OPTICS</span>
+          <span class="card-img-badge" id="c2Badge">СПЕКТРАЛЬНАЯ ОПТИКА</span>
         </div>
         <div class="card-content-area">
           <h3 class="card-title">Kiroshi Quantum Retinals</h3>
-          <p class="card-desc">Multi-spectrum visual telemetry with infrared, electromagnetic wave deciphering, and ballistic trajectory HUD.</p>
+          <p class="card-desc" id="c2Desc">Мультиспектральная визуальная телеметрия с инфракрасным диапазоном, расшифровкой электромагнитных волн и баллистическим HUD.</p>
           <div class="stat-bar-group">
             <div class="stat-row">
-              <span>SPECTRAL RESOLUTION</span>
+              <span id="c2S1Lbl">СПЕКТРАЛЬНОЕ РАЗРЕШЕНИЕ</span>
               <span>16K HDR</span>
             </div>
             <div class="meter"><div class="meter-fill" style="width: 98%"></div></div>
             <div class="stat-row">
-              <span>ZOOM MULTIPLIER</span>
+              <span id="c2S2Lbl">ОПТИЧЕСКИЙ ЗУМ</span>
               <span>64x OPTICAL</span>
             </div>
             <div class="meter"><div class="meter-fill cyan" style="width: 90%"></div></div>
           </div>
-          <button class="cyber-btn sm outline card-btn" data-sound="select">DEPLOY PROTOCOL</button>
+          <button class="cyber-btn sm outline card-btn" data-sound="select" id="c2DeployBtn">АКТИВИРОВАТЬ ПРОТОКОЛ</button>
         </div>
       </div>
 
@@ -174,26 +190,26 @@
         <div class="card-corner tr"></div>
         <div class="card-corner bl"></div>
         <div class="card-img-wrap">
-          <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80" alt="Ghost Phantom Sub-Matrix" class="card-img" loading="lazy">
+          <img src="assets/images/implant-stealth.svg" alt="Ghost Phantom Sub-Matrix" class="card-img" loading="lazy">
           <div class="card-img-overlay"></div>
-          <span class="card-img-badge">ACTIVE_STEALTH</span>
+          <span class="card-img-badge" id="c3Badge">АКТИВНЫЙ СТЕЛС</span>
         </div>
         <div class="card-content-area">
           <h3 class="card-title">Ghost Phantom Sub-Matrix</h3>
-          <p class="card-desc">Bends photon wavelengths around host chassis. Erases electronic heat signatures across all surveillance bands.</p>
+          <p class="card-desc" id="c3Desc">Преломляет волны фотонов вокруг корпуса. Стирает электронные тепловые следы во всех диапазонах наблюдения.</p>
           <div class="stat-bar-group">
             <div class="stat-row">
-              <span>OPTICAL CAMOUFLAGE</span>
+              <span id="c3S1Lbl">ОПТИЧЕСКИЙ КАМУФЛЯЖ</span>
               <span>99.98%</span>
             </div>
             <div class="meter"><div class="meter-fill" style="width: 100%"></div></div>
             <div class="stat-row">
-              <span>RADAR CROSS-SECTION</span>
+              <span id="c3S2Lbl">РАДИОЛОКАЦИОННАЯ ЭПР</span>
               <span>0.001 m²</span>
             </div>
             <div class="meter"><div class="meter-fill yellow" style="width: 95%"></div></div>
           </div>
-          <button class="cyber-btn sm outline card-btn" data-sound="select">DEPLOY PROTOCOL</button>
+          <button class="cyber-btn sm outline card-btn" data-sound="select" id="c3DeployBtn">АКТИВИРОВАТЬ ПРОТОКОЛ</button>
         </div>
       </div>
 
@@ -202,26 +218,26 @@
         <div class="card-corner tr"></div>
         <div class="card-corner bl"></div>
         <div class="card-img-wrap">
-          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="Valkyrie ICEbreaker Core" class="card-img" loading="lazy">
+          <img src="assets/images/implant-ice.svg" alt="Valkyrie ICEbreaker Core" class="card-img" loading="lazy">
           <div class="card-img-overlay"></div>
-          <span class="card-img-badge">CYBER_WARFARE</span>
+          <span class="card-img-badge" id="c4Badge">КИБЕР-ВОЙНА</span>
         </div>
         <div class="card-content-area">
           <h3 class="card-title">Valkyrie ICEbreaker Core</h3>
-          <p class="card-desc">Autonomous daemon deployment platform capable of neutralizing military firewalls and subnet nodes in seconds.</p>
+          <p class="card-desc" id="c4Desc">Автономная платформа запуска демонов, способная за секунды нейтрализовать военные файрволы и узлы подсетей.</p>
           <div class="stat-bar-group">
             <div class="stat-row">
-              <span>INTRUSION BANDWIDTH</span>
+              <span id="c4S1Lbl">ПРОПУСКНАЯ СПОСОБНОСТЬ</span>
               <span>100 Tb/s</span>
             </div>
             <div class="meter"><div class="meter-fill magenta" style="width: 96%"></div></div>
             <div class="stat-row">
-              <span>DAEMON THREADS</span>
+              <span id="c4S2Lbl">ПОТОКИ ДЕМОНОВ</span>
               <span>2,048 ASYNC</span>
             </div>
             <div class="meter"><div class="meter-fill" style="width: 88%"></div></div>
           </div>
-          <button class="cyber-btn sm outline card-btn" data-sound="select">DEPLOY PROTOCOL</button>
+          <button class="cyber-btn sm outline card-btn" data-sound="select" id="c4DeployBtn">АКТИВИРОВАТЬ ПРОТОКОЛ</button>
         </div>
       </div>
     </div>
@@ -237,18 +253,18 @@
           <span class="ctrl max"></span>
         </div>
         <div class="terminal-title">ROOT@NEO-NEXUS:~# /bin/cyber-core</div>
-        <div class="terminal-status">STATUS: SECURE</div>
+        <div class="terminal-status" id="termStatus">СТАТУС: ЗАЩИЩЕНО</div>
       </div>
       <div class="terminal-body" id="termOutput">
         <div class="term-line welcome">=======================================================</div>
-        <div class="term-line welcome">   NEO-NEXUS NEURAL TERMINAL v2.08 [KERNEL BUILD 77]   </div>
+        <div class="term-line welcome" id="termWelcome1">   NEO-NEXUS НЕЙРО-ТЕРМИНАЛ v2.08 [ЯДРО СБОРКА 77]   </div>
         <div class="term-line welcome">=======================================================</div>
-        <div class="term-line">Type <span class="cyan-text">'help'</span> to see available cyber commands.</div>
-        <div class="term-line">Type <span class="cyan-text">'matrix'</span> for stream breach.</div>
+        <div class="term-line" id="termWelcome2">Введите <span class="cyan-text">'помощь'</span> или <span class="cyan-text">'help'</span> для списка команд.</div>
+        <div class="term-line" id="termWelcome3">Введите <span class="cyan-text">'matrix'</span> для взлома цифрового потока.</div>
       </div>
       <div class="terminal-input-bar">
         <span class="prompt">guest@nexus:~$</span>
-        <input type="text" id="termInput" placeholder="enter command..." autocomplete="off" spellcheck="false">
+        <input type="text" id="termInput" placeholder="введите команду..." autocomplete="off" spellcheck="false">
       </div>
     </div>
   </div>
@@ -257,15 +273,15 @@
   <canvas id="matrixCanvas" class="hidden"></canvas>
 
   <!-- Footer -->
-  <footer class="cyber-footer">
+  <footer class="cyber-footer" id="matrix">
     <div class="footer-grid">
       <div class="footer-col">
         <div class="brand-glitch sm" data-text="NEO-NEXUS">NEO-NEXUS</div>
-        <p>Advanced Cybernetic Architectures & Tactical Neural Augmentation.</p>
+        <p id="ftDesc">Передовые кибернетические архитектуры и тактические нейроаугментации.</p>
         <div class="footer-hash">SHA-256: 8f4e2...7b9c1</div>
       </div>
       <div class="footer-col">
-        <h4>COMMUNICATION_CHANNELS</h4>
+        <h4 id="ftH1">КАНАЛЫ_СВЯЗИ</h4>
         <ul>
           <li><a href="#!">Subnet 19 // Neo-Shinjuku</a></li>
           <li><a href="#!">Encrypted Node 0x4B</a></li>
@@ -273,13 +289,13 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4>SYSTEM_DIAGNOSTICS</h4>
-        <div class="diagnostic-pill">OVERCLOCK: ACTIVE</div>
-        <div class="diagnostic-pill safe">FIREWALL: UNBREACHED</div>
+        <h4 id="ftH2">ДИАГНОСТИКА_СИСТЕМЫ</h4>
+        <div class="diagnostic-pill" id="ftPill1">РАЗГОН: АКТИВЕН</div>
+        <div class="diagnostic-pill safe" id="ftPill2">ФАЙРВОЛ: ЦЕЛ</div>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2084 NEO-NEXUS CORP. ALL RIGHTS RESERVED. BEYOND HUMAN EVOLUTION.</span>
+      <span id="ftCopy">© 2084 КОРПОРАЦИЯ NEO-NEXUS. ВСЕ ПРАВА ЗАЩИЩЕНЫ. ЗА ГРАНЯМИ ЭВОЛЮЦИИ ЧЕЛОВЕКА.</span>
     </div>
   </footer>
 

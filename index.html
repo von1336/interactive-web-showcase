@@ -1,22 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>THEMATIC WEB LAB // 5 Distinct Interactive Worlds</title>
+  <title>VON1336 // Full-Stack & Systems Engineering Showcase</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Cinzel:wght@600&family=Orbitron:wght@700&family=Archivo+Black&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Cinzel:wght@600;700&family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0f17;
-      --card-bg: rgba(22, 29, 44, 0.7);
-      --card-border: rgba(255, 255, 255, 0.1);
+      --bg: #07090e;
+      --bg-surface: rgba(15, 20, 32, 0.72);
+      --bg-surface-hover: rgba(22, 30, 48, 0.88);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-border-glow: rgba(99, 102, 241, 0.35);
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --accent: #6366f1;
-      --accent-glow: rgba(99, 102, 241, 0.25);
-      --font-main: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --text-dim: #64748b;
+      --accent-primary: #6366f1;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
     }
 
@@ -36,6 +42,7 @@
       position: relative;
     }
 
+    /* Ambient Canvas Waves */
     #bgCanvas {
       position: fixed;
       top: 0;
@@ -44,18 +51,119 @@
       height: 100vh;
       z-index: 0;
       pointer-events: none;
-      opacity: 0.6;
+      opacity: 0.55;
     }
 
     .master-container {
       position: relative;
       z-index: 10;
-      max-width: 1380px;
+      max-width: 1420px;
       margin: 0 auto;
-      padding: 4rem 2rem 6rem;
+      padding: 2rem 2rem 6rem;
     }
 
-    /* Header */
+    /* Top Navigation */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.75rem;
+      background: rgba(13, 17, 26, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      margin-bottom: 3.5rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 12px #10b981;
+      animation: pulseAnim 2.2s infinite ease-in-out;
+    }
+
+    @keyframes pulseAnim {
+      0%, 100% { opacity: 0.5; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.25); }
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .github-profile-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #f1f5f9;
+      padding: 0.45rem 1.1rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .github-profile-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: #38bdf8;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+      transform: translateY(-1px);
+    }
+
+    .lang-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(30, 41, 59, 0.75);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #f8fafc;
+      padding: 0.45rem 1rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .lang-toggle-btn:hover {
+      border-color: #38bdf8;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.35);
+    }
+
+    .lang-opt {
+      opacity: 0.45;
+      transition: opacity 0.2s, color 0.2s;
+    }
+
+    .lang-opt.active {
+      opacity: 1;
+      color: #38bdf8;
+      font-weight: 700;
+    }
+
+    /* Hero Section */
     .master-header {
       text-align: center;
       margin-bottom: 4rem;
@@ -64,551 +172,2514 @@
     .badge-pill {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      background: rgba(99, 102, 241, 0.1);
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      padding: 0.35rem 1rem;
-      border-radius: 30px;
+      gap: 0.6rem;
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      padding: 0.4rem 1.3rem;
+      border-radius: 9999px;
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       letter-spacing: 1.5px;
       color: #a5b4fc;
       margin-bottom: 1.5rem;
     }
 
-    .pulse {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #22c55e;
-      box-shadow: 0 0 10px #22c55e;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.6; transform: scale(0.9); }
-      50% { opacity: 1; transform: scale(1.2); }
-    }
-
     .master-title {
-      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      font-size: clamp(2.3rem, 5vw, 4.4rem);
       font-weight: 800;
       line-height: 1.15;
-      letter-spacing: -1px;
-      margin-bottom: 1.25rem;
+      letter-spacing: -1.5px;
+      margin-bottom: 1.35rem;
     }
 
     .gradient-title {
-      background: linear-gradient(135deg, #a5b4fc 0%, #38bdf8 50%, #ec4899 100%);
+      background: linear-gradient(135deg, #a5b4fc 0%, #38bdf8 30%, #ec4899 65%, #a5b4fc 100%);
+      background-size: 250% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       display: inline-block;
+      animation: textShimmer 8s linear infinite;
+    }
+
+    @keyframes textShimmer {
+      to { background-position: 250% center; }
     }
 
     .master-desc {
       color: var(--text-muted);
-      font-size: 1.2rem;
-      max-width: 750px;
+      font-size: 1.18rem;
+      max-width: 860px;
       margin: 0 auto 2.5rem;
-      font-weight: 400;
+      line-height: 1.65;
     }
 
-    .shortcut-hint {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: #64748b;
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      display: inline-block;
-      padding: 0.4rem 1.25rem;
-      border-radius: 8px;
-    }
-
-    .shortcut-hint kbd {
-      background: rgba(255, 255, 255, 0.15);
-      color: #fff;
-      padding: 0.15rem 0.4rem;
-      border-radius: 3px;
-      font-size: 0.75rem;
-    }
-
-    /* Gallery Grid */
-    .showcase-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-      gap: 2.25rem;
-    }
-
-    .showcase-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      overflow: hidden;
-      backdrop-filter: blur(16px);
+    /* Quick Stats Bar */
+    .stats-bar {
       display: flex;
-      flex-direction: column;
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.4s;
-      position: relative;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
     }
 
-    .showcase-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-    }
-
-    /* Custom Themes */
-    .card-cyber:hover { border-color: #00f3ff; box-shadow: 0 20px 40px rgba(0, 243, 255, 0.2); }
-    .card-botanica:hover { border-color: #2d5a45; box-shadow: 0 20px 40px rgba(45, 90, 69, 0.25); }
-    .card-horology:hover { border-color: #dfb17b; box-shadow: 0 20px 40px rgba(223, 177, 123, 0.25); }
-    .card-pop:hover { border-color: #ffde59; box-shadow: 0 20px 40px rgba(255, 222, 89, 0.25); }
-    .card-space:hover { border-color: #38bdf8; box-shadow: 0 20px 40px rgba(56, 189, 248, 0.25); }
-
-    /* Card Banner */
-    .card-banner {
-      height: 220px;
-      position: relative;
+    .stat-pill {
       display: flex;
       align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      background: #000;
+      gap: 0.75rem;
+      background: rgba(18, 24, 38, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0.6rem 1.25rem;
+      border-radius: 12px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     }
 
-    .banner-bg-img {
-      position: absolute;
-      top: 0;
-      left: 0;
+    .stat-num {
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #38bdf8;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: #94a3b8;
+    }
+
+    /* Featured Creative Labs Banner */
+    .section-title-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 1.8rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: 1.65rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      letter-spacing: -0.5px;
+    }
+
+    .section-title span.tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      background: rgba(99, 102, 241, 0.2);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #a5b4fc;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .section-subtitle {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      font-family: var(--font-mono);
+    }
+
+    /* Creative 5 Labs Grid */
+    .creative-labs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 5rem;
+    }
+
+    .lab-card {
+      background: rgba(18, 24, 38, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(12px);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .lab-card:hover {
+      transform: translateY(-5px);
+      border-color: #38bdf8;
+      box-shadow: 0 16px 36px rgba(56, 189, 248, 0.22);
+    }
+
+    .lab-thumb {
+      height: 150px;
+      position: relative;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .lab-thumb img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
-      filter: brightness(0.65) contrast(1.1);
+      transition: transform 0.5s ease;
+      filter: brightness(0.7) contrast(1.1);
     }
 
-    .showcase-card:hover .banner-bg-img {
+    .lab-card:hover .lab-thumb img {
       transform: scale(1.08);
-      filter: brightness(0.85) contrast(1.2);
+      filter: brightness(0.9);
     }
 
-    .banner-overlay {
+    .lab-badge {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0.75rem;
+      left: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: rgba(0, 0, 0, 0.75);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .lab-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .lab-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .lab-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+
+    .lab-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-lab-demo {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      background: #ffffff;
+      color: #07090e;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.55rem 0.75rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-lab-demo:hover {
+      background: #38bdf8;
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+    }
+
+    .btn-lab-arch {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.55rem 0.75rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-lab-arch:hover {
+      background: rgba(99, 102, 241, 0.25);
+      border-color: #6366f1;
+      color: #fff;
+    }
+
+    /* 21st.dev Style Search & Filter Controls */
+    .controls-panel {
+      position: sticky;
+      top: 1rem;
+      z-index: 50;
+      background: rgba(12, 17, 26, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 1rem 1.5rem;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+      margin-bottom: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .controls-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* Search Bar */
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
       pointer-events: none;
     }
 
-    .overlay-cyber {
-      background: linear-gradient(180deg, rgba(0, 243, 255, 0.2) 0%, rgba(7, 8, 12, 0.85) 100%);
-      border-bottom: 2px solid #00f3ff;
-    }
-    .overlay-botanica {
-      background: linear-gradient(180deg, rgba(45, 90, 69, 0.2) 0%, rgba(26, 36, 30, 0.85) 100%);
-      border-bottom: 2px solid #2d5a45;
-    }
-    .overlay-horology {
-      background: linear-gradient(180deg, rgba(223, 177, 123, 0.2) 0%, rgba(8, 9, 12, 0.85) 100%);
-      border-bottom: 2px solid #dfb17b;
-    }
-    .overlay-pop {
-      background: linear-gradient(180deg, rgba(255, 222, 89, 0.25) 0%, rgba(18, 18, 18, 0.85) 100%);
-      border-bottom: 3px solid #ffde59;
-    }
-    .overlay-space {
-      background: linear-gradient(180deg, rgba(56, 189, 248, 0.2) 0%, rgba(3, 7, 18, 0.85) 100%);
-      border-bottom: 2px solid #38bdf8;
-    }
-
-    .banner-vector-badge {
-      position: relative;
-      z-index: 2;
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .showcase-card:hover .banner-vector-badge {
-      transform: scale(1.15);
-    }
-
-    .site-number {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-      background: rgba(0, 0, 0, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+    .search-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 0.75rem 3.5rem 0.75rem 2.75rem;
       color: #fff;
-      z-index: 3;
+      font-family: var(--font-main);
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.25s ease;
     }
 
-    .site-type {
+    .search-input:focus {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: #38bdf8;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+    }
+
+    .search-shortcut {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
+      right: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
       font-family: var(--font-mono);
       font-size: 0.7rem;
-      letter-spacing: 1px;
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #94a3b8;
+      pointer-events: none;
+    }
+
+    .result-count {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+
+    /* Category Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+      scrollbar-width: none;
+    }
+
+    .filter-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
       color: #fff;
+    }
+
+    .tab-btn.active {
+      background: rgba(99, 102, 241, 0.25);
+      border-color: #6366f1;
+      color: #a5b4fc;
+      box-shadow: 0 0 16px rgba(99, 102, 241, 0.35);
+    }
+
+    .tab-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.1rem 0.4rem;
+      border-radius: 6px;
+    }
+
+    /* Bento Grid Spotlight Container */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(390px, 1fr));
+      gap: 1.75rem;
+      position: relative;
+    }
+
+    /* 21st.dev Bento Card with Spotlight */
+    .bento-card {
+      position: relative;
+      background: rgba(15, 20, 32, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(16px);
+      transition: border-color 0.3s ease, box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: default;
+    }
+
+    /* Radial Spotlight layer tracking mouse */
+    .bento-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 18px;
+      padding: 1px;
+      background: radial-gradient(
+        400px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+        rgba(99, 102, 241, 0.45),
+        transparent 60%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.35s ease;
       z-index: 3;
     }
 
-    /* Card Content */
-    .card-body {
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
+    .bento-card:hover::before {
+      opacity: 1;
     }
 
-    .site-title {
-      font-size: 1.6rem;
-      font-weight: 800;
-      margin-bottom: 0.5rem;
+    .bento-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 0 25px rgba(99, 102, 241, 0.12);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    /* Card Internal Content */
+    .card-top {
+      padding: 1.75rem 1.75rem 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .cat-pill {
+      display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-    }
-
-    .site-tagline {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 1.25rem;
-      letter-spacing: 0.5px;
-    }
-
-    .site-desc {
-      color: #cbd5e1;
-      font-size: 0.95rem;
-      line-height: 1.55;
-      margin-bottom: 1.75rem;
-      flex: 1;
-    }
-
-    .features-list {
-      display: flex;
-      flex-direction: column;
       gap: 0.4rem;
-      margin-bottom: 2rem;
-      background: rgba(0, 0, 0, 0.25);
-      padding: 1rem;
-      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
 
-    .feat-item {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
+    .cat-ai { background: rgba(168, 85, 247, 0.18); border: 1px solid rgba(168, 85, 247, 0.45); color: #d8b4fe; }
+    .cat-fastapi { background: rgba(6, 182, 212, 0.18); border: 1px solid rgba(6, 182, 212, 0.45); color: #67e8f9; }
+    .cat-django { background: rgba(16, 185, 129, 0.18); border: 1px solid rgba(16, 185, 129, 0.45); color: #6ee7b7; }
+    .cat-bots { background: rgba(59, 130, 246, 0.18); border: 1px solid rgba(59, 130, 246, 0.45); color: #93c5fd; }
+    .cat-desktop { background: rgba(245, 158, 11, 0.18); border: 1px solid rgba(245, 158, 11, 0.45); color: #fcd34d; }
+    .cat-creative { background: rgba(244, 63, 94, 0.18); border: 1px solid rgba(244, 63, 94, 0.45); color: #fda4af; }
+
+    .card-git-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       color: #94a3b8;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .card-git-link:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      transform: scale(1.08);
+    }
+
+    .card-main {
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+      color: #f1f5f9;
+    }
+
+    .card-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: #38bdf8;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 1.35rem;
+      flex: 1;
+    }
+
+    /* Stack Pills */
+    .stack-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tech-pill {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+    }
+
+    /* Features List */
+    .mini-features {
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .mf-item {
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      font-size: 0.78rem;
+      color: #94a3b8;
     }
 
-    .feat-item span.dot {
-      width: 5px;
-      height: 5px;
+    .mf-dot {
+      width: 4px;
+      height: 4px;
       border-radius: 50%;
-      background: var(--accent);
+      background: #38bdf8;
+      flex-shrink: 0;
     }
 
-    /* Launch Button */
-    .launch-btn {
+    /* Card Footer Actions */
+    .card-footer {
+      padding: 1.25rem 1.75rem;
+      background: rgba(10, 14, 22, 0.5);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn-detail {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: #c7d2fe;
+      padding: 0.65rem 1rem;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .btn-detail:hover {
+      background: #6366f1;
+      border-color: #6366f1;
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(99, 102, 241, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-demo-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      background: #ffffff;
+      color: #07090e;
+      text-decoration: none;
+      padding: 0.65rem 1rem;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      transition: all 0.25s ease;
+    }
+
+    .btn-demo-link:hover {
+      background: #38bdf8;
+      box-shadow: 0 4px 18px rgba(56, 189, 248, 0.4);
+    }
+
+    /* Deep-Dive Interactive Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(4, 7, 12, 0.82);
+      backdrop-filter: blur(24px);
+      z-index: 999;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      padding: 0.9rem 1.5rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.9rem;
-      letter-spacing: 0.5px;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-container {
+      background: #0d121c;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 880px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(99, 102, 241, 0.2);
+      transform: scale(0.95) translateY(20px);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-overlay.active .modal-container {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      padding: 2rem 2.25rem 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      background: rgba(18, 24, 38, 0.6);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.75rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #94a3b8;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
       transition: all 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      transform: rotate(90deg);
+    }
+
+    .modal-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+      color: #fff;
+    }
+
+    .modal-tagline {
+      font-family: var(--font-mono);
+      color: #38bdf8;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .modal-body {
+      padding: 2rem 2.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .modal-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .msec-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    .msec-header svg {
+      color: #6366f1;
+    }
+
+    .msec-text {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    /* Architecture Flow Box */
+    .arch-flow-box {
+      background: #080c14;
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #a5b4fc;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .feat-card-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .feat-card-item svg {
+      color: #10b981;
+      flex-shrink: 0;
+    }
+
+    /* Code Snippet Box */
+    .code-snippet-wrap {
+      position: relative;
+      background: #06090e;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .code-snippet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    .btn-copy-code {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      transition: color 0.2s;
+    }
+
+    .btn-copy-code:hover {
+      color: #38bdf8;
+    }
+
+    .code-snippet-body {
+      padding: 1rem 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: #38bdf8;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+
+    .modal-footer {
+      padding: 1.5rem 2.25rem;
+      background: rgba(14, 20, 32, 0.8);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    .btn-modal-github {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
       background: #ffffff;
-      color: #0b0f17;
+      color: #07090e;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      transition: all 0.25s ease;
     }
 
-    .launch-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+    .btn-modal-github:hover {
+      background: #38bdf8;
+      box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
     }
 
-    .btn-cyber { background: #00f3ff; color: #07080c; }
-    .btn-cyber:hover { box-shadow: 0 8px 20px rgba(0, 243, 255, 0.4); }
+    .btn-modal-demo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #6366f1, #38bdf8);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      transition: all 0.25s ease;
+    }
 
-    .btn-botanica { background: #2d5a45; color: #ffffff; }
-    .btn-botanica:hover { box-shadow: 0 8px 20px rgba(45, 90, 69, 0.4); }
-
-    .btn-horology { background: linear-gradient(135deg, #fce0ad, #dfb17b); color: #08090c; }
-    .btn-horology:hover { box-shadow: 0 8px 20px rgba(223, 177, 123, 0.4); }
-
-    .btn-pop { background: #121212; color: #ffde59; border: 2px solid #ffde59; }
-    .btn-pop:hover { background: #ffde59; color: #121212; box-shadow: 0 8px 20px rgba(255, 222, 89, 0.4); }
-
-    .btn-space { background: linear-gradient(135deg, #38bdf8, #818cf8); color: #030712; }
-    .btn-space:hover { box-shadow: 0 8px 20px rgba(56, 189, 248, 0.4); }
+    .btn-modal-demo:hover {
+      box-shadow: 0 6px 22px rgba(99, 102, 241, 0.5);
+      transform: translateY(-1px);
+    }
 
     /* Footer */
     .master-footer {
       text-align: center;
       margin-top: 6rem;
-      padding-top: 2rem;
+      padding-top: 3rem;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--text-muted);
+      color: var(--text-dim);
       font-size: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #38bdf8;
+    }
+
+    /* Empty Search State */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 2rem;
+      background: rgba(18, 24, 38, 0.4);
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      display: none;
+    }
+
+    .empty-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #f1f5f9;
+    }
+
+    .empty-desc {
+      color: #64748b;
+      font-size: 0.9rem;
     }
 
     @media (max-width: 768px) {
-      .showcase-grid { grid-template-columns: 1fr; }
-      .master-container { padding: 3rem 1.25rem; }
+      .master-container { padding: 1.25rem 1rem 4rem; }
+      .bento-grid { grid-template-columns: 1fr; }
+      .top-nav { flex-direction: column; gap: 1rem; border-radius: 16px; }
+      .controls-panel { border-radius: 14px; padding: 1rem; }
+      .modal-container { max-height: 95vh; border-radius: 16px; }
+      .modal-header, .modal-body, .modal-footer { padding: 1.25rem; }
     }
   </style>
 </head>
 <body>
-  <!-- Ambient Floating Grid Canvas -->
+  <!-- Ambient Wave Canvas -->
   <canvas id="bgCanvas"></canvas>
 
   <div class="master-container">
-    <!-- Header -->
+
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+      <a href="https://github.com/von1336" target="_blank" class="brand-logo">
+        <span class="pulse-dot"></span>
+        <span>VON1336 // DEV PORTFOLIO</span>
+      </a>
+
+      <div class="nav-actions">
+        <a href="https://github.com/von1336" target="_blank" class="github-profile-btn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span id="navGithubText">GitHub Profile</span>
+        </a>
+
+        <!-- Language Switcher -->
+        <button class="lang-toggle-btn" id="langToggleBtn" title="Переключить язык / Switch Language">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span class="lang-opt" data-lang-opt="ru">RU</span>
+          <span style="opacity:0.3;font-size:0.75rem;">/</span>
+          <span class="lang-opt" data-lang-opt="en">EN</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Header Hero -->
     <header class="master-header">
       <div class="badge-pill">
-        <span class="pulse"></span>
-        <span>EXPERIMENTATION LAB // 5 COMPLETED BUILDS</span>
+        <span class="pulse-dot"></span>
+        <span id="txtHeroBadge">PORTFOLIO & ARCHITECTURE LAB // 22+ PRODUCTION REPOSITORIES</span>
       </div>
 
-      <h1 class="master-title">
-        Thematic Web Laboratory <br>
-        <span class="gradient-title">Five Distinct Digital Worlds</span>
+      <h1 class="master-title" id="txtHeroTitle">
+        Инженерные проекты и архитектура <br>
+        <span class="gradient-title">Full-Stack & Systems Showcase</span>
       </h1>
 
-      <p class="master-desc">
-        Explore five completely different web applications engineered from scratch with unique aesthetics, custom physics, interactive HTML5 canvases, Web Audio sound synthesis, and bespoke animations.
+      <p class="master-desc" id="txtHeroDesc">
+        Интерактивный хаб всех моих разработок: от распределенных бэкендов на FastAPI и Django, ИИ-ассистентов с RAG-поиском и реалтайм WebSockets до нативного C# десктопа и 5 креативных веб-миров на чистом Canvas 2D/3D.
       </p>
 
-      <div class="shortcut-hint">
-        Quick Navigation: Press keys <kbd>1</kbd> through <kbd>5</kbd> on your keyboard to immediately open any website.
+      <!-- Stats Bar -->
+      <div class="stats-bar">
+        <div class="stat-pill">
+          <span class="stat-num">22+</span>
+          <span class="stat-label" id="statRepos">Репозиториев на GitHub</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-num">6+</span>
+          <span class="stat-label" id="statStacks">Ключевых направлений</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-num">100%</span>
+          <span class="stat-label" id="statType">Архитектура и чистый код</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-num">0</span>
+          <span class="stat-label" id="statDeps">Лишних зависимостей</span>
+        </div>
       </div>
     </header>
 
-    <!-- 5 Showcase Cards Grid with Photography Banners -->
-    <div class="showcase-grid">
+    <!-- Section 1: Featured 5 Creative Web Labs -->
+    <div class="section-title-wrap">
+      <div>
+        <h2 class="section-title">
+          <span id="txtLabsTitle">5 Интерактивных Веб-Лабораторий</span>
+          <span class="tag">LIVE 60FPS</span>
+        </h2>
+        <div class="section-subtitle" id="txtLabsSubtitle">// Canvas 2D/3D, Web Audio API, процедурная физика и Zero Build</div>
+      </div>
+    </div>
 
-      <!-- Website 1: Neo-Nexus -->
-      <article class="showcase-card card-cyber">
-        <div class="card-banner">
-          <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=700&q=80" alt="Neo-Nexus Cyberpunk" class="banner-bg-img" loading="lazy">
-          <div class="banner-overlay overlay-cyber"></div>
-          <span class="site-number">01</span>
-          <span class="site-type">CYBERPUNK</span>
-          <div class="banner-vector-badge" style="background: rgba(0, 243, 255, 0.15); border-color: #00f3ff;">
-            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00f3ff" stroke-width="2">
-              <rect x="2" y="2" width="20" height="20" rx="2"></rect>
-              <line x1="9" y1="2" x2="9" y2="22"></line>
-              <line x1="15" y1="2" x2="15" y2="22"></line>
-              <line x1="2" y1="9" x2="22" y2="9"></line>
-              <line x1="2" y1="15" x2="22" y2="15"></line>
-            </svg>
-          </div>
+    <div class="creative-labs-grid">
+      <!-- Lab 1: Neon-Nexus -->
+      <article class="lab-card">
+        <div class="lab-thumb">
+          <img src="assets/images/hub-neon.jpg" onerror="this.src='assets/images/hub-neon.svg'" alt="Neo Nexus" loading="lazy">
+          <span class="lab-badge">01 // CYBERPUNK</span>
         </div>
-        <div class="card-body">
-          <h2 class="site-title" style="font-family: 'Orbitron', sans-serif;">NEO-NEXUS</h2>
-          <div class="site-tagline">// QUANTUM NEURAL AUGMENTATION</div>
-          <p class="site-desc">
-            Dark dystopian cyberpunk tech hub with CRT scanlines, a 3D particle warp speed canvas, an interactive hacker CLI terminal modal, and real-time audio drone synthesis.
-          </p>
-          <div class="features-list">
-            <div class="feat-item"><span class="dot"></span> 3D Particle Warp Tunnel (Mouse reactive)</div>
-            <div class="feat-item"><span class="dot"></span> Interactive Neural CLI Terminal (`help`, `matrix`)</div>
-            <div class="feat-item"><span class="dot"></span> Web Audio Synth Drone & Cyber SFX</div>
-            <div class="feat-item"><span class="dot"></span> Text Decryption Scrambler Effect</div>
+        <div class="lab-body">
+          <h3 class="lab-title" style="font-family:'Orbitron', sans-serif;">NEO-NEXUS</h3>
+          <p class="lab-desc" id="lab1Desc">3D варп-туннель частиц, хакерский CLI-терминал (`help`, `matrix`), CRT-развертка и синтезатор процедурного дрона.</p>
+          <div class="lab-actions">
+            <a href="01-neon-nexus/index.html" class="btn-lab-demo" id="lab1Launch">Запустить Demo ↗</a>
+            <button class="btn-lab-arch" onclick="openModal('interactive-web-showcase')">Архитектура</button>
           </div>
-          <a href="01-neon-nexus/index.html" class="launch-btn btn-cyber">
-            LAUNCH NEO-NEXUS
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M7 17l9.2-9.2M17 17V7H7"/>
-            </svg>
-          </a>
         </div>
       </article>
 
-      <!-- Website 2: Lumina Botanica -->
-      <article class="showcase-card card-botanica">
-        <div class="card-banner">
-          <img src="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&w=700&q=80" alt="Lumina Botanica Editorial" class="banner-bg-img" loading="lazy">
-          <div class="banner-overlay overlay-botanica"></div>
-          <span class="site-number">02</span>
-          <span class="site-type">BIOPHILIC LUXURY</span>
-          <div class="banner-vector-badge" style="background: rgba(45, 90, 69, 0.25); border-color: #2d5a45;">
-            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#a7f3d0" stroke-width="1.8">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-            </svg>
-          </div>
+      <!-- Lab 2: Lumina Botanica -->
+      <article class="lab-card">
+        <div class="lab-thumb">
+          <img src="assets/images/hub-botanica.jpg" onerror="this.src='assets/images/hub-botanica.svg'" alt="Lumina Botanica" loading="lazy">
+          <span class="lab-badge">02 // BIOPHILIC</span>
         </div>
-        <div class="card-body">
-          <h2 class="site-title" style="font-family: 'Cinzel', serif; color: #faf8f5;">LUMINA BOTANICA</h2>
-          <div class="site-tagline">// HAUTE FLORISTRY & ARCHITECTURE</div>
-          <p class="site-desc">
-            High-fashion organic editorial experience with warm linen textures, floating botanical pollen physics, a magnetic expanding cursor, and interactive Dawn/Dusk/Nocturne moods.
-          </p>
-          <div class="features-list">
-            <div class="feat-item"><span class="dot"></span> Organic Spore & Seed Physics Canvas</div>
-            <div class="feat-item"><span class="dot"></span> Magnetic Cursor with Dynamic Text Badges</div>
-            <div class="feat-item"><span class="dot"></span> Mood Switcher (Dawn, Dusk, Nocturne)</div>
-            <div class="feat-item"><span class="dot"></span> Solfeggio Wind Chime Audio Synthesizer</div>
+        <div class="lab-body">
+          <h3 class="lab-title" style="font-family:'Cinzel', serif;">LUMINA BOTANICA</h3>
+          <p class="lab-desc" id="lab2Desc">Органическая физика спор и пыльцы, магнитный курсор, смена световых настроений и колокольчики 528 Гц.</p>
+          <div class="lab-actions">
+            <a href="02-lumina-botanica/index.html" class="btn-lab-demo" id="lab2Launch">Запустить Demo ↗</a>
+            <button class="btn-lab-arch" onclick="openModal('interactive-web-showcase')">Архитектура</button>
           </div>
-          <a href="02-lumina-botanica/index.html" class="launch-btn btn-botanica">
-            LAUNCH LUMINA BOTANICA
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M7 17l9.2-9.2M17 17V7H7"/>
-            </svg>
-          </a>
         </div>
       </article>
 
-      <!-- Website 3: ChronoCraft -->
-      <article class="showcase-card card-horology">
-        <div class="card-banner">
-          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80" alt="ChronoCraft Horology" class="banner-bg-img" loading="lazy">
-          <div class="banner-overlay overlay-horology"></div>
-          <span class="site-number">03</span>
-          <span class="site-type">SWISS HOROLOGY</span>
-          <div class="banner-vector-badge" style="background: rgba(223, 177, 123, 0.2); border-color: #dfb17b;">
-            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#dfb17b" stroke-width="1.8">
-              <circle cx="12" cy="12" r="9"/>
-              <polyline points="12 7 12 12 15 15"/>
-            </svg>
-          </div>
+      <!-- Lab 3: ChronoCraft -->
+      <article class="lab-card">
+        <div class="lab-thumb">
+          <img src="assets/images/hub-chrono.jpg" onerror="this.src='assets/images/hub-chrono.svg'" alt="ChronoCraft" loading="lazy">
+          <span class="lab-badge">03 // HOROLOGY</span>
         </div>
-        <div class="card-body">
-          <h2 class="site-title" style="font-family: 'Cinzel', serif; color: #dfb17b;">CHRONOCRAFT</h2>
-          <div class="site-tagline">// HAUTE HORLOGERIE GENÈVE</div>
-          <p class="site-desc">
-            Precision Swiss watchmaker atelier featuring an active HTML5 Canvas tourbillon escapement simulation (oscillating at 28,800 bph), a precision laboratory stopwatch, and mechanical tick audio.
-          </p>
-          <div class="features-list">
-            <div class="feat-item"><span class="dot"></span> Real-time Mechanical Tourbillon Canvas</div>
-            <div class="feat-item"><span class="dot"></span> Functional Swiss Stopwatch with Split/Lap Log</div>
-            <div class="feat-item"><span class="dot"></span> 4Hz Escapement Pallet Strike Audio Synthesizer</div>
-            <div class="feat-item"><span class="dot"></span> 3D Perspective Timepiece Card Tilt</div>
+        <div class="lab-body">
+          <h3 class="lab-title">CHRONOCRAFT</h3>
+          <p class="lab-desc" id="lab3Desc">Математическая симуляция турбийона 4 Гц (28 800 пк/ч), секундомер и процедурный звук спуска часового механизма.</p>
+          <div class="lab-actions">
+            <a href="03-chronocraft/index.html" class="btn-lab-demo" id="lab3Launch">Запустить Demo ↗</a>
+            <button class="btn-lab-arch" onclick="openModal('interactive-web-showcase')">Архитектура</button>
           </div>
-          <a href="03-chronocraft/index.html" class="launch-btn btn-horology">
-            LAUNCH CHRONOCRAFT
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M7 17l9.2-9.2M17 17V7H7"/>
-            </svg>
-          </a>
         </div>
       </article>
 
-      <!-- Website 4: NeoPop Creative -->
-      <article class="showcase-card card-pop">
-        <div class="card-banner">
-          <img src="https://images.unsplash.com/photo-1564982752979-3f7bc974d29a?auto=format&fit=crop&w=700&q=80" alt="NeoPop Creative Studio" class="banner-bg-img" loading="lazy">
-          <div class="banner-overlay overlay-pop"></div>
-          <span class="site-number" style="background: #121212;">04</span>
-          <span class="site-type" style="background: #121212; color: #ffde59;">NEO-BRUTALIST</span>
-          <div class="banner-vector-badge" style="background: #ffde59; border-color: #121212;">
-            <svg viewBox="0 0 24 24" width="28" height="28" fill="#121212">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-            </svg>
-          </div>
+      <!-- Lab 4: NeoPop Studio -->
+      <article class="lab-card">
+        <div class="lab-thumb">
+          <img src="assets/images/hub-pop.jpg" onerror="this.src='assets/images/hub-pop.svg'" alt="NeoPop Creative" loading="lazy">
+          <span class="lab-badge">04 // NEO-BRUTALISM</span>
         </div>
-        <div class="card-body">
-          <h2 class="site-title" style="font-family: 'Archivo Black', sans-serif; color: #ffde59;">NEOPOP* STUDIO</h2>
-          <div class="site-tagline">// PLAYFUL DIGITAL AGENCY</div>
-          <p class="site-desc">
-            Irreverent, loud neo-brutalist creative studio with draggable physics stickers you can fling across the viewport, bento grid tilt, interactive project budget calculator, and 8-bit sound effects.
-          </p>
-          <div class="features-list">
-            <div class="feat-item"><span class="dot"></span> Draggable Physics Stickers with Toss Velocity</div>
-            <div class="feat-item"><span class="dot"></span> Fullscreen Confetti Particle Explosions</div>
-            <div class="feat-item"><span class="dot"></span> Interactive Project Budget & Scope Calculator</div>
-            <div class="feat-item"><span class="dot"></span> Web Audio 8-bit Retro Pops, Boings & Blips</div>
+        <div class="lab-body">
+          <h3 class="lab-title">NEOPOP STUDIO</h3>
+          <p class="lab-desc" id="lab4Desc">Интерактивный лоток стикеров с физикой броска и инерцией, полноэкранное конфетти и 8-битные аудио-эффекты.</p>
+          <div class="lab-actions">
+            <a href="04-neopop-creative/index.html" class="btn-lab-demo" id="lab4Launch">Запустить Demo ↗</a>
+            <button class="btn-lab-arch" onclick="openModal('interactive-web-showcase')">Архитектура</button>
           </div>
-          <a href="04-neopop-creative/index.html" class="launch-btn btn-pop">
-            LAUNCH NEOPOP*
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M7 17l9.2-9.2M17 17V7H7"/>
-            </svg>
-          </a>
         </div>
       </article>
 
-      <!-- Website 5: Astronex Space -->
-      <article class="showcase-card card-space">
-        <div class="card-banner">
-          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=700&q=80" alt="Astronex Deep Space" class="banner-bg-img" loading="lazy">
-          <div class="banner-overlay overlay-space"></div>
-          <span class="site-number">05</span>
-          <span class="site-type">ASTROPHYSICS</span>
-          <div class="banner-vector-badge" style="background: rgba(56, 189, 248, 0.15); border-color: #38bdf8;">
-            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#38bdf8" stroke-width="1.8">
-              <circle cx="12" cy="12" r="10"/>
-              <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(30 12 12)"/>
-              <circle cx="12" cy="12" r="3" fill="#38bdf8"/>
-            </svg>
-          </div>
+      <!-- Lab 5: Astronex Space -->
+      <article class="lab-card">
+        <div class="lab-thumb">
+          <img src="assets/images/hub-space.jpg" onerror="this.src='assets/images/hub-space.svg'" alt="Astronex Space" loading="lazy">
+          <span class="lab-badge">05 // ASTROPHYSICS</span>
         </div>
-        <div class="card-body">
-          <h2 class="site-title" style="font-family: 'Syncopate', sans-serif; font-size: 1.35rem; color: #38bdf8;">ASTRONEX DEEP SPACE</h2>
-          <div class="site-tagline">// INTERFEROMETRIC OBSERVATORY</div>
-          <p class="site-desc">
-            Deep cosmic space observatory featuring an interactive 3D rotatable and zoomable starfield galaxy, Kepler orbital multi-planet physics simulator with speed/gravity sliders, and pulsar audio drone.
-          </p>
-          <div class="features-list">
-            <div class="feat-item"><span class="dot"></span> 3D Interactive Rotatable Starfield (Drag to Orbit)</div>
-            <div class="feat-item"><span class="dot"></span> Kepler Planetary Orbit Simulator with Speed Controls</div>
-            <div class="feat-item"><span class="dot"></span> Interactive Exoplanet Atmospheric Spectroscopy</div>
-            <div class="feat-item"><span class="dot"></span> Web Audio Deep Space Pulsar Drone Synthesizer</div>
+        <div class="lab-body">
+          <h3 class="lab-title">ASTRONEX SPACE</h3>
+          <p class="lab-desc" id="lab5Desc">3D вращаемое звездное поле, кеплеровский симулятор орбит экзопланет и синтезатор космической телеметрии пульсаров.</p>
+          <div class="lab-actions">
+            <a href="05-astronex-space/index.html" class="btn-lab-demo" id="lab5Launch">Запустить Demo ↗</a>
+            <button class="btn-lab-arch" onclick="openModal('interactive-web-showcase')">Архитектура</button>
           </div>
-          <a href="05-astronex-space/index.html" class="launch-btn btn-space">
-            LAUNCH ASTRONEX
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M7 17l9.2-9.2M17 17V7H7"/>
-            </svg>
-          </a>
         </div>
       </article>
+    </div>
 
+    <!-- Section 2: All Repositories Bento Grid -->
+    <div class="section-title-wrap" id="allReposSection">
+      <div>
+        <h2 class="section-title">
+          <span id="txtReposTitle">Все репозитории и проекты</span>
+          <span class="tag" id="txtTotalBadge">22 ПРОЕКТА</span>
+        </h2>
+        <div class="section-subtitle" id="txtReposSubtitle">// Интерактивный каталог: кликайте на любую карточку для полного разбора архитектуры</div>
+      </div>
+    </div>
+
+    <!-- 21st.dev Style Sticky Controls Panel -->
+    <div class="controls-panel">
+      <div class="controls-top">
+        <!-- Search Input -->
+        <div class="search-wrapper">
+          <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="projectSearchInput" class="search-input" placeholder="Поиск по технологиям, названию или задачам (напр. Redis, RAG, WebSockets, C#)...">
+          <span class="search-shortcut">/</span>
+        </div>
+        <div class="result-count" id="resultCount">Найдено: 22 проектов</div>
+      </div>
+
+      <!-- Filter Matrix Tabs -->
+      <div class="filter-tabs" id="filterTabs">
+        <button class="tab-btn active" data-filter="all">
+          <span id="tabAll">Все проекты</span>
+          <span class="tab-badge" id="badgeAll">22</span>
+        </button>
+        <button class="tab-btn" data-filter="ai">
+          <span>AI & RAG</span>
+          <span class="tab-badge">1</span>
+        </button>
+        <button class="tab-btn" data-filter="fastapi">
+          <span>FastAPI & Async</span>
+          <span class="tab-badge">4</span>
+        </button>
+        <button class="tab-btn" data-filter="django">
+          <span>Django & High-Load</span>
+          <span class="tab-badge">3</span>
+        </button>
+        <button class="tab-btn" data-filter="bots">
+          <span id="tabBots">Telegram & Парсеры</span>
+          <span class="tab-badge">5</span>
+        </button>
+        <button class="tab-btn" data-filter="desktop">
+          <span id="tabDesktop">Desktop & Systems</span>
+          <span class="tab-badge">3</span>
+        </button>
+        <button class="tab-btn" data-filter="creative">
+          <span id="tabCreative">Creative & Frontend</span>
+          <span class="tab-badge">2</span>
+        </button>
+        <button class="tab-btn" data-filter="apis">
+          <span>REST APIs & Tools</span>
+          <span class="tab-badge">4</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bento Grid Container with Spotlight Tracking -->
+    <div class="bento-grid" id="bentoGrid">
+      <!-- Rendered dynamically by JavaScript -->
+    </div>
+
+    <!-- Empty Search State -->
+    <div class="empty-state" id="emptyState">
+      <div class="empty-title" id="emptyTitle">Ничего не найдено</div>
+      <div class="empty-desc" id="emptyDesc">Попробуйте изменить поисковый запрос или переключить категорию фильтра.</div>
     </div>
 
     <!-- Master Footer -->
     <footer class="master-footer">
-      <p>© 2026 THEMATIC WEB LABORATORY. ALL 5 WEBSITES BUILT WITH ZERO EXTERNAL BUILD TOOLS • 100% STANDALONE & ACCESSIBLE.</p>
+      <div>© 2026 von1336. Crafted with engineering precision and zero build dependencies.</div>
+      <div class="footer-links">
+        <a href="https://github.com/von1336" target="_blank">GitHub Profile</a>
+        <a href="https://github.com/von1336/interactive-web-showcase" target="_blank">Source Code</a>
+        <a href="https://von1336.github.io/interactive-web-showcase/" target="_blank">Live Hub</a>
+      </div>
     </footer>
   </div>
 
+  <!-- Deep-Dive Interactive Architecture Modal -->
+  <div class="modal-overlay" id="archModalOverlay">
+    <div class="modal-container" id="archModalContainer">
+      <div class="modal-header">
+        <button class="modal-close-btn" id="modalCloseBtn" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <div class="modal-badges-row" id="modalBadgesRow"></div>
+        <h2 class="modal-title" id="modalTitle">Project Title</h2>
+        <div class="modal-tagline" id="modalTagline">// Project Tagline</div>
+      </div>
+
+      <div class="modal-body">
+        <!-- Section 1: What is it -->
+        <div class="modal-section">
+          <div class="msec-header">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span id="txtModalWhatTitle">1. Что это такое (Обзор и решаемая задача)</span>
+          </div>
+          <div class="msec-text" id="modalWhatText">Description...</div>
+        </div>
+
+        <!-- Section 2: How it works & Architecture -->
+        <div class="modal-section">
+          <div class="msec-header">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="8" rx="2"></rect>
+              <rect x="2" y="14" width="20" height="8" rx="2"></rect>
+              <line x1="6" y1="6" x2="6.01" y2="6"></line>
+              <line x1="6" y1="18" x2="6.01" y2="18"></line>
+            </svg>
+            <span id="txtModalHowTitle">2. Как это сделано (Архитектура и технические решения)</span>
+          </div>
+          <div class="arch-flow-box" id="modalHowText">Architecture diagram and engineering highlights...</div>
+        </div>
+
+        <!-- Section 3: Key Features -->
+        <div class="modal-section">
+          <div class="msec-header">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span id="txtModalFeatTitle">3. Ключевые возможности</span>
+          </div>
+          <div class="features-grid" id="modalFeaturesGrid"></div>
+        </div>
+
+        <!-- Section 4: Quick Start -->
+        <div class="modal-section">
+          <div class="msec-header">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="4 17 10 11 4 5"></polyline>
+              <line x1="12" y1="19" x2="20" y2="19"></line>
+            </svg>
+            <span id="txtModalQuickTitle">4. Локальный запуск</span>
+          </div>
+          <div class="code-snippet-wrap">
+            <div class="code-snippet-header">
+              <span>BASH / TERMINAL</span>
+              <button class="btn-copy-code" id="btnCopySnippet">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span id="txtCopyBtn">Копировать</span>
+              </button>
+            </div>
+            <pre class="code-snippet-body" id="modalCodeSnippet">git clone ...</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer" id="modalFooterActions">
+        <a href="#" target="_blank" class="btn-modal-github" id="modalGithubBtn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span id="txtModalOpenGithub">Открыть на GitHub ↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projects Database and Scripts -->
   <script>
-    // Keyboard shortcuts to jump into sites
-    window.addEventListener('keydown', (e) => {
-      if (e.key === '1') window.location.href = '01-neon-nexus/index.html';
-      if (e.key === '2') window.location.href = '02-lumina-botanica/index.html';
-      if (e.key === '3') window.location.href = '03-chronocraft/index.html';
-      if (e.key === '4') window.location.href = '04-neopop-creative/index.html';
-      if (e.key === '5') window.location.href = '05-astronex-space/index.html';
+    // All 22 repositories of @von1336 with rich metadata, RU/EN translations, architecture & key features
+    const PROJECTS_DATA = [
+  {
+    "id": "fastapi-rag-ai-assistant",
+    "name": "fastapi-rag-ai-assistant",
+    "category": "ai",
+    "cat_label_ru": "AI & RAG",
+    "cat_label_en": "AI & RAG",
+    "title_ru": "FastAPI RAG AI Assistant",
+    "title_en": "FastAPI RAG AI Assistant",
+    "tagline_ru": "RAG-поиск по базе знаний и потоковый SSE",
+    "tagline_en": "RAG Knowledge Retrieval & Streaming SSE",
+    "desc_ru": "ИИ-ассистент для поиска по документам (PDF, DOCX) с потоковой выдачей ответов без галлюцинаций.",
+    "desc_en": "AI assistant indexing documents (PDF, DOCX) to deliver factual answers with real-time SSE streaming.",
+    "stack": [
+      "FastAPI",
+      "ChromaDB",
+      "OpenAI",
+      "SSE",
+      "Docker",
+      "Pydantic v2"
+    ],
+    "github": "https://github.com/von1336/fastapi-rag-ai-assistant",
+    "what_ru": "Микросервис корпоративного поиска и ответов на базе RAG. Загружает регламенты и документацию, извлекает релевантные фрагменты через векторный поиск и генерирует точные ответы со ссылками на источники.",
+    "what_en": "Enterprise RAG microservice. Ingests documentation, extracts relevant context via vector search, and delivers grounded answers with source citations.",
+    "how_ru": "• Поток данных: Client -> FastAPI -> Chunker -> Embeddings (text-embedding-3-small) -> ChromaDB -> OpenAI SSE Stream.\n• Семантический поиск: Косинусная близость векторов с пред-фильтрацией метаданных.\n• Стриминг: Server-Sent Events (SSE) с задержкой первого токена менее 400 мс.\n• Надежность: In-memory Rate Limiter (sliding window) и Pydantic v2 схемы.",
+    "how_en": "• Data Flow: Client -> FastAPI -> Chunker -> Embeddings (text-embedding-3-small) -> ChromaDB -> OpenAI SSE Stream.\n• Semantic Retrieval: Cosine similarity vector search with metadata pre-filtering.\n• Streaming: Server-Sent Events (SSE) with sub-400ms TTFT latency.\n• Security: In-memory sliding-window rate limiting & Pydantic v2 validation.",
+    "features_ru": [
+      "Автоиндексация PDF, DOCX и TXT файлов",
+      "Потоковая генерация через Server-Sent Events (SSE)",
+      "Фактологические ответы с опорой на контекст",
+      "Готовый Docker Compose стек для деплоя"
+    ],
+    "features_en": [
+      "Automated indexing of PDF, DOCX, and TXT files",
+      "Real-time streaming via Server-Sent Events (SSE)",
+      "Context-grounded factual answers",
+      "Turnkey Docker Compose production stack"
+    ],
+    "quick_start": "git clone https://github.com/von1336/fastapi-rag-ai-assistant.git && cd fastapi-rag-ai-assistant && docker compose up -d"
+  },
+  {
+    "id": "fastapi-kanban-board-realtime",
+    "name": "fastapi-kanban-board-realtime",
+    "category": "fastapi",
+    "cat_label_ru": "WEBSOCKETS",
+    "cat_label_en": "WEBSOCKETS",
+    "title_ru": "Real-time Kanban Platform",
+    "title_en": "Real-Time Collaborative Kanban",
+    "tagline_ru": "Канбан с синхронизацией по WebSockets и Redis Pub/Sub",
+    "tagline_en": "Multiplayer Kanban with WebSockets & Redis Pub/Sub",
+    "desc_ru": "Многопользовательская канбан-доска: перетаскивание задач синхронизируется у всех участников команды без задержек.",
+    "desc_en": "Multiplayer Kanban board: task updates and card moves broadcast in real-time across connected users.",
+    "stack": [
+      "FastAPI",
+      "WebSockets",
+      "Redis Pub/Sub",
+      "PostgreSQL",
+      "SQLAlchemy 2.0",
+      "Docker"
+    ],
+    "github": "https://github.com/von1336/fastapi-kanban-board-realtime",
+    "what_ru": "Платформа совместной работы в реальном времени. Команды перемещают задачи между колонками (drag-and-drop), а изменения моментально отражаются у всех коллег.",
+    "what_en": "Real-time collaborative project management platform. Teams reorder cards across columns with instant zero-latency broadcast to all active peers.",
+    "how_ru": "• Архитектура: Client -> WebSocket Connection Manager -> Redis Pub/Sub -> PostgreSQL.\n• Масштабирование: Redis Pub/Sub объединяет независимые ноды FastAPI за балансировщиком.\n• Оптимизация порядка: Дробное индексирование (fractional indexing) исключает перезапись сотен строк при перемещении карточки.\n• Сессии: Heartbeat ping-pong с автопереподключением при разрыве сети.",
+    "how_en": "• Architecture: Client -> WebSocket Connection Manager -> Redis Pub/Sub -> PostgreSQL.\n• Scalability: Redis Pub/Sub decouples socket connections across horizontal worker instances.\n• Card Ordering: Fractional indexing enables drag-and-drop position changes without cascading updates.\n• Resilience: Heartbeat ping-pong with automatic reconnection.",
+    "features_ru": [
+      "Мгновенный broadcast изменений по WebSockets",
+      "Горизонтальное масштабирование через Redis Pub/Sub",
+      "Асинхронные миграции Alembic + SQLAlchemy 2.0",
+      "Дробное индексирование позиций задач"
+    ],
+    "features_en": [
+      "Instant WebSocket broadcast of all card actions",
+      "Horizontal backend scaling via Redis Pub/Sub",
+      "Async migrations with Alembic & SQLAlchemy 2.0",
+      "Fractional indexing for card reordering"
+    ],
+    "quick_start": "git clone https://github.com/von1336/fastapi-kanban-board-realtime.git && cd fastapi-kanban-board-realtime && docker compose up -d"
+  },
+  {
+    "id": "django-ecommerce-api-backend",
+    "name": "django-ecommerce-api-backend",
+    "category": "django",
+    "cat_label_ru": "DJANGO HIGH-LOAD",
+    "cat_label_en": "DJANGO HIGH-LOAD",
+    "title_ru": "Django 5 E-Commerce Engine",
+    "title_en": "Django 5 High-Concurrency E-Commerce",
+    "tagline_ru": "E-commerce бэкенд с Celery и атомарным резервом",
+    "tagline_en": "E-Commerce Backend with Celery & Atomic Stock Locks",
+    "desc_ru": "Отказоустойчивый бэкенд интернет-магазина: каталог, корзина, чекаут с блокировкой строк и фоновые очереди Celery.",
+    "desc_en": "High-load e-commerce engine: product catalogs, cart, checkout with row-level locks, and async Celery queues.",
+    "stack": [
+      "Django 5",
+      "DRF",
+      "Celery",
+      "Redis",
+      "PostgreSQL",
+      "Docker Compose",
+      "JWT"
+    ],
+    "github": "https://github.com/von1336/django-ecommerce-api-backend",
+    "what_ru": "Серверный движок интернет-магазина. Защищает складские остатки от одновременных покупок при пиковом трафике и выносит тяжелые задачи в фон.",
+    "what_en": "Robust e-commerce backend engine. Prevents inventory overselling during traffic surges and delegates heavy processing to background workers.",
+    "how_ru": "• Атомарность чекаута: Блокировки строк select_for_update() исключают race condition при покупке последнего товара.\n• Фоновые очереди: Отправка писем, расчет чеков и синхронизация складов вынесены в Celery воркеры с брокером Redis.\n• Оптимизация ORM: Ликвидация N+1 запросов через select_related / prefetch_related и составные индексы в PostgreSQL.",
+    "how_en": "• Atomic Checkout: Row-level select_for_update() locks eliminate race conditions and double-spending.\n• Task Queues: Order notifications, invoicing, and analytics run asynchronously in Celery workers via Redis.\n• Database Tuning: Zero N+1 queries via select_related / prefetch_related and composite PostgreSQL indexes.",
+    "features_ru": [
+      "Защита от оверселлинга через select_for_update()",
+      "Асинхронные очереди Celery для фоновых задач",
+      "Многоуровневая фильтрация каталога и поиск",
+      "Интерактивная документация OpenAPI / Swagger"
+    ],
+    "features_en": [
+      "Zero overselling via atomic select_for_update()",
+      "Asynchronous Celery worker queues via Redis",
+      "Faceted product filtering and search",
+      "OpenAPI / Swagger interactive specification"
+    ],
+    "quick_start": "git clone https://github.com/von1336/django-ecommerce-api-backend.git && cd django-ecommerce-api-backend && docker compose up -d"
+  },
+  {
+    "id": "aiohttp-celery-news-aggregator",
+    "name": "aiohttp-celery-news-aggregator",
+    "category": "fastapi",
+    "cat_label_ru": "ASYNC PIPELINE",
+    "cat_label_en": "ASYNC PIPELINE",
+    "title_ru": "Async News Aggregator Pipeline",
+    "title_en": "Async News Aggregator Pipeline",
+    "tagline_ru": "RSS-агрегатор на aiohttp с дедупликацией в Redis",
+    "tagline_en": "High-Throughput RSS Aggregator with Redis Deduplication",
+    "desc_ru": "Неблокирующий сбор и анализ сотен новостных лент с фильтрацией дублей в Redis и экспортом через API.",
+    "desc_en": "Non-blocking RSS harvester ingesting hundreds of feeds concurrently with in-memory Redis deduplication.",
+    "stack": [
+      "aiohttp",
+      "Celery",
+      "Redis",
+      "PostgreSQL",
+      "Docker",
+      "asyncio"
+    ],
+    "github": "https://github.com/von1336/aiohttp-celery-news-aggregator",
+    "what_ru": "Конвейер круглосуточного мониторинга новостей. Опрашивает ленты, отсекает повторы по хешам и предоставляет API для поиска и аналитики.",
+    "what_en": "24/7 news monitoring pipeline. Polls RSS streams concurrently, filters duplicate articles by content hashes, and serves an analytics API.",
+    "how_ru": "• Параллельный опрос: asyncio.gather под контролем asyncio.Semaphore для защиты от сетевых блокировок.\n• Дедупликация: Быстрая проверка SHA-256 хешей в Redis Set до обращения к постоянной БД.\n• Планировщик: Celery Beat каждые N минут запускает циклы обновления источников.",
+    "how_en": "• Concurrency: Non-blocking asyncio.gather constrained by asyncio.Semaphore to prevent network throttling.\n• Deduplication: Instant SHA-256 fingerprint checking against Redis in-memory sets.\n• Scheduling: Celery Beat triggers periodic background scraping cycles.",
+    "features_ru": [
+      "Параллельный сбор сотен фидов за секунды",
+      "Мгновенная дедупликация через Redis in-memory хеши",
+      "Периодические фоновые воркеры Celery Beat",
+      "Полнотекстовый поиск по статьям и источникам"
+    ],
+    "features_en": [
+      "Concurrent feed polling across hundreds of sources",
+      "In-memory deduplication via Redis SHA-256 sets",
+      "Scheduled periodic harvesting via Celery Beat",
+      "Full-text search across articles and feeds"
+    ],
+    "quick_start": "git clone https://github.com/von1336/aiohttp-celery-news-aggregator.git && cd aiohttp-celery-news-aggregator && docker compose up -d"
+  },
+  {
+    "id": "tg-ads-parser",
+    "name": "tg-ads-parser",
+    "category": "bots",
+    "cat_label_ru": "TELEGRAM & AI",
+    "cat_label_en": "TELEGRAM & AI",
+    "title_ru": "Telegram Ads Parser & AI Proposal",
+    "title_en": "Freelance Lead Hunter & GPT-5 Proposal AI",
+    "tagline_ru": "Охотник за заказами с 10+ бирж и ИИ-откликами GPT-5",
+    "tagline_en": "Freelance Lead Hunter Across 10+ Portals with GPT-5 Pitches",
+    "desc_ru": "Мониторинг бирж (HH, Kwork, FL, Habr, YouDo, OLX, Reddit) с мгновенной генерацией откликов по кнопке через GPT-5.",
+    "desc_en": "Freelance lead generator scraping 10+ platforms with one-click calibrated GPT-5 proposals.",
+    "stack": [
+      "Python 3.12",
+      "aiogram 3",
+      "GPT-5 / NordRouter",
+      "SQLite WAL",
+      "Asyncio"
+    ],
+    "github": "https://github.com/von1336/tg-ads-parser",
+    "what_ru": "Бот для поиска заказов. Сканирует биржи фриланса, отсеивает спам, присылает уведомления и в 1 клик генерирует живой, краткий отклик для клиента (до 78 слов).",
+    "what_en": "Freelance lead generation tool. Monitors freelance marketplaces, filters noise, alerts Telegram, and drafts brief human-like proposals on demand.",
+    "how_ru": "• Модульные скраперы: Независимые парсеры RU, UZ и US бирж с рандомизацией пауз.\n• Дедупликация: Хеширование URL в SQLite в режиме WAL.\n• Генерация: NordRouter API (gpt-5.4-mini) со строгим лимитом 60-80 слов и 3-частной структурой.",
+    "how_en": "• Modular Scrapers: Isolated parsers for RU, UZ, and US exchanges with delay jitter.\n• Deduplication: URL fingerprinting in concurrent SQLite WAL mode.\n• AI Generation: NordRouter gateway (gpt-5.4-mini) with strict 60-80 word brevity limits.",
+    "features_ru": [
+      "Мониторинг 10+ бирж фриланса в реальном времени",
+      "Генерация отклика через GPT-5 по кнопке",
+      "Строгий лимит краткости (до 78 слов, живой тон)",
+      "Инлайн-кнопки «Другой вариант» для регенерации"
+    ],
+    "features_en": [
+      "Real-time monitoring across 10+ freelance exchanges",
+      "One-click GPT-5 proposal generation via inline button",
+      "Strict brevity limit (sub-80 words, natural tone)",
+      "Regenerate proposal variant in one click"
+    ],
+    "quick_start": "git clone https://github.com/von1336/tg-ads-parser.git && cd tg-ads-parser && python main.py"
+  },
+  {
+    "id": "interactive-web-showcase",
+    "name": "interactive-web-showcase",
+    "category": "creative",
+    "cat_label_ru": "CREATIVE WEB",
+    "cat_label_en": "CREATIVE WEB",
+    "title_ru": "5 Interactive Web Worlds Suite",
+    "title_en": "5 Interactive Web Worlds Suite",
+    "tagline_ru": "5 визуальных миров: Canvas 2D/3D, Web Audio и физика",
+    "tagline_en": "5 Creative Worlds with Canvas 2D/3D & Procedural Audio",
+    "desc_ru": "Сюита из 5 интерактивных веб-лабораторий на чистом JS: 3D частицы, турбийон 4Hz, орбиты Кеплера и процедурный звук без внешних библиотек.",
+    "desc_en": "Curated suite of 5 interactive web worlds in vanilla JS: 3D particle warp, 4Hz tourbillon, Kepler orbits, and procedural sound.",
+    "stack": [
+      "HTML5 Canvas 2D/3D",
+      "Web Audio API",
+      "Vanilla ES6+",
+      "CSS 3D",
+      "Zero Build"
+    ],
+    "github": "https://github.com/von1336/interactive-web-showcase",
+    "demo_url": "01-neon-nexus/index.html",
+    "what_ru": "Пять завершенных веб-проектов с нулевыми зависимостями (Zero Build). Демонстрирует нативные веб-стандарты: рендеринг 60fps на Canvas, процедурный синтез Web Audio и физические симуляции.",
+    "what_en": "Five standalone web experiences built with zero build tools or npm dependencies. Showcases real-time 60fps Canvas, procedural Web Audio, and physics simulation.",
+    "how_ru": "• Canvas 3D: Математическая перспективная проекция 3D точек на плоскость 2D в цикле requestAnimationFrame.\n• Web Audio API: Синтез звука в реальном времени через программные осцилляторы и фильтры без MP3 файлов.\n• Физика: Гравитация, инерция броска стикеров и орбитальная механика Кеплера.",
+    "how_en": "• Canvas 3D: Mathematical 3D-to-2D perspective projection executed in 60fps requestAnimationFrame.\n• Web Audio API: Procedural sound synthesis using oscillators and biquad filters without external MP3s.\n• Physics: Gravity, toss inertia vectors, and Keplerian orbital mechanics.",
+    "features_ru": [
+      "Рендеринг 60 FPS на Canvas 2D и 3D",
+      "Процедурный звук Web Audio без внешних аудиофайлов",
+      "Физические симуляции: турбийон 4Hz, гравитация, орбиты",
+      "Zero Build — работает нативно в любом браузере"
+    ],
+    "features_en": [
+      "Smooth 60 FPS Canvas 2D and 3D rendering",
+      "Procedural Web Audio synthesis with zero sound files",
+      "Physics engines: 4Hz tourbillon, gravity, orbits",
+      "Zero Build — runs natively in any browser"
+    ],
+    "quick_start": "git clone https://github.com/von1336/interactive-web-showcase.git && cd interactive-web-showcase && python -m http.server 8000"
+  },
+  {
+    "id": "hermes-installer",
+    "name": "hermes-installer",
+    "category": "desktop",
+    "cat_label_ru": "C# & WPF",
+    "cat_label_en": "C# & WPF",
+    "title_ru": "Hermes WPF Launcher & Auto-Updater",
+    "title_en": "Hermes Windows Launcher & Auto-Updater",
+    "tagline_ru": "Windows-лаунчер на C# / WPF с автообновлением по SemVer",
+    "tagline_en": "Modern Windows Desktop Launcher with GitHub Releases Updates",
+    "desc_ru": "Десктопное приложение для Windows: темный WPF-интерфейс, фоновая загрузка апдейтов через GitHub Releases API и упаковка Inno Setup.",
+    "desc_en": "Native Windows launcher: modern WPF UI, background updates via GitHub Releases API, and Inno Setup packaging.",
+    "stack": [
+      "C#",
+      ".NET",
+      "WPF / XAML",
+      "GitHub Releases API",
+      "Inno Setup",
+      "MVVM"
+    ],
+    "github": "https://github.com/von1336/hermes-installer",
+    "what_ru": "Десктопный лаунчер для дистрибуции ПО. Проверяет наличие новых версий на GitHub, скачивает релизы в фоне с проверкой SHA-256 и обновляет приложение.",
+    "what_en": "Desktop launcher for software distribution. Checks GitHub for new releases, downloads updates in the background with SHA-256 verification, and applies patches.",
+    "how_ru": "• Паттерн MVVM с двухсторонней привязкой данных (Data Binding) и кастомными стилями XAML.\n• UpdateService: Сравнение версий SemVer и потоковое скачивание с индикацией прогресса.\n• Inno Setup: Сценарий сборки инсталлятора с чистым удалением.",
+    "how_en": "• MVVM pattern with two-way data binding and responsive dark XAML templates.\n• UpdateService: SemVer version comparison and streaming binary downloads with progress callbacks.\n• Packaging: Inno Setup compilation script with clean uninstall routines.",
+    "features_ru": [
+      "Нативный темный интерфейс на WPF / XAML",
+      "Автообновление через GitHub Releases API",
+      "Проверка целостности бинарных файлов SHA-256",
+      "Инсталлятор Inno Setup под Windows"
+    ],
+    "features_en": [
+      "Native dark UI built with WPF / XAML",
+      "Automated updates via GitHub Releases API",
+      "Cryptographic SHA-256 payload verification",
+      "Inno Setup Windows installer bundle"
+    ],
+    "quick_start": "git clone https://github.com/von1336/hermes-installer.git && cd hermes-installer && dotnet build -c Release"
+  },
+  {
+    "id": "autogit_pro",
+    "name": "autogit_pro",
+    "category": "desktop",
+    "cat_label_ru": "PYTHON DESKTOP",
+    "cat_label_en": "PYTHON DESKTOP",
+    "title_ru": "AutoGit Pro Desktop Suite",
+    "title_en": "AutoGit Pro Desktop Suite",
+    "tagline_ru": "Десктоп-автоматизация GitHub на CustomTkinter",
+    "tagline_en": "GitHub Desktop Automation Suite on CustomTkinter",
+    "desc_ru": "Приложение для автоматизации рутины с GitHub: пакетная загрузка проектов, коммиты, управление токенами и ветками без консоли.",
+    "desc_en": "Desktop automation GUI for GitHub workflows: batch folder uploads, commits, branch rules, and token management.",
+    "stack": [
+      "Python",
+      "CustomTkinter",
+      "GitHub API",
+      "Git CLI",
+      "PyInstaller"
+    ],
+    "github": "https://github.com/von1336/autogit_pro",
+    "what_ru": "Десктопный комбайн разработчика. Создает репозитории, загружает проекты целыми папками и настраивает видимость в пару кликов без ввода git-команд.",
+    "what_en": "Power-user desktop tool. Creates repositories, uploads local project folders, and sets branch settings in a few clicks without manual git commands.",
+    "how_ru": "• CustomTkinter: Адаптивная темная тема и фоновые потоки (threading) без зависания интерфейса.\n• Отказоустойчивость: Клиент GitHub API с повторными попытками (urllib3 Retries).\n• Сборка: Упаковка в автономный исполняемый файл .exe через PyInstaller.",
+    "how_en": "• UI: CustomTkinter with responsive dark mode and worker threads to keep UI fluid.\n• Resilience: GitHub API client with urllib3 retries on network drops.\n• Packaging: Packaged as standalone Windows executable via PyInstaller.",
+    "features_ru": [
+      "Пакетная загрузка локальных папок на GitHub за 1 клик",
+      "Асинхронный UI на CustomTkinter без зависаний",
+      "Поддержка приватных и публичных репозиториев",
+      "Автономный .exe файл без внешних зависимостей"
+    ],
+    "features_en": [
+      "One-click batch folder upload to GitHub",
+      "Non-blocking threaded UI with CustomTkinter",
+      "Public and private repository support",
+      "Standalone Windows .exe bundle"
+    ],
+    "quick_start": "git clone https://github.com/von1336/autogit_pro.git && cd autogit_pro && python github_gui_ctk.py"
+  },
+  {
+    "id": "von-procurement-platform",
+    "name": "von-procurement-platform",
+    "category": "django",
+    "cat_label_ru": "B2B PLATFORM",
+    "cat_label_en": "B2B PLATFORM",
+    "title_ru": "B2B Procurement & Tender Platform",
+    "title_en": "B2B Procurement Platform",
+    "tagline_ru": "Платформа корпоративных закупок с Celery и Docker",
+    "tagline_en": "B2B Tender & Procurement Suite with Celery",
+    "desc_ru": "Система автоматизации закупок, тендеров, импорта тяжелых прайс-листов поставщиков и аудита контрагентов.",
+    "desc_en": "B2B platform automating tenders, vendor price lists, supplier catalogs, and audit logs.",
+    "stack": [
+      "Django 5",
+      "DRF",
+      "Celery",
+      "PostgreSQL",
+      "Redis",
+      "Docker"
+    ],
+    "github": "https://github.com/von1336/von-procurement-platform",
+    "what_ru": "B2B-платформа для автоматизации тендеров и снабжения. Позволяет поставщикам загружать коммерческие предложения, а закупщикам — согласовывать заказы.",
+    "what_en": "B2B supply chain and procurement platform. Lets suppliers upload quotes and catalogs while buyers approve orders and monitor spend.",
+    "how_ru": "• Ролевая модель: Разграничение прав для покупателей, поставщиков и контролеров.\n• Пакетная обработка: Фоновый импорт прайс-листов (Excel/CSV) через воркеры Celery.\n• Аудит: Логирование смены статусов заказов для безопасности.",
+    "how_en": "• Granular RBAC: Access boundaries for Buyers, Suppliers, and Auditors.\n• Batch Processing: Async processing of large catalog files via Celery workers.\n• Audit Trail: Immutable logging of order status changes for compliance.",
+    "features_ru": [
+      "Автоматизация сбора коммерческих предложений",
+      "Асинхронный импорт прайсов через Celery",
+      "Строгая ролевая модель и аудит действий",
+      "Готовое развертывание в Docker Compose"
+    ],
+    "features_en": [
+      "Automated quotation and tender processing",
+      "Asynchronous catalog ingestion via Celery",
+      "Role-based access control & audit trails",
+      "Production-ready Docker Compose orchestration"
+    ],
+    "quick_start": "git clone https://github.com/von1336/von-procurement-platform.git && cd von-procurement-platform && docker compose up -d"
+  },
+  {
+    "id": "cbr-currency-tracker-bot",
+    "name": "cbr-currency-tracker-bot",
+    "category": "bots",
+    "cat_label_ru": "TELEGRAM BOT",
+    "cat_label_en": "TELEGRAM BOT",
+    "title_ru": "CBR Currency Volatility Bot",
+    "title_en": "CBR Currency Volatility Bot",
+    "tagline_ru": "Трекер курсов валют ЦБ РФ с алертами волатильности",
+    "tagline_en": "CBR Exchange Monitor with Volatility Alerts",
+    "desc_ru": "Мониторинг курсов валют Центробанка РФ: уведомления при резких скачках курса выше заданного процента и утренние рассылки.",
+    "desc_en": "Telegram currency bot tracking official CBR rates with threshold spike alerts and scheduled digests.",
+    "stack": [
+      "Python 3.12",
+      "aiogram 3",
+      "CBR XML API",
+      "SQLite",
+      "APScheduler"
+    ],
+    "github": "https://github.com/von1336/cbr-currency-tracker-bot",
+    "what_ru": "Финансовый Telegram-бот. Отслеживает курсы валют ЦБ РФ и моментально сигнализирует при резких колебаниях рынка.",
+    "what_en": "Financial Telegram bot tracking Central Bank rates and triggering alerts when daily volatility crosses custom thresholds.",
+    "how_ru": "• Асинхронный парсер XML API ЦБ РФ с кэшированием котировок в памяти.\n• Расчет волатильности: Вычисление процентной дельты к предыдущему дню.\n• APScheduler: Планировщик регулярных рассылок подписчикам.",
+    "how_en": "• Async parser for CBR XML feed with in-memory rate caching.\n• Volatility Engine: Computes daily delta percentages to trigger alerts.\n• APScheduler: Broadcasts localized morning digests.",
+    "features_ru": [
+      "Автоматический мониторинг курсов ЦБ РФ",
+      "Алерты при резких скачках курса",
+      "Утренние персональные дайджесты",
+      "Инлайн-клавиатура для конвертации"
+    ],
+    "features_en": [
+      "Automated CBR exchange rate polling",
+      "Instant push alerts on currency volatility spikes",
+      "Scheduled morning digest broadcasts",
+      "Interactive inline currency converter"
+    ],
+    "quick_start": "git clone https://github.com/von1336/cbr-currency-tracker-bot.git && cd cbr-currency-tracker-bot && python bot.py"
+  },
+  {
+    "id": "hh-vacancy-parser",
+    "name": "hh-vacancy-parser",
+    "category": "bots",
+    "cat_label_ru": "DATA PARSER",
+    "cat_label_en": "DATA PARSER",
+    "title_ru": "HeadHunter Vacancy Pipeline",
+    "title_en": "HeadHunter Vacancy Pipeline",
+    "tagline_ru": "Парсер вакансий с нормализацией валют и PostgreSQL upsert",
+    "tagline_en": "HeadHunter Job Pipeline with Multi-Currency Upserts",
+    "desc_ru": "Сбор вакансий с HeadHunter API: конвертация зарплат в рубли по курсу ЦБ, запись в PostgreSQL без дублей и алерты в Telegram.",
+    "desc_en": "HeadHunter API vacancy pipeline normalizing salaries to a unified currency with idempotent PostgreSQL upserts.",
+    "stack": [
+      "Python 3.12",
+      "HH API",
+      "PostgreSQL",
+      "aiogram",
+      "Asyncio"
+    ],
+    "github": "https://github.com/von1336/hh-vacancy-parser",
+    "what_ru": "Инструмент аналитики вакансий. Собирает предложения работы по стеку, приводит вилки зарплат к единой валюте и отправляет выборку в Telegram.",
+    "what_en": "Job market analytics engine. Ingests vacancies, standardizes salaries across currencies, and delivers curated alerts to Telegram.",
+    "how_ru": "• Идемпотентность: INSERT ... ON CONFLICT DO UPDATE по ID вакансии в PostgreSQL.\n• Нормализация: Приведение вилок (gross/net) к единой валюте по курсам ЦБ.\n• Лимиты: Обработка статуса 429 с экспоненциальным backoff.",
+    "how_en": "• Idempotency: PostgreSQL upserts (INSERT ... ON CONFLICT DO UPDATE).\n• Normalization: Gross/net salary parsing and currency conversion based on live rates.\n• Rate Limiting: Backoff handlers respecting API quotas.",
+    "features_ru": [
+      "Идемпотентный сбор вакансий без дублей",
+      "Автоконвертация зарплатных вилок в рубли",
+      "Telegram-уведомления о целевых вакансиях",
+      "Расчет медианных зарплат по стекам"
+    ],
+    "features_en": [
+      "Idempotent database upserts preventing duplicates",
+      "Automated multi-currency salary normalization",
+      "Targeted Telegram vacancy notifications",
+      "Median salary calculation across tech stacks"
+    ],
+    "quick_start": "git clone https://github.com/von1336/hh-vacancy-parser.git && cd hh-vacancy-parser && python run.py"
+  },
+  {
+    "id": "telegram-task-manager-bot",
+    "name": "telegram-task-manager-bot",
+    "category": "bots",
+    "cat_label_ru": "TELEGRAM BOT",
+    "cat_label_en": "TELEGRAM BOT",
+    "title_ru": "Telegram Task Manager & Reminders",
+    "title_en": "Telegram Task Manager & Reminders",
+    "tagline_ru": "Таск-менеджер в Telegram с напоминаниями через JobQueue",
+    "tagline_en": "Telegram Task Manager with JobQueue Deadlines",
+    "desc_ru": "Бот продуктивности: создание списков дел, расстановка дедлайнов, повторяющиеся напоминания и удобная инлайн-навигация.",
+    "desc_en": "Productivity bot: manage tasks, set due dates, schedule recurring reminders, and interact via inline menus.",
+    "stack": [
+      "python-telegram-bot v20",
+      "SQLAlchemy",
+      "JobQueue",
+      "SQLite"
+    ],
+    "github": "https://github.com/von1336/telegram-task-manager-bot",
+    "what_ru": "Персональный менеджер задач в чате Telegram. Помогает контролировать дедлайны и присылает своевременные пуш-уведомления.",
+    "what_en": "Personal task manager in Telegram. Organizes to-do lists and sends timely deadline reminders.",
+    "how_ru": "• Ядро: Асинхронный python-telegram-bot v20.\n• Напоминания: Очередь JobQueue для точного срабатывания таймеров.\n• Хранение: База SQLite с ORM SQLAlchemy.",
+    "how_en": "• Framework: Asynchronous python-telegram-bot v20.\n• Scheduler: Built-in JobQueue for non-blocking precision reminders.\n• Storage: SQLite database with SQLAlchemy ORM.",
+    "features_ru": [
+      "Создание задач с дедлайнами и приоритетами",
+      "Напоминания точно в срок через JobQueue",
+      "Инлайн-меню управления в 1 клик",
+      "Настройка персонального часового пояса"
+    ],
+    "features_en": [
+      "Task creation with deadlines and priorities",
+      "Accurate scheduled reminders via JobQueue",
+      "One-click inline keyboard management",
+      "Personalized timezone configuration"
+    ],
+    "quick_start": "git clone https://github.com/von1336/telegram-task-manager-bot.git && cd telegram-task-manager-bot && python bot.py"
+  },
+  {
+    "id": "fastapi-shop-catalog-api",
+    "name": "fastapi-shop-catalog-api",
+    "category": "fastapi",
+    "cat_label_ru": "FASTAPI BACKEND",
+    "cat_label_en": "FASTAPI BACKEND",
+    "title_ru": "FastAPI Async Catalog REST API",
+    "title_en": "FastAPI Async Catalog API",
+    "tagline_ru": "Каталог товаров на SQLAlchemy 2.0 Async и Pydantic v2",
+    "tagline_en": "Async Catalog API with SQLAlchemy 2.0 & Pydantic v2",
+    "desc_ru": "Быстрый REST API каталога: вложенные категории, фасетная фильтрация по параметрам, пагинация и типизированные схемы.",
+    "desc_en": "High-throughput product catalog API with nested categories, attribute filters, pagination, and typed schemas.",
+    "stack": [
+      "FastAPI",
+      "SQLAlchemy 2.0",
+      "Pydantic v2",
+      "PostgreSQL",
+      "pytest"
+    ],
+    "github": "https://github.com/von1336/fastapi-shop-catalog-api",
+    "what_ru": "Микросервис товарного каталога для интернет-магазинов. Обрабатывает сотни запросов в секунду с фильтрацией по цене, бренду и атрибутам.",
+    "what_en": "Product catalog microservice for e-commerce. Handles high-throughput queries with multi-attribute faceted filtering and pagination.",
+    "how_ru": "• Архитектура: Трехслойная (Controller -> Service -> Repository).\n• База данных: asyncpg + SQLAlchemy 2.0 с Mapped моделями.\n• Валидация: Сериализация схем через Pydantic v2.",
+    "how_en": "• Architecture: Three-tier design (Controller -> Service -> Repository).\n• Storage: asyncpg + SQLAlchemy 2.0 with Mapped typing.\n• Schemas: Fast serialization powered by Pydantic v2.",
+    "features_ru": [
+      "SQLAlchemy 2.0 с полной поддержкой async/await",
+      "Строгая валидация схем Pydantic v2",
+      "Динамическая фильтрация и пагинация",
+      "OpenAPI 3.1 интерактивная документация"
+    ],
+    "features_en": [
+      "SQLAlchemy 2.0 with native async/await syntax",
+      "Strict data validation via Pydantic v2",
+      "Dynamic filtering and pagination",
+      "Interactive OpenAPI 3.1 specification"
+    ],
+    "quick_start": "git clone https://github.com/von1336/fastapi-shop-catalog-api.git && cd fastapi-shop-catalog-api && uvicorn app.main:app --reload"
+  },
+  {
+    "id": "django-blog-rest-api",
+    "name": "django-blog-rest-api",
+    "category": "django",
+    "cat_label_ru": "DJANGO & DRF",
+    "cat_label_en": "DJANGO & DRF",
+    "title_ru": "Django 5 Blog Platform API",
+    "title_en": "Django 5 Blog Platform API",
+    "tagline_ru": "API блогов с кастомными permissions и комментариями",
+    "tagline_en": "Blog Platform API with Object Permissions & Comments",
+    "desc_ru": "Платформа контента: статьи, черновики, древовидные комментарии, теги и детальное разграничение прав доступа.",
+    "desc_en": "Publishing platform API supporting drafts, threaded discussions, tags, and object-level permission policies.",
+    "stack": [
+      "Django 5",
+      "DRF",
+      "PostgreSQL",
+      "Token Auth",
+      "drf-spectacular"
+    ],
+    "github": "https://github.com/von1336/django-blog-rest-api",
+    "what_ru": "REST API для медиа-порталов и блогов. Поддерживает публикации, систему комментирования и разграничение прав авторов и редакторов.",
+    "what_en": "REST API for content publishing platforms. Supports article lifecycles, nested comments, and granular authorization for writers and editors.",
+    "how_ru": "• Права: Кастомный класс IsAuthorOrReadOnly.\n• Запросы: Исключение N+1 через prefetch_related комментов и авторов.\n• Спецификация: Схема OpenAPI 3.0 через drf-spectacular.",
+    "how_en": "• Security: Custom IsAuthorOrReadOnly permission class.\n• Query Tuning: Zero N+1 bottlenecks via prefetch_related.\n• Docs: OpenAPI 3.0 schema via drf-spectacular.",
+    "features_ru": [
+      "Статусы статей (черновик -> публикация)",
+      "Древовидная система комментариев",
+      "Оптимизированные запросы без N+1",
+      "OpenAPI 3.0 спецификация"
+    ],
+    "features_en": [
+      "Article lifecycle (draft to published)",
+      "Threaded comment discussions",
+      "Optimized database queries without N+1",
+      "OpenAPI 3.0 schema generation"
+    ],
+    "quick_start": "git clone https://github.com/von1336/django-blog-rest-api.git && cd django-blog-rest-api && python manage.py runserver"
+  },
+  {
+    "id": "react-dashboard",
+    "name": "react-dashboard",
+    "category": "creative",
+    "cat_label_ru": "REACT FRONTEND",
+    "cat_label_en": "REACT FRONTEND",
+    "title_ru": "React 18 Admin Dashboard",
+    "title_en": "React 18 Admin Dashboard",
+    "tagline_ru": "Аналитическая панель на React 18, Vite и Recharts",
+    "tagline_en": "Analytics Dashboard with React 18, Vite & Recharts",
+    "desc_ru": "Интерфейс аналитики с интерактивными графиками Recharts, виджетами KPI, темной темой и быстрой сборкой на Vite.",
+    "desc_en": "Modern dashboard featuring interactive charts, KPI metrics, dark mode, and lightning-fast Vite builds.",
+    "stack": [
+      "React 18",
+      "Vite",
+      "Recharts",
+      "TailwindCSS"
+    ],
+    "github": "https://github.com/von1336/react-dashboard",
+    "what_ru": "Фронтенд-панель администратора для визуализации метрик: конверсии, выручка и активность пользователей на интерактивных графиках.",
+    "what_en": "Administrative dashboard tracking revenue, conversions, and customer engagement metrics on responsive charts.",
+    "how_ru": "• Компоненты: React 18 с хуками состояния.\n• Графики: Векторные SVG-чарты на базе Recharts.\n• Стили: TailwindCSS с проработанной темной темой.",
+    "how_en": "• Architecture: Functional React 18 components with custom hooks.\n• Data Viz: Recharts rendering responsive SVG charts.\n• Styling: Dark-first TailwindCSS design tokens.",
+    "features_ru": [
+      "Молниеносная сборка на базе Vite",
+      "Интерактивные графики на Recharts",
+      "Адаптивный интерфейс для планшетов и десктопа",
+      "Продуманная темная цветовая палитра"
+    ],
+    "features_en": [
+      "Lightning-fast Vite builds and HMR",
+      "Interactive SVG charts powered by Recharts",
+      "Fully responsive desktop and tablet layouts",
+      "Polished high-contrast dark theme"
+    ],
+    "quick_start": "git clone https://github.com/von1336/react-dashboard.git && cd react-dashboard && npm install && npm run dev"
+  },
+  {
+    "id": "web-scraper",
+    "name": "web-scraper",
+    "category": "bots",
+    "cat_label_ru": "WEB SCRAPING",
+    "cat_label_en": "WEB SCRAPING",
+    "title_ru": "Universal Modular Scraper",
+    "title_en": "Universal Modular Scraper",
+    "tagline_ru": "Модульный скрапер с экспортом в CSV/Excel",
+    "tagline_en": "Modular Web Scraper with Multi-Format Export",
+    "desc_ru": "Сбор данных с сайтов с обходом пагинации, ретраями сетевых сбоев и экспортом в CSV, JSON и Excel.",
+    "desc_en": "Web scraper with recursive pagination handling, connection retries, and clean tabular export.",
+    "stack": [
+      "Python 3.12",
+      "BeautifulSoup4",
+      "Pandas",
+      "OpenPyXL"
+    ],
+    "github": "https://github.com/von1336/web-scraper",
+    "what_ru": "Утилита для сбора структурированных каталогов, цен и контактов с веб-страниц с экспортом в таблицы Excel.",
+    "what_en": "Web extraction tool harvesting structured product catalogs, pricing, and contact datasets into Excel spreadsheets.",
+    "how_ru": "• Модули: Изолированные классы парсеров под каждый сайт.\n• Сеть: HTTPAdapter с автоматическими ретраями таймаутов.\n• Экспорт: Сериализация через Pandas в CSV, JSON и Excel.",
+    "how_en": "• Architecture: Modular scraper classes adhering to a shared interface.\n• Networking: HTTPAdapter with automatic retry backoff.\n• Export: Direct serialization into CSV, JSON, and Excel via Pandas.",
+    "features_ru": [
+      "Модульные адаптеры под разные сайты",
+      "Автоматический обход пагинации",
+      "Устойчивые HTTP-сессии с ретраями",
+      "Экспорт в CSV, JSON и Excel (.xlsx)"
+    ],
+    "features_en": [
+      "Modular adapters for various website layouts",
+      "Automated pagination traversal",
+      "Resilient HTTP sessions with retries",
+      "Export to CSV, JSON, and Excel (.xlsx)"
+    ],
+    "quick_start": "git clone https://github.com/von1336/web-scraper.git && cd web-scraper && python scraper.py"
+  },
+  {
+    "id": "vk-to-yadisk-backup",
+    "name": "vk-to-yadisk-backup",
+    "category": "desktop",
+    "cat_label_ru": "CLOUD BACKUP",
+    "cat_label_en": "CLOUD BACKUP",
+    "title_ru": "VK to Yandex.Disk Backup Engine",
+    "title_en": "VK to Yandex.Disk Backup Engine",
+    "tagline_ru": "Облачный бэкап фото из соцсети в Яндекс.Диск",
+    "tagline_en": "Cloud Photo Backup from VK to Yandex.Disk",
+    "desc_ru": "Резервное копирование фотоальбомов из VK в облако Яндекс.Диска с выбором максимального качества и защитой от перезаписи.",
+    "desc_en": "Cloud-to-cloud photo backup from VKontakte to Yandex.Disk preserving original image resolution.",
+    "stack": [
+      "Python",
+      "VK API",
+      "Yandex.Disk REST",
+      "Requests"
+    ],
+    "github": "https://github.com/von1336/vk-to-yadisk-backup",
+    "what_ru": "Сервис миграции фотоальбомов из VK в облачный Яндекс.Диск без расходования места на локальном диске пользователя.",
+    "what_en": "Backup utility migrating photo albums to Yandex.Disk directly via remote URLs without local storage overhead.",
+    "how_ru": "• Качество: Выбор фото с максимальным разрешением (width * height).\n• Облачная передача: Загрузка по ссылке напрямую в API Яндекс.Диска.\n• Коллизии: Уникальные имена по лайкам и дате съемки.",
+    "how_en": "• Resolution: Maximizes photo dimensions via API metadata.\n• Direct Upload: Remote URL ingestion straight to Yandex.Disk storage.\n• Deduplication: Deterministic naming based on likes count and upload dates.",
+    "features_ru": [
+      "Отбор оригиналов фото максимального качества",
+      "Прямая облачная загрузка без локального диска",
+      "Разрешение конфликтов имен файлов",
+      "Итоговый JSON-отчет о скопированных медиа"
+    ],
+    "features_en": [
+      "Extracts highest available resolution originals",
+      "Direct cloud-to-cloud ingestion",
+      "Collision-safe file naming strategy",
+      "Detailed JSON migration manifest output"
+    ],
+    "quick_start": "git clone https://github.com/von1336/vk-to-yadisk-backup.git && cd vk-to-yadisk-backup && python main.py"
+  },
+  {
+    "id": "ecommerce-api",
+    "name": "ecommerce-api",
+    "category": "apis",
+    "cat_label_ru": "NODE.JS REST",
+    "cat_label_en": "NODE.JS REST",
+    "title_ru": "Node.js E-Commerce Microservice",
+    "title_en": "Node.js Express E-Commerce API",
+    "tagline_ru": "REST API на Node.js, Express, SQLite и JWT",
+    "tagline_en": "Lightweight E-Commerce API with Express, SQLite & JWT",
+    "desc_ru": "Компактный бэкенд интернет-магазина: регистрация, JWT-авторизация, каталог товаров и оформление заказов.",
+    "desc_en": "Lean e-commerce API: authentication, product catalogs, and order management on Node.js and SQLite.",
+    "stack": [
+      "Node.js",
+      "Express",
+      "SQLite",
+      "JWT",
+      "Bcrypt"
+    ],
+    "github": "https://github.com/von1336/ecommerce-api",
+    "what_ru": "Быстрый серверный API интернет-магазина. Идеален для легковесных веб-приложений без тяжелых СУБД.",
+    "what_en": "Lightweight e-commerce backend microservice designed for embedded catalogs and quick prototypes.",
+    "how_ru": "• Роутинг: Модульные Express Routers с JWT middleware.\n• Безопасность: Хеширование паролей Bcrypt.\n• База: Встроенная легковесная SQLite.",
+    "how_en": "• Routing: Modular Express Router endpoints with auth guards.\n• Security: Bcrypt password hashing & stateless JWT.\n• Storage: Embedded SQLite engine.",
+    "features_ru": [
+      "Хеширование паролей Bcrypt и токены JWT",
+      "CRUD-операции каталога товаров",
+      "Оформление заказов",
+      "Автономная SQLite без настройки серверов"
+    ],
+    "features_en": [
+      "Bcrypt password hashing and JWT authorization",
+      "CRUD operations for catalog items",
+      "Order processing flow",
+      "Embedded SQLite database"
+    ],
+    "quick_start": "git clone https://github.com/von1336/ecommerce-api.git && cd ecommerce-api && npm install && npm start"
+  },
+  {
+    "id": "contact-manager-cli",
+    "name": "contact-manager-cli",
+    "category": "apis",
+    "cat_label_ru": "PYTHON CLI",
+    "cat_label_en": "PYTHON CLI",
+    "title_ru": "PostgreSQL Contact Manager CLI",
+    "title_en": "PostgreSQL Contact Manager CLI",
+    "tagline_ru": "Консольный менеджер с PostgreSQL и экспортом",
+    "tagline_en": "Terminal Contact Manager with PostgreSQL & Data Export",
+    "desc_ru": "Надежная консольная утилита адресной книги с защитой от SQLi (параметризованные запросы) и экспортом в CSV/JSON.",
+    "desc_en": "Terminal address book utility with parameterized SQL queries preventing SQLi, phone validation, and exports.",
+    "stack": [
+      "Python",
+      "PostgreSQL",
+      "Psycopg2",
+      "Argparse"
+    ],
+    "github": "https://github.com/von1336/contact-manager-cli",
+    "what_ru": "Терминальная утилита для безопасного хранения контактов в PostgreSQL с поиском и выгрузкой отчетов.",
+    "what_en": "Command-line tool for storing contacts securely in PostgreSQL with search, validation, and multi-format export.",
+    "how_ru": "• Интерфейс: Командная строка на модуле argparse.\n• Безопасность: 100% параметризованные SQL-запросы.\n• Экспорт: Сериализация контактов в CSV и JSON.",
+    "how_en": "• Interface: Command-line menus with argparse.\n• Security: Parameterized psycopg2 SQL queries.\n• Export: Structured serialization to CSV and JSON.",
+    "features_ru": [
+      "Параметризованный SQL (защита от SQLi)",
+      "Валидация номеров и email по Regex",
+      "Экспорт базы в CSV и JSON",
+      "Автоматические тесты unittest"
+    ],
+    "features_en": [
+      "Parameterized SQL protecting from injections",
+      "Regex validation for phone numbers and emails",
+      "Export database subsets to CSV and JSON",
+      "Automated unittest test suite"
+    ],
+    "quick_start": "git clone https://github.com/von1336/contact-manager-cli.git && cd contact-manager-cli && python main.py --help"
+  },
+  {
+    "id": "flask-notes-jwt-api",
+    "name": "flask-notes-jwt-api",
+    "category": "apis",
+    "cat_label_ru": "FLASK REST",
+    "cat_label_en": "FLASK REST",
+    "title_ru": "Flask Notes API with JWT & Rate Limiting",
+    "title_en": "Flask Notes API with JWT & Rate Limiting",
+    "tagline_ru": "REST API заметок на Flask с защитой от перегрузок",
+    "tagline_en": "Secure Notes REST API with JWT & Request Throttling",
+    "desc_ru": "Защищенный API заметок с изоляцией пользователей по JWT, тегами, поиском и ограничителем запросов Flask-Limiter.",
+    "desc_en": "Protected notes microservice with JWT auth, multi-tag search, and sliding-window rate limiting.",
+    "stack": [
+      "Flask",
+      "Flask-JWT",
+      "SQLAlchemy",
+      "Flask-Limiter"
+    ],
+    "github": "https://github.com/von1336/flask-notes-jwt-api",
+    "what_ru": "Микросервис персональных заметок с токенами доступа, тегированием и защитой от брутфорс-атак.",
+    "what_en": "Personal notes microservice guaranteeing user isolation, JWT authentication, and brute-force protection.",
+    "how_ru": "• Авторизация: Bearer токены Flask-JWT-Extended.\n• Троттлинг: Ограничение запросов через Flask-Limiter.\n• Модели: ORM SQLAlchemy со связями Many-to-Many.",
+    "how_en": "• Auth: Bearer tokens via Flask-JWT-Extended.\n• Throttling: Request rate limiting via Flask-Limiter.\n• Storage: SQLAlchemy ORM with Many-to-Many tagging.",
+    "features_ru": [
+      "Авторизация по токенам Flask-JWT",
+      "Защита от перегрузок через Flask-Limiter",
+      "Тегирование и поиск по заметкам",
+      "ORM SQLAlchemy с миграциями"
+    ],
+    "features_en": [
+      "Stateless Flask-JWT authentication",
+      "Abuse mitigation via Flask-Limiter",
+      "Tag-based organization and search",
+      "SQLAlchemy ORM data persistence"
+    ],
+    "quick_start": "git clone https://github.com/von1336/flask-notes-jwt-api.git && cd flask-notes-jwt-api && python app.py"
+  },
+  {
+    "id": "flask-url-shortener",
+    "name": "flask-url-shortener",
+    "category": "apis",
+    "cat_label_ru": "WEB UTILITY",
+    "cat_label_en": "WEB UTILITY",
+    "title_ru": "Flask URL Shortener & Analytics",
+    "title_en": "Flask URL Shortener & Analytics",
+    "tagline_ru": "Короткие ссылки с защитой от SSRF и счетчиками",
+    "tagline_en": "URL Shortener with SSRF Defense & Click Analytics",
+    "desc_ru": "Сервис сокращения ссылок: алгоритм Base62, DNS-проверка опасных приватных IP (защита от SSRF) и счетчики переходов.",
+    "desc_en": "URL shortener generating Base62 slugs with SSRF loopback filtering and atomic click counters.",
+    "stack": [
+      "Flask",
+      "SQLAlchemy",
+      "Base62",
+      "SSRF Defense"
+    ],
+    "github": "https://github.com/von1336/flask-url-shortener",
+    "what_ru": "Сервис коротких ссылок со встроенной защитой корпоративной сети от SSRF-атак и статистикой кликов.",
+    "what_en": "Link shortener service tracking engagement while actively screening destination IPs to prevent SSRF vulnerabilities.",
+    "how_ru": "• Слаги: Base62 кодирование автоинкрементного ID.\n• Защита: DNS-валидация для блокировки приватных подсетей (RFC 1918, 127.0.0.1).\n• Аналитика: Атомарный инкремент счетчика при HTTP 302.",
+    "how_en": "• Slugs: Base62 encoding of auto-incrementing IDs.\n• Security: DNS validation blocking RFC 1918 and loopback IPs.\n• Tracking: Atomic counter increments on HTTP 302 redirect.",
+    "features_ru": [
+      "Компактные уникальные ссылки Base62",
+      "Защита от SSRF (блокировка локальных IP)",
+      "Атомарный счетчик переходов",
+      "Опциональный срок жизни ссылок (TTL)"
+    ],
+    "features_en": [
+      "Compact unique Base62 slugs",
+      "SSRF defense blocking private IP subnets",
+      "Atomic click counter updates",
+      "Configurable expiration timestamps (TTL)"
+    ],
+    "quick_start": "git clone https://github.com/von1336/flask-url-shortener.git && cd flask-url-shortener && python app.py"
+  },
+  {
+    "id": "telegram-bot",
+    "name": "telegram-bot",
+    "category": "bots",
+    "cat_label_ru": "AIOGRAM BOT",
+    "cat_label_en": "AIOGRAM BOT",
+    "title_ru": "Multifunctional Telegram Bot",
+    "title_en": "Multipurpose aiogram 3.x Bot",
+    "tagline_ru": "Бот на aiogram 3.x с OpenWeather API и калькулятором",
+    "tagline_en": "Utility Bot with OpenWeather API & Safe Math Evaluator",
+    "desc_ru": "Многофункциональный бот: прогноз погоды по городам, безопасный расчет математических выражений и инлайн-клавиатуры.",
+    "desc_en": "Multipurpose bot: weather forecasts via OpenWeatherMap API, safe math evaluation, and inline menus.",
+    "stack": [
+      "Python 3.12",
+      "aiogram 3",
+      "OpenWeatherMap",
+      "Asyncio"
+    ],
+    "github": "https://github.com/von1336/telegram-bot",
+    "what_ru": "Сервисный Telegram-бот на модульной архитектуре aiogram 3.x с интеграцией внешних REST API.",
+    "what_en": "Utility Telegram bot demonstrating clean aiogram 3.x modular routing and external API integration.",
+    "how_ru": "• Роутинг: Изолированные роутеры aiogram 3.x.\n• Сеть: Неблокирующие запросы через aiohttp.\n• Безопасность: Парсинг выражений через AST-дерево.",
+    "how_en": "• Routing: Declarative aiogram 3.x router modules.\n• Networking: Non-blocking HTTP queries via aiohttp.\n• Parsing: Safe expression tree evaluation (no eval).",
+    "features_ru": [
+      "Модульная архитектура aiogram 3.x Router",
+      "Прогноз погоды через OpenWeather API",
+      "Безопасный калькулятор без eval",
+      "Интуитивные инлайн-клавиатуры"
+    ],
+    "features_en": [
+      "Modular aiogram 3.x router architecture",
+      "Weather forecasts via OpenWeather API",
+      "Safe expression parsing without eval",
+      "Responsive inline keyboard navigation"
+    ],
+    "quick_start": "git clone https://github.com/von1336/telegram-bot.git && cd telegram-bot && python main.py"
+  },
+  {
+    "id": "portfolio-site",
+    "name": "portfolio-site",
+    "category": "creative",
+    "cat_label_ru": "VANILLA WEB",
+    "cat_label_en": "VANILLA WEB",
+    "title_ru": "Developer Portfolio Site",
+    "title_en": "Developer Portfolio Website",
+    "tagline_ru": "Сайт-портфолио в темной теме на чистом JavaScript",
+    "tagline_en": "Dark-Themed Portfolio Site in Vanilla JavaScript",
+    "desc_ru": "Адаптивный сайт-портфолио разработчика с терминальной hero-секцией, анимациями и чистым кодом без фреймворков.",
+    "desc_en": "Clean personal portfolio site with a terminal hero section and responsive layout in pure vanilla JS and CSS.",
+    "stack": [
+      "HTML5",
+      "CSS3",
+      "Vanilla JS"
+    ],
+    "github": "https://github.com/von1336/portfolio-site",
+    "what_ru": "Легковесный сайт-портфолио для презентации проектов с терминальной эстетикой и быстрой загрузкой.",
+    "what_en": "Lightweight portfolio website for showcasing engineering projects with terminal aesthetics and zero bundle overhead.",
+    "how_ru": "• Верстка: Чистый семантический HTML5 и CSS3 Grid/Flexbox.\n• Интерактив: Vanilla JavaScript без внешних скриптов.",
+    "how_en": "• Layout: Clean semantic HTML5 & modern CSS3 Grid/Flexbox.\n• Logic: Vanilla JavaScript with zero external scripts.",
+    "features_ru": [
+      "Быстрая загрузка без бандлеров и библиотек",
+      "Терминальная hero-секция",
+      "Адаптивная верстка под мобильные устройства",
+      "Стильная темная цветовая гамма"
+    ],
+    "features_en": [
+      "Instant loading with zero bundler overhead",
+      "Terminal-themed interactive hero section",
+      "Responsive across mobile and desktop",
+      "High-contrast dark color palette"
+    ],
+    "quick_start": "git clone https://github.com/von1336/portfolio-site.git && cd portfolio-site && python -m http.server 8000"
+  }
+];
+
+    // UI Translations Dictionary
+    const I18N = {
+      ru: {
+        navGithubText: "Профиль GitHub",
+        txtHeroBadge: "ПОРТФОЛИО И АРХИТЕКТУРА // 22+ РЕПОЗИТОРИЯ",
+        txtHeroTitle: 'Инженерные проекты и архитектура <br><span class="gradient-title">Full-Stack & Systems Showcase</span>',
+        txtHeroDesc: "Интерактивный хаб всех моих разработок: от распределенных бэкендов на FastAPI и Django, ИИ-ассистентов с RAG-поиском и реалтайм WebSockets до нативного C# десктопа и 5 креативных веб-миров на чистом Canvas 2D/3D.",
+        statRepos: "Репозиториев на GitHub",
+        statStacks: "Ключевых направлений",
+        statType: "Архитектура и чистый код",
+        statDeps: "Лишних зависимостей",
+        txtLabsTitle: "5 Интерактивных Веб-Лабораторий",
+        txtLabsSubtitle: "// Canvas 2D/3D, Web Audio API, процедурная физика и Zero Build",
+        lab1Desc: "3D варп-туннель частиц, хакерский CLI-терминал (`help`, `matrix`), CRT-развертка и синтезатор процедурного дрона.",
+        lab2Desc: "Органическая физика спор и пыльцы, магнитный курсор, смена световых настроений и колокольчики 528 Гц.",
+        lab3Desc: "Математическая симуляция турбийона 4 Гц (28 800 пк/ч), секундомер и процедурный звук спуска часового механизма.",
+        lab4Desc: "Интерактивный лоток стикеров с физикой броска и инерцией, полноэкранное конфетти и 8-битные аудио-эффекты.",
+        lab5Desc: "3D вращаемое звездное поле, кеплеровский симулятор орбит экзопланет и синтезатор космической телеметрии пульсаров.",
+        lab1Launch: "Запустить Demo ↗",
+        lab2Launch: "Запустить Demo ↗",
+        lab3Launch: "Запустить Demo ↗",
+        lab4Launch: "Запустить Demo ↗",
+        lab5Launch: "Запустить Demo ↗",
+        txtReposTitle: "Все репозитории и проекты",
+        txtTotalBadge: "22 ПРОЕКТА",
+        txtReposSubtitle: "// Интерактивный каталог: кликайте на любую карточку для полного разбора архитектуры",
+        searchPlaceholder: "Поиск по технологиям, названию или задачам (напр. Redis, RAG, WebSockets, C#)...",
+        foundProjects: "Найдено: {count} проектов",
+        tabAll: "Все проекты",
+        tabBots: "Telegram & Парсеры",
+        tabDesktop: "Desktop & Systems",
+        tabCreative: "Creative & Frontend",
+        emptyTitle: "Ничего не найдено",
+        emptyDesc: "Попробуйте изменить поисковый запрос или переключить категорию фильтра.",
+        btnDetailText: "Что это такое и как сделано ↗",
+        btnDemoText: "Запустить Demo ↗",
+        txtModalWhatTitle: "1. Что это такое (Обзор и решаемая задача)",
+        txtModalHowTitle: "2. Как это сделано (Архитектура и технические решения)",
+        txtModalFeatTitle: "3. Ключевые возможности",
+        txtModalQuickTitle: "4. Локальный запуск",
+        txtCopyBtn: "Копировать",
+        txtCopiedBtn: "Скопировано!",
+        txtModalOpenGithub: "Открыть репозиторий на GitHub ↗",
+        txtModalLaunchDemo: "Запустить Live Demo ↗"
+      },
+      en: {
+        navGithubText: "GitHub Profile",
+        txtHeroBadge: "PORTFOLIO & ARCHITECTURE LAB // 22+ PRODUCTION REPOSITORIES",
+        txtHeroTitle: 'Systems Engineering & Architecture <br><span class="gradient-title">Full-Stack Showcase</span>',
+        txtHeroDesc: "Interactive hub of all engineering repositories: from distributed backends in FastAPI & Django, RAG AI assistants, and real-time WebSockets to native C# desktop apps and 5 creative Canvas 2D/3D laboratories.",
+        statRepos: "GitHub Repositories",
+        statStacks: "Core Engineering Tracks",
+        statType: "Clean Code & Architecture",
+        statDeps: "Unnecessary Dependencies",
+        txtLabsTitle: "5 Interactive Web Laboratories",
+        txtLabsSubtitle: "// Canvas 2D/3D, Web Audio API, procedural physics & Zero Build",
+        lab1Desc: "3D particle warp tunnel, hacker CLI terminal (`help`, `matrix`), CRT scanlines, and ambient procedural drone synth.",
+        lab2Desc: "Organic spore and pollen physics, magnetic cursor, daylight mood switches, and 528Hz pentatonic wind chimes.",
+        lab3Desc: "Mathematical 4Hz (28,800 bph) tourbillon escapement simulation, precision stopwatch, and procedural pallet click audio.",
+        lab4Desc: "Interactive physics sticker tray with toss inertia, fullscreen confetti explosion, and 8-bit retro arcade Web Audio.",
+        lab5Desc: "3D rotatable celestial starfield, Keplerian exoplanet orbital mechanics, and cosmic radio telemetry synthesizer.",
+        lab1Launch: "Launch Demo ↗",
+        lab2Launch: "Launch Demo ↗",
+        lab3Launch: "Launch Demo ↗",
+        lab4Launch: "Launch Demo ↗",
+        lab5Launch: "Launch Demo ↗",
+        txtReposTitle: "All Repositories & Engineering Work",
+        txtTotalBadge: "22 PROJECTS",
+        txtReposSubtitle: "// Interactive catalog: click on any card for full architecture breakdown",
+        searchPlaceholder: "Search by tech stack, title, or keywords (e.g. Redis, RAG, WebSockets, C#)...",
+        foundProjects: "Found: {count} projects",
+        tabAll: "All Projects",
+        tabBots: "Telegram & Parsers",
+        tabDesktop: "Desktop & Systems",
+        tabCreative: "Creative & Frontend",
+        emptyTitle: "No projects found",
+        emptyDesc: "Try adjusting your search query or switching the category filter tab.",
+        btnDetailText: "Architecture & Breakdown ↗",
+        btnDemoText: "Launch Demo ↗",
+        txtModalWhatTitle: "1. What It Is (Overview & Problem Solved)",
+        txtModalHowTitle: "2. How It Was Built (Architecture & Engineering)",
+        txtModalFeatTitle: "3. Key Features",
+        txtModalQuickTitle: "4. Quick Start & Execution",
+        txtCopyBtn: "Copy",
+        txtCopiedBtn: "Copied!",
+        txtModalOpenGithub: "Open Repository on GitHub ↗",
+        txtModalLaunchDemo: "Launch Live Demo ↗"
+      }
+    };
+
+    let currentLang = localStorage.getItem('von1336_lang') || 'ru';
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    // Render Bento Grid
+    const bentoGrid = document.getElementById('bentoGrid');
+    const emptyState = document.getElementById('emptyState');
+    const resultCount = document.getElementById('resultCount');
+
+    function getCatClass(cat) {
+      if (cat === 'ai') return 'cat-ai';
+      if (cat === 'fastapi') return 'cat-fastapi';
+      if (cat === 'django') return 'cat-django';
+      if (cat === 'bots') return 'cat-bots';
+      if (cat === 'desktop') return 'cat-desktop';
+      if (cat === 'creative') return 'cat-creative';
+      return 'cat-fastapi';
+    }
+
+    function renderProjects() {
+      const q = searchQuery.toLowerCase().trim();
+      const filtered = PROJECTS_DATA.filter(p => {
+        const matchesCat = (currentFilter === 'all') || (p.category === currentFilter);
+        if (!matchesCat) return false;
+        if (!q) return true;
+
+        const title = (currentLang === 'ru' ? p.title_ru : p.title_en) || p.title;
+        const tagline = (currentLang === 'ru' ? p.tagline_ru : p.tagline_en) || '';
+        const desc = (currentLang === 'ru' ? p.desc_ru : p.desc_en) || '';
+        const stackStr = p.stack.join(' ').toLowerCase();
+
+        return title.toLowerCase().includes(q) ||
+               tagline.toLowerCase().includes(q) ||
+               desc.toLowerCase().includes(q) ||
+               stackStr.includes(q) ||
+               p.name.toLowerCase().includes(q);
+      });
+
+      resultCount.textContent = I18N[currentLang].foundProjects.replace('{count}', filtered.length);
+
+      if (filtered.length === 0) {
+        bentoGrid.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+
+      bentoGrid.innerHTML = filtered.map(p => {
+        const title = (currentLang === 'ru' ? p.title_ru : p.title_en) || p.title;
+        const tagline = (currentLang === 'ru' ? p.tagline_ru : p.tagline_en) || '';
+        const desc = (currentLang === 'ru' ? p.desc_ru : p.desc_en) || '';
+        const catLabel = (currentLang === 'ru' ? p.cat_label_ru : p.cat_label_en) || p.category.toUpperCase();
+        const features = (currentLang === 'ru' ? p.features_ru : p.features_en) || [];
+
+        const stackHtml = p.stack.slice(0, 5).map(s => `<span class="tech-pill">${s}</span>`).join('');
+        const featuresHtml = features.slice(0, 3).map(f => `
+          <div class="mf-item">
+            <span class="mf-dot"></span>
+            <span>${f}</span>
+          </div>
+        `).join('');
+
+        const demoBtnHtml = p.demo_url ? `
+          <a href="${p.demo_url}" class="btn-demo-link" target="_blank">
+            ${I18N[currentLang].btnDemoText}
+          </a>
+        ` : '';
+
+        return `
+          <article class="bento-card" data-id="${p.id}" onclick="handleCardClick(event, '${p.id}')">
+            <div class="card-top">
+              <span class="cat-pill ${getCatClass(p.category)}">${catLabel}</span>
+              <a href="${p.github}" target="_blank" class="card-git-link" title="GitHub" onclick="event.stopPropagation()">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+              </a>
+            </div>
+            <div class="card-main">
+              <h3 class="card-title">${title}</h3>
+              <div class="card-tagline">// ${tagline}</div>
+              <p class="card-desc">${desc}</p>
+              <div class="stack-wrap">${stackHtml}</div>
+              <div class="mini-features">${featuresHtml}</div>
+            </div>
+            <div class="card-footer">
+              <button class="btn-detail" onclick="openModal('${p.id}')">
+                ${I18N[currentLang].btnDetailText}
+              </button>
+              ${demoBtnHtml}
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      initSpotlight();
+    }
+
+    function handleCardClick(e, id) {
+      if (e.target.closest('a') || e.target.closest('button')) return;
+      openModal(id);
+    }
+
+    // 21st.dev Bento Grid Spotlight: Tracks mouse coordinates across cards
+    function initSpotlight() {
+      const cards = document.querySelectorAll('.bento-card');
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        });
+      });
+    }
+
+    // Modal Deep Dive Logic
+    const modalOverlay = document.getElementById('archModalOverlay');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    let activeModalProject = null;
+
+    function openModal(id) {
+      const p = PROJECTS_DATA.find(item => item.id === id);
+      if (!p) return;
+      activeModalProject = p;
+
+      const title = (currentLang === 'ru' ? p.title_ru : p.title_en) || p.title;
+      const tagline = (currentLang === 'ru' ? p.tagline_ru : p.tagline_en) || '';
+      const catLabel = (currentLang === 'ru' ? p.cat_label_ru : p.cat_label_en) || p.category.toUpperCase();
+      const whatText = (currentLang === 'ru' ? p.what_ru : p.what_en) || p.desc_ru;
+      const howText = (currentLang === 'ru' ? p.how_ru : p.how_en) || '';
+      const features = (currentLang === 'ru' ? p.features_ru : p.features_en) || [];
+
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalTagline').textContent = `// ${tagline}`;
+
+      // Badges
+      const badgesRow = document.getElementById('modalBadgesRow');
+      badgesRow.innerHTML = `
+        <span class="cat-pill ${getCatClass(p.category)}">${catLabel}</span>
+        ${p.stack.map(s => `<span class="tech-pill">${s}</span>`).join('')}
+      `;
+
+      document.getElementById('modalWhatText').textContent = whatText;
+      document.getElementById('modalHowText').textContent = howText;
+
+      // Features Grid
+      const fGrid = document.getElementById('modalFeaturesGrid');
+      fGrid.innerHTML = features.map(f => `
+        <div class="feat-card-item">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>${f}</span>
+        </div>
+      `).join('');
+
+      // Code snippet
+      document.getElementById('modalCodeSnippet').textContent = p.quick_start || `git clone ${p.github}.git`;
+
+      // Footer actions
+      const modalFooter = document.getElementById('modalFooterActions');
+      let footerHtml = `
+        <a href="${p.github}" target="_blank" class="btn-modal-github">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span>${I18N[currentLang].txtModalOpenGithub}</span>
+        </a>
+      `;
+
+      if (p.demo_url) {
+        footerHtml = `
+          <a href="${p.demo_url}" target="_blank" class="btn-modal-demo">
+            <span>${I18N[currentLang].txtModalLaunchDemo}</span>
+          </a>
+        ` + footerHtml;
+      }
+      modalFooter.innerHTML = footerHtml;
+
+      modalOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+      activeModalProject = null;
+    }
+
+    modalCloseBtn.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+        closeModal();
+      }
+      if ((e.key === '/' || (e.ctrlKey && e.key === 'k')) && !modalOverlay.classList.contains('active')) {
+        const input = document.getElementById('projectSearchInput');
+        if (document.activeElement !== input) {
+          e.preventDefault();
+          input.focus();
+          input.select();
+        }
+      }
+    });
+
+    // Copy Snippet
+    document.getElementById('btnCopySnippet').addEventListener('click', () => {
+      const code = document.getElementById('modalCodeSnippet').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const copyTxt = document.getElementById('txtCopyBtn');
+        const orig = copyTxt.textContent;
+        copyTxt.textContent = I18N[currentLang].txtCopiedBtn;
+        setTimeout(() => { copyTxt.textContent = orig; }, 2000);
+      });
+    });
+
+    // Search Input Event
+    const searchInput = document.getElementById('projectSearchInput');
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderProjects();
+    });
+
+    // Filter Tabs Events
+    const filterTabs = document.getElementById('filterTabs');
+    filterTabs.addEventListener('click', (e) => {
+      const btn = e.target.closest('.tab-btn');
+      if (!btn) return;
+      filterTabs.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      renderProjects();
+    });
+
+    // Language Toggle
+    const langBtn = document.getElementById('langToggleBtn');
+    function applyLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('von1336_lang', lang);
+
+      // Active indicator on toggle
+      document.querySelectorAll('.lang-opt').forEach(opt => {
+        opt.classList.toggle('active', opt.dataset.langOpt === lang);
+      });
+
+      // Apply static texts
+      const dict = I18N[lang];
+      for (const [id, text] of Object.entries(dict)) {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = text;
+      }
+
+      searchInput.placeholder = dict.searchPlaceholder;
+
+      // Re-render project cards and modal if open
+      renderProjects();
+      if (activeModalProject) {
+        openModal(activeModalProject.id);
+      }
+    }
+
+    langBtn.addEventListener('click', () => {
+      applyLanguage(currentLang === 'ru' ? 'en' : 'ru');
     });
 
     // Background Canvas Waves
     const canvas = document.getElementById('bgCanvas');
     const ctx = canvas.getContext('2d');
     let width, height;
+    let mousePos = { x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5 };
 
     function resize() {
       width = canvas.width = window.innerWidth;
@@ -617,17 +2688,27 @@
     window.addEventListener('resize', resize);
     resize();
 
+    window.addEventListener('mousemove', (e) => {
+      mousePos.targetX = e.clientX / width;
+      mousePos.targetY = e.clientY / height;
+    });
+
     let step = 0;
     function renderBg() {
       ctx.clearRect(0, 0, width, height);
       ctx.strokeStyle = 'rgba(99, 102, 241, 0.08)';
       ctx.lineWidth = 1;
 
-      step += 0.01;
-      for (let x = 0; x < width; x += 60) {
+      mousePos.x += (mousePos.targetX - mousePos.x) * 0.05;
+      mousePos.y += (mousePos.targetY - mousePos.y) * 0.05;
+
+      step += 0.012;
+      const mouseDistortion = (mousePos.x - 0.5) * 20;
+
+      for (let x = 0; x < width; x += 55) {
         ctx.beginPath();
-        for (let y = 0; y < height; y += 40) {
-          const offset = Math.sin(step + (x + y) * 0.005) * 15;
+        for (let y = 0; y < height; y += 35) {
+          const offset = Math.sin(step + (x + y) * 0.0045) * (14 + Math.abs(mouseDistortion));
           ctx.lineTo(x + offset, y);
         }
         ctx.stroke();
@@ -635,6 +2716,9 @@
       requestAnimationFrame(renderBg);
     }
     renderBg();
+
+    // Initial load
+    applyLanguage(currentLang);
   </script>
 </body>
 </html>

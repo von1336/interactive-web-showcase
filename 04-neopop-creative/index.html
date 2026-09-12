@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NEOPOP // Hyper-Playful Creative & Product Studio</title>
+  <title id="docTitle">NEOPOP // Дерзкая и игривая дизайн-студия цифровых продуктов</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -15,17 +15,17 @@
 
   <!-- Marquee Ticker Top Bar -->
   <div class="marquee-bar">
-    <div class="marquee-track">
-      <span>// WE BUILD WILD DIGITAL EXPERIENCES</span>
-      <span>// ZERO BORING WEBSITES ALLOWED</span>
-      <span>// 100% UNAPOLOGETIC CREATIVITY</span>
-      <span>// BRUTALIST DESIGNS THAT CONVERT</span>
-      <span>// DRAGGABLE PHYSICS STICKERS EVERYWHERE</span>
-      <span>// WE BUILD WILD DIGITAL EXPERIENCES</span>
-      <span>// ZERO BORING WEBSITES ALLOWED</span>
-      <span>// 100% UNAPOLOGETIC CREATIVITY</span>
-      <span>// BRUTALIST DESIGNS THAT CONVERT</span>
-      <span>// DRAGGABLE PHYSICS STICKERS EVERYWHERE</span>
+    <div class="marquee-track" id="marqueeTrack">
+      <span>// СОЗДАЕМ БЕЗУМНЫЕ ЦИФРОВЫЕ ВПЕЧАТЛЕНИЯ</span>
+      <span>// НИКАКИХ СКУЧНЫХ САЙТОВ</span>
+      <span>// 100% БЕСКОМПРОМИССНЫЙ КРЕАТИВ</span>
+      <span>// БРУТАЛИСТСКИЙ ДИЗАЙН, КОТОРЫЙ ПРОДАЕТ</span>
+      <span>// ИНТЕРАКТИВНЫЕ СТИКЕРЫ С ФИЗИКОЙ</span>
+      <span>// СОЗДАЕМ БЕЗУМНЫЕ ЦИФРОВЫЕ ВПЕЧАТЛЕНИЯ</span>
+      <span>// НИКАКИХ СКУЧНЫХ САЙТОВ</span>
+      <span>// 100% БЕСКОМПРОМИССНЫЙ КРЕАТИВ</span>
+      <span>// БРУТАЛИСТСКИЙ ДИЗАЙН, КОТОРЫЙ ПРОДАЕТ</span>
+      <span>// ИНТЕРАКТИВНЫЕ СТИКЕРЫ С ФИЗИКОЙ</span>
     </div>
   </div>
 
@@ -33,89 +33,96 @@
   <nav class="pop-nav">
     <div class="nav-brand">
       <span class="brand-box">NEOPOP*</span>
-      <span class="brand-badge">STUDIO</span>
+      <span class="brand-badge" id="brandBadge">СТУДИЯ</span>
     </div>
 
     <div class="nav-links">
-      <a href="#work" class="pop-link">WORK</a>
-      <a href="#services" class="pop-link">SERVICES</a>
-      <a href="#calculator" class="pop-link">ESTIMATOR</a>
-      <a href="#contact" class="pop-link">SAY HELLO</a>
+      <a href="#work" class="pop-link" id="navWork">РАБОТЫ</a>
+      <a href="#services" class="pop-link" id="navServices">УСЛУГИ</a>
+      <a href="#calculator" class="pop-link" id="navCalc">КАЛЬКУЛЯТОР</a>
+      <a href="#contact" class="pop-link" id="navContact">НА СВЯЗИ</a>
     </div>
 
     <div class="nav-actions">
+      <!-- Language Switcher -->
+      <button class="pop-lang-btn" id="langToggle" title="RU / EN">
+        <span class="lang-opt active" data-lang-opt="ru">RU</span>
+        <span class="lang-sep">/</span>
+        <span class="lang-opt" data-lang-opt="en">EN</span>
+      </button>
+
       <button id="sfxToggle" class="sfx-btn" title="Toggle 8-Bit Pop Audio">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align: middle; margin-right: 4px;">
           <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
           <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
         </svg>
-        <span class="sfx-text">SFX: ON</span>
+        <span class="sfx-text" id="sfxText">ЗВУК: ВКЛ</span>
       </button>
       <button class="pop-btn-nav" id="confettiTrigger">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" style="vertical-align: middle; margin-right: 4px;">
           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
         </svg>
-        CONFETTI BLAST
+        <span id="confettiLabel">ЗАЛП КОНФЕТТИ</span>
       </button>
       <a href="../index.html" class="portal-back-btn">
         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
           <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
         </svg>
-        HUB
+        <span id="hubLabel">ХАБ</span>
       </a>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <header class="pop-hero">
+  <header class="pop-hero" id="services">
     <div class="hero-content">
-      <div class="hero-sticker-note">HIGH-IMPACT PRODUCT DESIGN & CODE</div>
-      <h1 class="hero-headline">
-        WE MAKE WEBSITES <br>
-        <span class="highlight-yellow">THAT STAND OUT.</span>
+      <div class="hero-sticker-note" id="heroStickerNote">УДАРНЫЙ ДИЗАЙН И КОД ВЫСОКОЙ КОНВЕРСИИ</div>
+      <h1 class="hero-headline" id="heroHeadline">
+        МЫ ДЕЛАЕМ САЙТЫ, <br>
+        <span class="highlight-yellow">КОТОРЫЕ ЗАМЕЧАЮТ.</span>
       </h1>
-      <p class="hero-pitch">
-        Tired of generic corporate templates? We engineer bold, high-contrast, physics-infused digital products that captivate audiences and drive measurable conversions.
+      <p class="hero-pitch" id="heroPitch">
+        Устали от унылых корпоративных шаблонов? Мы создаем дерзкие, контрастные цифровые продукты с живой физикой, которые захватывают внимание и приносят реальные продажи.
       </p>
       <div class="hero-btns">
-        <a href="#calculator" class="chunky-btn yellow">CALCULATE BUDGET</a>
-        <a href="#work" class="chunky-btn lilac">EXPLORE PRODUCTIONS</a>
+        <a href="#calculator" class="chunky-btn yellow" id="btnCalc">РАССЧИТАТЬ СМЕТУ</a>
+        <a href="#work" class="chunky-btn lilac" id="btnWork">СМОТРЕТЬ РАБОТЫ</a>
       </div>
     </div>
 
     <!-- Dedicated Interactive Sticker Sandbox Tray -->
     <div class="sticker-shelf-wrap">
-      <div class="shelf-label">// INTERACTIVE STICKER PLAYGROUND: DRAG & TOSS ANYWHERE</div>
+      <div class="shelf-label" id="shelfLabel">// ИНТЕРАКТИВНАЯ ПЛОЩАДКА СО СТИКЕРАМИ: ХВАТАЙ И БРОСАЙ</div>
       <div class="sticker-sandbox" id="stickerArea">
-        <div class="sticker sticker-1" data-drag="true">HOT RELEASE // 2026</div>
-        <div class="sticker sticker-2" data-drag="true">[100% PURE CODE]</div>
-        <div class="sticker sticker-3" data-drag="true">[PIXEL PERFECT]</div>
-        <div class="sticker sticker-4" data-drag="true">TOSS ME AROUND</div>
-        <div class="sticker sticker-5" data-drag="true">AWARD WINNING DEV</div>
-        <div class="sticker sticker-6" data-drag="true">READY TO SHIP</div>
+        <div class="sticker sticker-1" data-drag="true" id="stk1">ГОРЯЧИЙ РЕЛИЗ // 2026</div>
+        <div class="sticker sticker-2" data-drag="true" id="stk2">[100% ЧИСТЫЙ КОД]</div>
+        <div class="sticker sticker-3" data-drag="true" id="stk3">[ПИКСЕЛЬ-ПЕРФЕКТ]</div>
+        <div class="sticker sticker-4" data-drag="true" id="stk4">ШВЫРНИ МЕНЯ!</div>
+        <div class="sticker sticker-5" data-drag="true" id="stk5">ТОПОВЫЙ ДЕВЕЛОПМЕНТ</div>
+        <div class="sticker sticker-6" data-drag="true" id="stk6">ГОТОВ К ЗАПУСКУ</div>
       </div>
-      <button class="reset-stickers-btn" id="resetStickersBtn">RESET STICKERS</button>
+      <button class="reset-stickers-btn" id="resetStickersBtn">СБРОСИТЬ СТИКЕРЫ</button>
     </div>
   </header>
 
   <!-- Bento Grid Work Showcase with High-Res Product Photography -->
   <section class="section-bento" id="work">
-    <div class="section-title-tag">FEATURED PRODUCTIONS</div>
-    <h2 class="bento-title">THE DIGITAL PLAYGROUND</h2>
+    <div class="section-title-tag" id="bentoTag">ИЗБРАННЫЕ РАБОТЫ</div>
+    <h2 class="bento-title" id="bentoTitle">ЦИФРОВОЙ ПОЛИГОН</h2>
 
     <div class="bento-grid">
       <!-- Bento Item 1 (Big - 7 cols) -->
       <div class="bento-card bento-lg bg-mint" data-bento="true">
         <div class="bento-card-top">
-          <span class="bento-badge">CASE STUDY // 01</span>
-          <span class="bento-meta">E-COMMERCE // 3D WEBGL</span>
+          <span class="bento-badge">КЕЙС // 01</span>
+          <span class="bento-meta" id="b1Meta">ИНТЕРНЕТ-МАГАЗИН // 3D WEBGL</span>
         </div>
         <div class="bento-img-frame">
-          <img src="https://images.unsplash.com/photo-1564982752979-3f7bc974d29a?auto=format&fit=crop&w=800&q=80" alt="Radical Skateboards customizer" class="bento-photo" loading="lazy">
+          <img src="assets/images/bento-skate.jpg" onerror="this.onerror=null;this.src='assets/images/bento-skate.svg'" alt="Radical Skateboards customizer" class="bento-photo" loading="lazy">
         </div>
         <div class="bento-card-inner">
           <h3>Radical Skateboards Co.</h3>
-          <p>3D WebGL skate customizer with real-time physics and custom grip tape generator. Increased checkout conversion by 214%.</p>
+          <p id="b1Desc">3D WebGL кастомизатор скейтов с физикой в реальном времени и генератором наждака. Увеличил конверсию оформления заказов на 214%.</p>
           <div class="tech-tags">
             <span>WEBGL</span>
             <span>THREE.JS</span>
@@ -128,15 +135,15 @@
       <!-- Bento Item 2 (Medium - 5 cols) -->
       <div class="bento-card bento-md bg-lilac" data-bento="true">
         <div class="bento-card-top">
-          <span class="bento-badge">FINTECH // 02</span>
-          <span class="bento-meta">MOBILE WEB APP</span>
+          <span class="bento-badge">ФИНТЕХ // 02</span>
+          <span class="bento-meta" id="b2Meta">МОБИЛЬНОЕ ВЕБ-ПРИЛОЖЕНИЕ</span>
         </div>
         <div class="bento-img-frame">
-          <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=600&q=80" alt="HyperDebit App Fintech" class="bento-photo" loading="lazy">
+          <img src="assets/images/bento-fintech.jpg" onerror="this.onerror=null;this.src='assets/images/bento-fintech.svg'" alt="HyperDebit App Fintech" class="bento-photo" loading="lazy">
         </div>
         <div class="bento-card-inner">
           <h3>HyperDebit Mobile Bank</h3>
-          <p>Next-generation mobile web experience with high APR yields, encrypted cards, and reactive haptic audio.</p>
+          <p id="b2Desc">Мобильный веб-банк нового поколения с высокими ставками доходности, шифрованными картами и тактильным звуковым откликом.</p>
           <div class="tech-tags">
             <span>REACT 19</span>
             <span>TAILWIND</span>
@@ -148,15 +155,15 @@
       <!-- Bento Item 3 (Medium - 5 cols) -->
       <div class="bento-card bento-md bg-coral" data-bento="true">
         <div class="bento-card-top">
-          <span class="bento-badge">AI SAAS // 03</span>
-          <span class="bento-meta">MULTIMODAL AI</span>
+          <span class="bento-badge">ИИ SAAS // 03</span>
+          <span class="bento-meta" id="b3Meta">МУЛЬТИМОДАЛЬНЫЙ ИИ</span>
         </div>
         <div class="bento-img-frame">
-          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="Synthetix AI Engine" class="bento-photo" loading="lazy">
+          <img src="assets/images/bento-ai.jpg" onerror="this.onerror=null;this.src='assets/images/bento-ai.svg'" alt="Synthetix AI Engine" class="bento-photo" loading="lazy">
         </div>
         <div class="bento-card-inner">
           <h3>Synthetix AI Engine</h3>
-          <p>Autonomous intelligence engine turning raw telemetry into multimodal 3D visual assets in seconds.</p>
+          <p id="b3Desc">Автономный интеллектуальный движок, превращающий сырую телеметрию в мультимодальные 3D-ассеты за считанные секунды.</p>
           <div class="tech-tags">
             <span>FASTAPI</span>
             <span>PYTHON</span>
@@ -168,15 +175,15 @@
       <!-- Bento Item 4 (Big - 7 cols) -->
       <div class="bento-card bento-lg bg-yellow" data-bento="true">
         <div class="bento-card-top">
-          <span class="bento-badge">CULTURE // 04</span>
-          <span class="bento-meta">INTERACTIVE ORDERING</span>
+          <span class="bento-badge">РЕСТОРАНЫ // 04</span>
+          <span class="bento-meta" id="b4Meta">ИНТЕРАКТИВНЫЙ ЗАКАЗ</span>
         </div>
         <div class="bento-img-frame">
-          <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1000&q=80" alt="Slice Club Tokyo Artisan Pizza" class="bento-photo" loading="lazy">
+          <img src="assets/images/bento-pizza.jpg" onerror="this.onerror=null;this.src='assets/images/bento-pizza.svg'" alt="Slice Club Tokyo Artisan Pizza" class="bento-photo" loading="lazy">
         </div>
         <div class="bento-card-inner">
           <h3>Slice Club Tokyo</h3>
-          <p>Interactive artisan culinary ordering system with real-time oven temperature telemetry and localized delivery routing.</p>
+          <p id="b4Desc">Интерактивная кулинарная система заказов с телеметрией температуры дровяных печей в реальном времени и локальной доставкой.</p>
           <div class="tech-tags">
             <span>INTERACTIVE MAP</span>
             <span>CANVAS 2D</span>
@@ -191,17 +198,17 @@
   <section class="section-calc" id="calculator">
     <div class="calc-card">
       <div class="calc-header">
-        <span class="calc-tag">INSTANT ESTIMATE CALCULATOR</span>
-        <h2>HOW CRAZY IS YOUR PROJECT?</h2>
-        <p>Slide the sliders or click any tier button to calculate your custom production budget in real time.</p>
+        <span class="calc-tag" id="calcTag">МОЛНИЕНОСНЫЙ РАСЧЕТ СТОИМОСТИ</span>
+        <h2 id="calcHead">НАСКОЛЬКО БЕЗУМЕН ВАШ ПРОЕКТ?</h2>
+        <p id="calcDesc">Перемещайте ползунки или нажимайте на варианты, чтобы рассчитать индивидуальный бюджет в реальном времени.</p>
       </div>
 
       <div class="calc-body">
         <!-- Slider 1: Scope -->
         <div class="calc-control-group">
           <div class="control-label-row">
-            <span class="control-title">1. PROJECT SCALE:</span>
-            <strong class="control-value-badge" id="scopeLabel">3-5 Page Interactive Site</strong>
+            <span class="control-title" id="lblScope">1. МАСШТАБ ПРОЕКТА:</span>
+            <strong class="control-value-badge" id="scopeLabel">Интерактивный сайт (3-5 стр.)</strong>
           </div>
           
           <div class="slider-row">
@@ -214,18 +221,18 @@
 
           <!-- Clickable Tier Pills -->
           <div class="tier-pills" id="scopePills">
-            <button type="button" class="tier-pill" data-val="1">1 Page Landing</button>
-            <button type="button" class="tier-pill active" data-val="2">3-5 Page Site</button>
-            <button type="button" class="tier-pill" data-val="3">Full Web App</button>
-            <button type="button" class="tier-pill" data-val="4">Enterprise Suite</button>
+            <button type="button" class="tier-pill" data-val="1" id="scPill1">1 стр. Лендинг</button>
+            <button type="button" class="tier-pill active" data-val="2" id="scPill2">3-5 стр. Сайт</button>
+            <button type="button" class="tier-pill" data-val="3" id="scPill3">Веб-приложение</button>
+            <button type="button" class="tier-pill" data-val="4" id="scPill4">Корп. портал</button>
           </div>
         </div>
 
         <!-- Slider 2: Insanity / Complexity -->
         <div class="calc-control-group">
           <div class="control-label-row">
-            <span class="control-title">2. ANIMATION & PHYSICS COMPLEXITY:</span>
-            <strong class="control-value-badge" id="insanityLabel">High (3D Canvas + Custom Sound)</strong>
+            <span class="control-title" id="lblInsanity">2. СЛОЖНОСТЬ АНИМАЦИЙ И ФИЗИКИ:</span>
+            <strong class="control-value-badge" id="insanityLabel">Высокая (3D Canvas + Звук)</strong>
           </div>
 
           <div class="slider-row">
@@ -238,9 +245,9 @@
 
           <!-- Clickable Tier Pills -->
           <div class="tier-pills" id="insanityPills">
-            <button type="button" class="tier-pill" data-val="1">Standard (Chunky CSS)</button>
-            <button type="button" class="tier-pill active" data-val="2">High (3D + Sound)</button>
-            <button type="button" class="tier-pill" data-val="3">Maximum Overdrive</button>
+            <button type="button" class="tier-pill" data-val="1" id="insPill1">Стандарт (CSS)</button>
+            <button type="button" class="tier-pill active" data-val="2" id="insPill2">Высокая (3D + Звук)</button>
+            <button type="button" class="tier-pill" data-val="3" id="insPill3">Максимум драйва</button>
           </div>
         </div>
 
@@ -249,20 +256,20 @@
           <label class="custom-check">
             <input type="checkbox" id="checkBrand" checked>
             <span class="checkmark"></span>
-            <span>Branding & Bespoke Vector Identity (+ $2,500)</span>
+            <span id="lblBrand">Брендинг и векторная айдентика (+ $2,500)</span>
           </label>
           <label class="custom-check">
             <input type="checkbox" id="checkSound" checked>
             <span class="checkmark"></span>
-            <span>Synthesized Web Audio Soundscape (+ $1,800)</span>
+            <span id="lblSound">Синтезированный саунд-дизайн Web Audio (+ $1,800)</span>
           </label>
         </div>
 
         <!-- Total Box -->
         <div class="calc-total-box">
-          <div class="total-label">ESTIMATED LAUNCH BUDGET</div>
+          <div class="total-label" id="lblTotal">ПРИМЕРНЫЙ БЮДЖЕТ ЗАПУСКА</div>
           <div class="total-amount" id="totalBudget">$14,300</div>
-          <button class="chunky-btn yellow lg" id="bookCallBtn">LOCK IN THIS PROJECT</button>
+          <button class="chunky-btn yellow lg" id="bookCallBtn">ЗАБРОНИРОВАТЬ ПРОЕКТ</button>
         </div>
       </div>
     </div>
@@ -273,25 +280,25 @@
     <div class="footer-grid">
       <div class="footer-brand-box">
         <div class="brand-box big">NEOPOP*</div>
-        <p>Building loud, joyful, and memorable digital products since 2024.</p>
+        <p id="ftPitch">Создаем громкие, радостные и незабываемые цифровые продукты с 2024 года.</p>
       </div>
 
       <div class="footer-links">
-        <h4>LINKS</h4>
-        <a href="#work">Manifesto</a>
-        <a href="#calculator">Pricing</a>
-        <a href="#contact">Contact</a>
+        <h4 id="ftHLinks">ССЫЛКИ</h4>
+        <a href="#work" id="ftL1">Манифест</a>
+        <a href="#calculator" id="ftL2">Цены</a>
+        <a href="#contact" id="ftL3">Контакты</a>
       </div>
 
       <div class="footer-links">
-        <h4>SOCIALS</h4>
+        <h4 id="ftHSocials">СОЦСЕТИ</h4>
         <a href="#!">Twitter / X</a>
         <a href="#!">Instagram</a>
         <a href="#!">Dribbble</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>DESIGNED WITH PASSION, CODE & ZERO APOLOGIES. ALL RIGHTS RESERVED.</span>
+      <span id="ftCopy">СОЗДАНО С ДРАЙВОМ, КОДОМ И БЕЗ ИЗВИНЕНИЙ. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</span>
     </div>
   </footer>
 

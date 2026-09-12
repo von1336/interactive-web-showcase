@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LUMINA BOTANICA // Biophilic Architecture & Haute Floristry</title>
+  <title id="docTitle">LUMINA BOTANICA // Биофильная архитектура и высокая флористика</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -23,34 +23,41 @@
       <span class="brand-monogram">LB</span>
       <div class="brand-titles">
         <span class="brand-name">LUMINA BOTANICA</span>
-        <span class="brand-sub">ATELIER D'ART & NATURE</span>
+        <span class="brand-sub" id="brandSub">АТЕЛЬЕ ИСКУССТВА И ПРИРОДЫ</span>
       </div>
     </div>
 
     <nav class="nav-menu">
-      <a href="#philosophy" class="nav-link">PHILOSOPHY</a>
-      <a href="#herbarium" class="nav-link">HERBARIUM</a>
-      <a href="#spaces" class="nav-link">SANCTUARIES</a>
-      <a href="#contact" class="nav-link">COMMISSIONS</a>
+      <a href="#philosophy" class="nav-link" id="navPhil">ФИЛОСОФИЯ</a>
+      <a href="#herbarium" class="nav-link" id="navHerb">ГЕРБАРИЙ</a>
+      <a href="#spaces" class="nav-link" id="navSpaces">СВЯТИЛИЩА</a>
+      <a href="#contact" class="nav-link" id="navContact">ПРОЕКТЫ</a>
     </nav>
 
     <div class="nav-right">
+      <!-- Language Switcher -->
+      <button class="lang-pill-btn" id="langToggle" title="Переключить язык / Switch Language">
+        <span class="lang-opt active" data-lang-opt="ru">RU</span>
+        <span class="lang-sep">|</span>
+        <span class="lang-opt" data-lang-opt="en">EN</span>
+      </button>
+
       <div class="mood-selector">
-        <button class="mood-btn active" data-mood="day" title="Verdant Dawn">DAWN</button>
-        <button class="mood-btn" data-mood="dusk" title="Golden Sunset">DUSK</button>
-        <button class="mood-btn" data-mood="night" title="Nocturne Garden">NOCTURNE</button>
+        <button class="mood-btn active" data-mood="day" id="moodDay" title="Verdant Dawn">РАССВЕТ</button>
+        <button class="mood-btn" data-mood="dusk" id="moodDusk" title="Golden Sunset">СУМЕРКИ</button>
+        <button class="mood-btn" data-mood="night" id="moodNight" title="Nocturne Garden">НОКТЮРН</button>
       </div>
       <button class="audio-btn" id="audioToggle" title="Organic Soundscape">
         <svg class="audio-svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M12 3v18M8 7v10M16 9v6M4 11v2M20 11v2"/>
         </svg>
-        <span class="audio-text">CHIMES</span>
+        <span class="audio-text" id="audioLabel">КОЛОКОЛЬЧИКИ</span>
       </button>
       <a href="../index.html" class="portal-back-btn">
         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
         </svg>
-        HUB
+        <span id="hubLabel">ХАБ</span>
       </a>
     </div>
   </header>
@@ -59,18 +66,18 @@
   <main>
     <section class="hero-editorial">
       <div class="hero-content">
-        <div class="editorial-tag">VOL. XXIII — THE BIOPHILIC LIVING COLLECTION</div>
-        <h1 class="hero-heading">
-          Where Living Flora <br>
-          <em>Meets Sculptural Form</em>
+        <div class="editorial-tag" id="heroTag">ТОМ XXIII — БИОФИЛЬНАЯ ЖИВАЯ КОЛЛЕКЦИЯ</div>
+        <h1 class="hero-heading" id="heroHeading">
+          Где живая природа <br>
+          <em>Обретает скульптурную форму</em>
         </h1>
-        <p class="hero-text">
-          Lumina Botanica curates bespoke living ecosystems, botanical installations, and sensory botanical architecture for discerning residences, museums, and private sanctuaries worldwide.
+        <p class="hero-text" id="heroText">
+          Lumina Botanica создает эксклюзивные живые экосистемы, ботанические инсталляции и сенсорную биофильную архитектуру для резиденций, музеев и частных святилищ по всему миру.
         </p>
 
         <div class="hero-actions">
-          <a href="#herbarium" class="btn-primary" data-cursor="EXPLORE">EXPLORE SPECIMENS</a>
-          <button class="btn-secondary" id="bloomTrigger" data-cursor="BLOOM">TRIGGER BLOOM</button>
+          <a href="#herbarium" class="btn-primary" id="btnExplore" data-cursor="EXPLORE">ИССЛЕДОВАТЬ ЭКСПОНАТЫ</a>
+          <button class="btn-secondary" id="bloomTrigger" data-cursor="BLOOM">РАСЦВЕТ ФЛОРЫ</button>
         </div>
       </div>
 
@@ -78,16 +85,16 @@
         <div class="art-visual-wrapper">
           <div class="art-ornament-circle"></div>
           <div class="art-photo-container">
-            <img src="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&w=700&q=80" alt="Monstera Deliciosa Variegata" class="art-photo" id="heroBotanicalPhoto" loading="lazy">
+            <img src="assets/images/hero-monstera.jpg" onerror="this.onerror=null;this.src='assets/images/hero-monstera.svg'" alt="Monstera Deliciosa Variegata" class="art-photo" id="heroBotanicalPhoto" loading="lazy">
             <div class="art-photo-glow"></div>
           </div>
           <div class="art-card-inner">
-            <div class="art-badge">N° 084 // HERITAGE</div>
+            <div class="art-badge" id="artBadge">№ 084 // НАСЛЕДИЕ</div>
             <div class="art-botanical-name">Monstera Deliciosa Variegata</div>
-            <div class="art-caption">Cultivated under micro-climate glasshouse chambers in Kyoto</div>
+            <div class="art-caption" id="artCaption">Выращено в микроклиматических стеклянных оранжереях Киото</div>
             <div class="growth-meter">
-              <span>VITALITY RATING</span>
-              <span class="val">99.4% OPTIMAL</span>
+              <span id="growthLabel">ЖИЗНЕННЫЙ ТОНУС</span>
+              <span class="val" id="growthVal">99.4% ОПТИМАЛЬНО</span>
             </div>
           </div>
         </div>
@@ -106,24 +113,24 @@
 
       <div class="philosophy-grid">
         <div class="philosophy-quote">
-          <blockquote>
-            “To design with nature is not merely to bring green indoors, but to honor the quiet, slow cadence of the living earth.”
+          <blockquote id="quoteText">
+            «Творить в согласии с природой — значит не просто вносить зелень в интерьер, но почитать тихий, неспешный ритм живой Земли».
           </blockquote>
-          <cite>— Astrid Vance, Master Botanist & Founder</cite>
+          <cite id="quoteCite">— Астрид Вэнс, главный ботаник и основатель</cite>
         </div>
 
         <div class="metrics-column">
           <div class="metric-card">
             <div class="metric-num">3,400+</div>
-            <div class="metric-label">Heritage Species Preserved</div>
+            <div class="metric-label" id="m1Lbl">Сохраненных реликтовых видов</div>
           </div>
           <div class="metric-card">
             <div class="metric-num">100%</div>
-            <div class="metric-label">Regenerative Soil Systems</div>
+            <div class="metric-label" id="m2Lbl">Регенеративные почвенные системы</div>
           </div>
           <div class="metric-card">
             <div class="metric-num">18</div>
-            <div class="metric-label">Global Architectural Sanctuaries</div>
+            <div class="metric-label" id="m3Lbl">Глобальных архитектурных святилищ</div>
           </div>
         </div>
       </div>
@@ -132,31 +139,31 @@
     <!-- Herbarium Catalog Section -->
     <section class="herbarium-section" id="herbarium">
       <div class="section-title-wrap">
-        <div class="sub-label">ARCHIVE & SELECTIONS</div>
-        <h2 class="section-heading">The Curated Herbarium</h2>
+        <div class="sub-label" id="herbSub">АРХИВ И СЕЛЕКЦИЯ</div>
+        <h2 class="section-heading" id="herbHead">Кураторский гербарий</h2>
       </div>
 
       <div class="filter-pills">
-        <button class="filter-pill active" data-filter="all">ALL COLLECTIONS</button>
-        <button class="filter-pill" data-filter="flora">RARE FLORA</button>
-        <button class="filter-pill" data-filter="foliage">SCULPTURAL FOLIAGE</button>
-        <button class="filter-pill" data-filter="aromatic">SACRED AROMATICS</button>
+        <button class="filter-pill active" data-filter="all" id="fpAll">ВСЕ КОЛЛЕКЦИИ</button>
+        <button class="filter-pill" data-filter="flora" id="fpFlora">РЕДКАЯ ФЛОРА</button>
+        <button class="filter-pill" data-filter="foliage" id="fpFoliage">СКУЛЬПТУРНАЯ ЛИСТВА</button>
+        <button class="filter-pill" data-filter="aromatic" id="fpArom">СВЯЩЕННЫЕ АРОМАТЫ</button>
       </div>
 
       <div class="specimen-grid">
         <!-- Item 1 -->
         <article class="specimen-card" data-category="foliage" data-cursor="DISCOVER">
           <div class="card-photo-box">
-            <img src="https://images.unsplash.com/photo-1509423350716-97f9360b4e09?auto=format&fit=crop&w=600&q=80" alt="Strelitzia Reginae" class="specimen-img" loading="lazy">
+            <img src="assets/images/specimen-strelitzia.jpg" onerror="this.onerror=null;this.src='assets/images/specimen-strelitzia.svg'" alt="Strelitzia Reginae" class="specimen-img" loading="lazy">
             <div class="photo-vignette"></div>
           </div>
           <div class="specimen-info">
             <span class="specimen-code">SPECIMEN // 01</span>
             <h3 class="specimen-title">Strelitzia Reginae 'Alba'</h3>
-            <p class="specimen-desc">Architectural white bird of paradise featuring statuesque emerald fronds and pure crystalline bracts.</p>
+            <p class="specimen-desc" id="sp1Desc">Архитектурная белая райская птица с величественными изумрудными листьями и кристально-чистыми прицветниками.</p>
             <div class="specimen-meta">
-              <span>ORIGIN: SOUTH AFRICA</span>
-              <span class="accent-tag">RARE SEEDLING</span>
+              <span id="sp1Origin">ПРОИСХОЖДЕНИЕ: ЮЖНАЯ АФРИКА</span>
+              <span class="accent-tag" id="sp1Tag">РЕДКИЙ САЖЕНЕЦ</span>
             </div>
           </div>
         </article>
@@ -164,16 +171,16 @@
         <!-- Item 2 -->
         <article class="specimen-card" data-category="flora" data-cursor="DISCOVER">
           <div class="card-photo-box">
-            <img src="https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?auto=format&fit=crop&w=600&q=80" alt="Phalaenopsis Bellina Orchid" class="specimen-img" loading="lazy">
+            <img src="assets/images/specimen-orchid.jpg" onerror="this.onerror=null;this.src='assets/images/specimen-orchid.svg'" alt="Phalaenopsis Bellina Orchid" class="specimen-img" loading="lazy">
             <div class="photo-vignette"></div>
           </div>
           <div class="specimen-info">
             <span class="specimen-code">SPECIMEN // 02</span>
-            <h3 class="specimen-title">Phalaenopsis Bellina Orchid</h3>
-            <p class="specimen-desc">Wild scented orchid exhibiting magenta petals with gradient citrus-lime margins and intoxicating fragrance.</p>
+            <h3 class="specimen-title" id="sp2Title">Орхидея Phalaenopsis Bellina</h3>
+            <p class="specimen-desc" id="sp2Desc">Дикая ароматная орхидея с пурпурными лепестками, лаймово-цитрусовой каймой и пьянящим ароматом.</p>
             <div class="specimen-meta">
-              <span>ORIGIN: BORNEO</span>
-              <span class="accent-tag">FRAGRANT</span>
+              <span id="sp2Origin">ПРОИСХОЖДЕНИЕ: БОРНЕО</span>
+              <span class="accent-tag" id="sp2Tag">БЛАГОУХАЮЩИЙ</span>
             </div>
           </div>
         </article>
@@ -181,16 +188,16 @@
         <!-- Item 3 -->
         <article class="specimen-card" data-category="aromatic" data-cursor="DISCOVER">
           <div class="card-photo-box">
-            <img src="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=600&q=80" alt="Santalum Album Sandalwood Forest" class="specimen-img" loading="lazy">
+            <img src="assets/images/specimen-sandalwood.jpg" onerror="this.onerror=null;this.src='assets/images/specimen-sandalwood.svg'" alt="Santalum Album Sandalwood Forest" class="specimen-img" loading="lazy">
             <div class="photo-vignette"></div>
           </div>
           <div class="specimen-info">
             <span class="specimen-code">SPECIMEN // 03</span>
-            <h3 class="specimen-title">Santalum Album (Sandalwood)</h3>
-            <p class="specimen-desc">Sustainably propagated sacred sandalwood trees producing meditative, balsamic heartwood oils.</p>
+            <h3 class="specimen-title" id="sp3Title">Santalum Album (Сандал)</h3>
+            <p class="specimen-desc" id="sp3Desc">Священные сандаловые деревья устойчивого разведения, дающие медитативные бальзамические древесные масла.</p>
             <div class="specimen-meta">
-              <span>ORIGIN: SOUTHERN INDIA</span>
-              <span class="accent-tag">HERITAGE</span>
+              <span id="sp3Origin">ПРОИСХОЖДЕНИЕ: ЮЖНАЯ ИНДИЯ</span>
+              <span class="accent-tag" id="sp3Tag">НАСЛЕДИЕ</span>
             </div>
           </div>
         </article>
@@ -198,16 +205,16 @@
         <!-- Item 4 -->
         <article class="specimen-card" data-category="flora" data-cursor="DISCOVER">
           <div class="card-photo-box">
-            <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80" alt="Nelumbo Nucifera Celestial Lotus" class="specimen-img" loading="lazy">
+            <img src="assets/images/specimen-lotus.jpg" onerror="this.onerror=null;this.src='assets/images/specimen-lotus.svg'" alt="Nelumbo Nucifera Celestial Lotus" class="specimen-img" loading="lazy">
             <div class="photo-vignette"></div>
           </div>
           <div class="specimen-info">
             <span class="specimen-code">SPECIMEN // 04</span>
-            <h3 class="specimen-title">Nelumbo Nucifera 'Celestial'</h3>
-            <p class="specimen-desc">Sacred aquatic lotus revered for its self-cleaning superhydrophobic leaves and multi-layered petals.</p>
+            <h3 class="specimen-title" id="sp4Title">Nelumbo Nucifera 'Celestial' (Лотос)</h3>
+            <p class="specimen-desc" id="sp4Desc">Священный водный лотос, почитаемый за супергидрофобные самоочищающиеся листья и многослойные лепестки.</p>
             <div class="specimen-meta">
-              <span>ORIGIN: MEKONG DELTA</span>
-              <span class="accent-tag">AQUATIC</span>
+              <span id="sp4Origin">ПРОИСХОЖДЕНИЕ: ДЕЛЬТА МЕКОНГА</span>
+              <span class="accent-tag" id="sp4Tag">ВОДНЫЙ</span>
             </div>
           </div>
         </article>
@@ -218,14 +225,14 @@
     <section class="sanctuary-preview" id="spaces">
       <div class="sanctuary-box">
         <div class="sanctuary-content">
-          <span class="sanctuary-tag">BESPOKE ARCHITECTURAL INSTALLATIONS</span>
-          <h2>Bring Ancient Forests Into High Architecture</h2>
-          <p>
-            Our horticultural architects blend indoor microclimates, automated nutrient misting, and museum-grade circadian illumination to sustain thriving vertical forests in private penthouses and cultural foundations.
+          <span class="sanctuary-tag" id="sancTag">АВТОРСКИЕ АРХИТЕКТУРНЫЕ ИНСТАЛЛЯЦИИ</span>
+          <h2 id="sancHeading">Привнесите древние леса в высокую архитектуру</h2>
+          <p id="sancDesc">
+            Наши ландшафтные архитекторы объединяют комнатные микроклиматы, автоматизированное туманообразование с питательными веществами и циркадное освещение музейного уровня для вертикальных лесов.
           </p>
           <div class="quote-form">
-            <input type="email" placeholder="Enter your email for private portfolio access..." class="editorial-input">
-            <button class="btn-primary" id="subscribeBtn">REQUEST INQUIRY</button>
+            <input type="email" placeholder="Введите email для доступа к портфолио..." class="editorial-input" id="quoteInput">
+            <button class="btn-primary" id="subscribeBtn">ОТПРАВИТЬ ЗАПРОС</button>
           </div>
           <div class="confirm-message" id="confirmMsg"></div>
         </div>
@@ -239,26 +246,26 @@
       <div class="footer-brand">
         <span class="brand-monogram lg">LB</span>
         <h3>LUMINA BOTANICA</h3>
-        <p>Horticultural Atelier & Biophilic Architecture</p>
+        <p id="ftBrandDesc">Ботаническое ателье и биофильная архитектура</p>
       </div>
 
       <div class="footer-links-col">
-        <h4>ATELIERS</h4>
+        <h4 id="ftHAteliers">АТЕЛЬЕ</h4>
         <p>14 Rue de l'Université, Paris</p>
         <p>Kokusai-dori 8, Kyoto</p>
         <p>76 Franklin St, Tribeca NYC</p>
       </div>
 
       <div class="footer-links-col">
-        <h4>EDITIONS</h4>
-        <a href="#!">The Biophilic Journal</a>
-        <a href="#!">Conservation Monograph</a>
-        <a href="#!">Rare Seed Register</a>
+        <h4 id="ftHEditions">ИЗДАНИЯ</h4>
+        <a href="#!" id="ftEd1">Биофильный журнал</a>
+        <a href="#!" id="ftEd2">Монография о сохранении видов</a>
+        <a href="#!" id="ftEd3">Регистр редких семян</a>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p>© 2026 LUMINA BOTANICA ATELIER. DEDICATED TO PRESERVING EARTH'S BOTANICAL TREASURES.</p>
+      <p id="ftCopy">© 2026 АТЕЛЬЕ LUMINA BOTANICA. ПОСВЯЩЕНО СОХРАНЕНИЮ БОТАНИЧЕСКИХ СОКРОВИЩ ЗЕМЛИ.</p>
     </div>
   </footer>
 

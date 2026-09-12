@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500" width="100%" height="100%">
+  <defs>
+    <!-- Outer Background Radial -->
+    <radialGradient id="cardBg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#141824"/>
+      <stop offset="60%" stop-color="#090b10"/>
+      <stop offset="100%" stop-color="#040507"/>
+    </radialGradient>
+
+    <!-- Rose Gold Metal Gradients -->
+    <linearGradient id="roseGoldCase" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eed8b7"/>
+      <stop offset="25%" stop-color="#c59868"/>
+      <stop offset="50%" stop-color="#f5e4cb"/>
+      <stop offset="75%" stop-color="#9a6e42"/>
+      <stop offset="100%" stop-color="#dfb17b"/>
+    </linearGradient>
+
+    <radialGradient id="bezelRing" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#fdf3e2"/>
+      <stop offset="35%" stop-color="#d9a76d"/>
+      <stop offset="70%" stop-color="#885b31"/>
+      <stop offset="100%" stop-color="#4a3017"/>
+    </radialGradient>
+
+    <linearGradient id="innerRehaut" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a0c12"/>
+      <stop offset="100%" stop-color="#1d2230"/>
+    </linearGradient>
+
+    <!-- Meteorite Texture Pattern -->
+    <pattern id="widmanstatten" width="80" height="80" patternUnits="userSpaceOnUse" patternTransform="rotate(27)">
+      <rect width="80" height="80" fill="#1b202c"/>
+      <path d="M0,20 L80,20 M0,50 L80,50 M20,0 L20,80 M60,0 L60,80" stroke="#2c3345" stroke-width="1.2"/>
+      <path d="M0,0 L80,80 M0,40 L40,80 M40,0 L80,40" stroke="#3d475d" stroke-width="1.5" opacity="0.65"/>
+      <path d="M80,0 L0,80 M40,0 L0,40 M80,40 L40,80" stroke="#4a556f" stroke-width="0.9" opacity="0.5"/>
+      <circle cx="15" cy="35" r="0.8" fill="#8896b3" opacity="0.4"/>
+      <circle cx="65" cy="55" r="1" fill="#8896b3" opacity="0.5"/>
+      <line x1="10" y1="15" x2="35" y2="70" stroke="#5d6a87" stroke-width="0.8" opacity="0.4"/>
+      <line x1="50" y1="10" x2="75" y2="65" stroke="#252b3a" stroke-width="1.8"/>
+    </pattern>
+
+    <!-- Moonphase Midnight Blue Gradient -->
+    <radialGradient id="nightSky" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#17224d"/>
+      <stop offset="50%" stop-color="#0b112c"/>
+      <stop offset="100%" stop-color="#040612"/>
+    </radialGradient>
+
+    <!-- Gold Moon Gradient -->
+    <radialGradient id="goldMoon" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#fff5cc"/>
+      <stop offset="45%" stop-color="#e8bd4b"/>
+      <stop offset="85%" stop-color="#a67c1e"/>
+      <stop offset="100%" stop-color="#6d4e08"/>
+    </radialGradient>
+
+    <!-- Blued Steel Hands -->
+    <linearGradient id="bluedSteel" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e58b8"/>
+      <stop offset="45%" stop-color="#3b82f6"/>
+      <stop offset="70%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="caseShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.85"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#dfb17b" flood-opacity="0.2"/>
+    </filter>
+
+    <filter id="handShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="700" height="500" fill="url(#cardBg)"/>
+
+  <g transform="translate(350, 240)" filter="url(#caseShadow)">
+    <!-- Watch Lugs (18k Rose Gold) -->
+    <path d="M-105,-175 L-130,-215 L-95,-218 L-80,-178 Z" fill="url(#roseGoldCase)" stroke="#664420" stroke-width="1"/>
+    <path d="M105,-175 L130,-215 L95,-218 L80,-178 Z" fill="url(#roseGoldCase)" stroke="#664420" stroke-width="1"/>
+    <path d="M-105,175 L-130,215 L-95,218 L-80,178 Z" fill="url(#roseGoldCase)" stroke="#664420" stroke-width="1"/>
+    <path d="M105,175 L130,215 L95,218 L80,178 Z" fill="url(#roseGoldCase)" stroke="#664420" stroke-width="1"/>
+
+    <!-- Alligator Strap Silhouette -->
+    <path d="M-90,-218 L90,-218 L80,-240 L-80,-240 Z" fill="#121318"/>
+    <path d="M-90,218 L90,218 L80,240 L-80,240 Z" fill="#121318"/>
+
+    <!-- Knurled Crown at 3 o'clock with Sapphire Cabochon -->
+    <rect x="180" y="-22" width="16" height="44" rx="3" fill="url(#roseGoldCase)" stroke="#523214" stroke-width="1"/>
+    <line x1="184" y1="-20" x2="184" y2="20" stroke="#523214" stroke-width="1.5"/>
+    <line x1="188" y1="-20" x2="188" y2="20" stroke="#523214" stroke-width="1.5"/>
+    <line x1="192" y1="-20" x2="192" y2="20" stroke="#523214" stroke-width="1.5"/>
+    <ellipse cx="196" cy="0" rx="3.5" ry="8" fill="#1d4ed8" stroke="#3b82f6" stroke-width="0.8"/>
+
+    <!-- Main Outer Case (18k Rose Gold 42mm) -->
+    <circle cx="0" cy="0" r="185" fill="url(#roseGoldCase)"/>
+    <circle cx="0" cy="0" r="176" fill="#16120e"/>
+    <circle cx="0" cy="0" r="172" fill="url(#bezelRing)"/>
+    <circle cx="0" cy="0" r="162" fill="url(#innerRehaut)"/>
+
+    <!-- Dial: Meteorite Slice Plate -->
+    <circle cx="0" cy="0" r="154" fill="url(#widmanstatten)"/>
+    <circle cx="0" cy="0" r="154" fill="none" stroke="#dfb17b" stroke-width="1" opacity="0.3"/>
+
+    <!-- Caliper / Minute Track Rehaut -->
+    <circle cx="0" cy="0" r="150" fill="none" stroke="#2a3346" stroke-width="12"/>
+    <circle cx="0" cy="0" r="144" fill="none" stroke="#dfb17b" stroke-width="1" opacity="0.6"/>
+
+    <!-- Applied Rose Gold Hour Indices -->
+    <g fill="#fbe6ca" stroke="#9a6e42" stroke-width="0.5">
+      <!-- 12 o'clock double index -->
+      <rect x="-4" y="-148" width="3" height="14" rx="1"/>
+      <rect x="1" y="-148" width="3" height="14" rx="1"/>
+      <!-- 3 o'clock -->
+      <rect x="134" y="-2" width="14" height="4" rx="1"/>
+      <!-- 6 o'clock -->
+      <rect x="-2" y="134" width="4" height="14" rx="1"/>
+      <!-- 9 o'clock -->
+      <rect x="-148" y="-2" width="14" height="4" rx="1"/>
+      <!-- 1, 2, 4, 5, 7, 8, 10, 11 hour points -->
+      <circle cx="71" cy="-123" r="2.5"/>
+      <circle cx="123" cy="-71" r="2.5"/>
+      <circle cx="123" cy="71" r="2.5"/>
+      <circle cx="71" cy="123" r="2.5"/>
+      <circle cx="-71" cy="123" r="2.5"/>
+      <circle cx="-123" cy="71" r="2.5"/>
+      <circle cx="-123" cy="-71" r="2.5"/>
+      <circle cx="-71" cy="-123" r="2.5"/>
+    </g>
+
+    <!-- Sub-dial at 9: Days of Week Guilloché -->
+    <g transform="translate(-65, 5)">
+      <circle cx="0" cy="0" r="40" fill="#131722" stroke="#dfb17b" stroke-width="1"/>
+      <circle cx="0" cy="0" r="38" fill="none" stroke="#252c3d" stroke-width="1" stroke-dasharray="2 3"/>
+      <text x="0" y="-26" text-anchor="middle" fill="#dfb17b" font-family="sans-serif" font-size="6" font-weight="700">MON</text>
+      <text x="26" y="0" text-anchor="middle" fill="#8896b3" font-family="sans-serif" font-size="5.5">WED</text>
+      <text x="0" y="28" text-anchor="middle" fill="#8896b3" font-family="sans-serif" font-size="5.5">FRI</text>
+      <text x="-26" y="0" text-anchor="middle" fill="#8896b3" font-family="sans-serif" font-size="5.5">SUN</text>
+      <line x1="0" y1="0" x2="16" y2="-12" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="0" cy="0" r="2.5" fill="#dfb17b"/>
+    </g>
+
+    <!-- Sub-dial at 3: Date of Month Guilloché -->
+    <g transform="translate(65, 5)">
+      <circle cx="0" cy="0" r="40" fill="#131722" stroke="#dfb17b" stroke-width="1"/>
+      <circle cx="0" cy="0" r="38" fill="none" stroke="#252c3d" stroke-width="1" stroke-dasharray="2 3"/>
+      <text x="0" y="-26" text-anchor="middle" fill="#dfb17b" font-family="sans-serif" font-size="6" font-weight="700">31</text>
+      <text x="26" y="0" text-anchor="middle" fill="#8896b3" font-family="sans-serif" font-size="5.5">08</text>
+      <text x="0" y="28" text-anchor="middle" fill="#8896b3" font-family="sans-serif" font-size="5.5">15</text>
+      <text x="-26" y="0" text-anchor="middle" fill="#8896b3" font-family="sans-serif" font-size="5.5">22</text>
+      <line x1="0" y1="0" x2="-14" y2="-18" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="0" cy="0" r="2.5" fill="#dfb17b"/>
+    </g>
+
+    <!-- Astronomical Moonphase Aperture at 6 o'clock -->
+    <g transform="translate(0, 68)">
+      <path d="M-48,-5 C-48,32 48,32 48,-5 C36,8 18,12 0,12 C-18,12 -36,8 -48,-5 Z" fill="#0b0e18" stroke="#dfb17b" stroke-width="1.5"/>
+      <g clip-path="url(#moonClip)">
+        <clipPath id="moonClip">
+          <path d="M-47,-4 C-47,30 47,30 47,-4 C35,7 18,11 0,11 C-18,11 -35,7 -47,-4 Z"/>
+        </clipPath>
+        <circle cx="0" cy="5" r="42" fill="url(#nightSky)"/>
+        <circle cx="-25" cy="5" r="0.8" fill="#ffffff"/>
+        <circle cx="-12" cy="18" r="1.2" fill="#fff5cc"/>
+        <circle cx="28" cy="8" r="0.9" fill="#ffffff"/>
+        <circle cx="15" cy="20" r="1.1" fill="#fff5cc"/>
+        <circle cx="-35" cy="15" r="0.7" fill="#93c5fd"/>
+        <circle cx="34" cy="16" r="0.8" fill="#93c5fd"/>
+        <circle cx="2" cy="10" r="16" fill="url(#goldMoon)"/>
+        <circle cx="-3" cy="6" r="3.2" fill="#c79c32" opacity="0.5"/>
+        <circle cx="6" cy="14" r="4" fill="#a67c1e" opacity="0.45"/>
+        <circle cx="-1" cy="17" r="2" fill="#c79c32" opacity="0.4"/>
+        <circle cx="9" cy="5" r="2.5" fill="#9e7314" opacity="0.4"/>
+      </g>
+      <path d="M-42,-6 Q0,10 42,-6" fill="none" stroke="#dfb17b" stroke-width="0.8" opacity="0.6"/>
+      <text x="0" y="38" text-anchor="middle" fill="#dfb17b" font-family="serif" font-size="6.5" letter-spacing="1">LUNAR 29½ DAYS</text>
+    </g>
+
+    <!-- Brand Typography & Heritage -->
+    <text x="0" y="-75" text-anchor="middle" fill="#fdf2e2" font-family="'Cinzel', serif, 'Times New Roman'" font-size="10" font-weight="700" letter-spacing="4">CHRONOCRAFT</text>
+    <text x="0" y="-62" text-anchor="middle" fill="#dfb17b" font-family="sans-serif" font-size="5.5" letter-spacing="2">GENÈVE • 1888</text>
+    <text x="0" y="-52" text-anchor="middle" fill="#94a3b8" font-family="sans-serif" font-size="4.5" letter-spacing="1.5">METEORITE • PERPETUAL</text>
+
+    <!-- Blued Steel Breguet Pomme Hands -->
+    <g filter="url(#handShadow)">
+      <!-- Hour Hand -->
+      <g transform="rotate(-58)">
+        <path d="M0,8 L-2.5,0 L-1.5,-62 A6,6 0 1,1 1.5,-62 L2.5,0 Z" fill="url(#bluedSteel)"/>
+        <circle cx="0" cy="-65" r="5" fill="none" stroke="#60a5fa" stroke-width="1.2"/>
+        <circle cx="0" cy="-65" r="2.5" fill="#17224d"/>
+        <path d="M0,-70 L0,-82" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+
+      <!-- Minute Hand -->
+      <g transform="rotate(52)">
+        <path d="M0,10 L-2.2,0 L-1.2,-98 A7,7 0 1,1 1.2,-98 L2.2,0 Z" fill="url(#bluedSteel)"/>
+        <circle cx="0" cy="-102" r="6" fill="none" stroke="#60a5fa" stroke-width="1.2"/>
+        <circle cx="0" cy="-102" r="3" fill="#17224d"/>
+        <path d="M0,-108 L0,-126" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+
+      <!-- Center Cap & Synthetic Ruby -->
+      <circle cx="0" cy="0" r="7" fill="url(#roseGoldCase)"/>
+      <circle cx="0" cy="0" r="4.5" fill="#1e3a8a"/>
+      <circle cx="0" cy="0" r="2.5" fill="#93c5fd"/>
+    </g>
+
+    <!-- Sapphire Crystal AR Glare Reflection Arc -->
+    <path d="M-135,-100 A150,150 0 0,1 135,-100" fill="none" stroke="rgba(255, 255, 255, 0.18)" stroke-width="8" filter="blur(4px)"/>
+    <path d="M-110,-120 A150,150 0 0,1 80,-140" fill="none" stroke="rgba(96, 165, 250, 0.25)" stroke-width="3"/>
+  </g>
+
+  <!-- Specimen Title Banner below watch -->
+  <text x="350" y="475" text-anchor="middle" fill="#dfb17b" font-family="'Cinzel', serif" font-size="12" letter-spacing="4">ASTRONOMIA PERPETUAL MOONPHASE // GIBEON METEORITE</text>
+</svg>

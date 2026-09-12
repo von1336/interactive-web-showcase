@@ -3,6 +3,7 @@
 // ==========================================
 
 document.addEventListener('DOMContentLoaded', () => {
+  initLanguage();
   initSpaceCanvas();
   initOrbitalSimulator();
   initPulsarAudio();
@@ -12,14 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
 // ------------------------------------------
 // 1. Interactive 3D Rotatable Starfield Canvas
 // ------------------------------------------
+let hyperdriveMultiplier = 1;
+
 function initSpaceCanvas() {
   const canvas = document.getElementById('spaceCanvas');
   const ctx = canvas.getContext('2d');
   let width, height;
   let stars = [];
-  const starCount = 350;
+  const starCount = 380;
 
-  // 3D rotation angles & zoom
   let rotX = 0;
   let rotY = 0;
   let targetRotX = 0;
@@ -29,7 +31,6 @@ function initSpaceCanvas() {
   let isDragging = false;
   let lastMouseX = 0;
   let lastMouseY = 0;
-  let hyperdriveSpeed = 1;
 
   function resize() {
     width = canvas.width = window.innerWidth;
@@ -46,8 +47,19 @@ function initSpaceCanvas() {
       this.x = (Math.random() - 0.5) * 2000;
       this.y = (Math.random() - 0.5) * 2000;
       this.z = (Math.random() - 0.5) * 2000;
-      this.size = Math.random() * 2 + 0.8;
+      this.prevZ = this.z;
+      this.size = Math.random() * 2.2 + 0.8;
       this.color = Math.random() > 0.6 ? '#38bdf8' : (Math.random() > 0.4 ? '#818cf8' : '#fbbf24');
+    }
+    update() {
+      this.prevZ = this.z;
+      if (hyperdriveMultiplier > 1) {
+        this.z -= 35 * (hyperdriveMultiplier / 2);
+        if (this.z < -1000) {
+          this.z = 1000;
+          this.prevZ = 1000;
+        }
+      }
     }
   }
 
@@ -86,7 +98,7 @@ function initSpaceCanvas() {
     rotY += (targetRotY - rotY) * 0.05;
     zoom += (targetZoom - zoom) * 0.05;
 
-    ctx.fillStyle = 'rgba(3, 7, 18, 0.35)';
+    ctx.fillStyle = hyperdriveMultiplier > 1 ? 'rgba(3, 7, 18, 0.22)' : 'rgba(3, 7, 18, 0.35)';
     ctx.fillRect(0, 0, width, height);
 
     const cosY = Math.cos(rotY);
@@ -95,6 +107,8 @@ function initSpaceCanvas() {
     const sinX = Math.sin(rotX);
 
     stars.forEach(star => {
+      star.update();
+
       // Rotate around Y
       let x1 = star.x * cosY - star.z * sinY;
       let z1 = star.z * cosY + star.x * sinY;
@@ -103,25 +117,37 @@ function initSpaceCanvas() {
       let y1 = star.y * cosX - z1 * sinX;
       let z2 = z1 * cosX + star.y * sinX;
 
-      // Hyperdrive move
-      star.z -= 0.5 * hyperdriveSpeed;
-      if (star.z < -1000) star.z += 2000;
+      const fov = 400 * zoom;
+      const depth = z2 + 800;
 
-      // Projection
-      const fov = 450 * zoom;
-      const scale = fov / (fov + z2 + 800);
-
-      if (scale > 0) {
-        const px = x1 * scale + width / 2;
-        const py = y1 * scale + height / 2;
+      if (depth > 10) {
+        const k = fov / depth;
+        const px = x1 * k + width / 2;
+        const py = y1 * k + height / 2;
 
         if (px >= 0 && px <= width && py >= 0 && py <= height) {
-          const alpha = Math.min(1, Math.max(0.1, scale * 1.5));
-          ctx.fillStyle = star.color;
-          ctx.globalAlpha = alpha;
-          ctx.beginPath();
-          ctx.arc(px, py, star.size * scale * (hyperdriveSpeed > 1 ? 1.5 : 1), 0, Math.PI * 2);
-          ctx.fill();
+          const alpha = Math.min(1, Math.max(0.15, 1 - depth / 1800));
+
+          if (hyperdriveMultiplier > 1) {
+            // Draw warp speed streak
+            const pk = fov / (star.prevZ + 800);
+            const prevPx = x1 * pk + width / 2;
+            const prevPy = y1 * pk + height / 2;
+
+            ctx.strokeStyle = star.color;
+            ctx.globalAlpha = alpha;
+            ctx.lineWidth = star.size * k * 1.5;
+            ctx.beginPath();
+            ctx.moveTo(prevPx, prevPy);
+            ctx.lineTo(px, py);
+            ctx.stroke();
+          } else {
+            ctx.fillStyle = star.color;
+            ctx.globalAlpha = alpha;
+            ctx.beginPath();
+            ctx.arc(px, py, star.size * k * 0.8, 0, Math.PI * 2);
+            ctx.fill();
+          }
         }
       }
     });
@@ -130,30 +156,348 @@ function initSpaceCanvas() {
   }
   render();
 
-  // Hyperdrive Warp Button
+  // Hyperdrive Warp Jump Button
   const warpBtn = document.getElementById('galaxyWarpBtn');
-  if (warpBtn) {
-    warpBtn.addEventListener('click', () => {
-      hyperdriveSpeed = 20;
-      playPulsarTone(800, 1.2);
-      setTimeout(() => {
-        hyperdriveSpeed = 1;
-      }, 1600);
-    });
-  }
+  warpBtn?.addEventListener('click', () => {
+    hyperdriveMultiplier = 8;
+    document.body.classList.add('warp-shake');
+    playPulsarWarpChirp();
+    setTimeout(() => {
+      hyperdriveMultiplier = 1;
+      document.body.classList.remove('warp-shake');
+    }, 1400);
+  });
 }
 
 // ------------------------------------------
-// 2. Interactive Kepler Orbital Simulator
+// 2. Language Switcher (RU / EN)
 // ------------------------------------------
+const i18n = {
+  ru: {
+    docTitle: "ASTRONEX // Обсерватория глубокого космоса и телеметрия экзопланет",
+    navObs: "ОБСЕРВАТОРИЯ",
+    navSim: "ОРБИТАЛЬНЫЙ_СИМ",
+    navExo: "ЭКЗОПЛАНЕТЫ",
+    navSpectro: "СПЕКТРОГРАФ",
+    pulsarOn: "ПУЛЬСАР: ВКЛ",
+    pulsarOff: "ПУЛЬСАР: ВЫКЛ",
+    hub: "ХАБ",
+    hudArrayStatus: "СЕТЬ ГЛУБОКОГО КОСМОСА // МАССИВ 09 В СЕТИ",
+    hudAperture: "АПЕРТУРА: 30.5M",
+    heroTitle: "ОТКРЫВАЯ МИРЫ <br><span class='cosmic-gradient'>ВНЕШНЕГО РУБЕЖА</span>",
+    heroDesc: "Картографирование землеподобных экзопланет, атмосферных биосигнатур и гравитационных эхо в рукаве Персея с помощью автономных спутников-интерферометров.",
+    btnEnterSim: "ВОЙТИ В СИМУЛЯТОР ОРБИТ",
+    galaxyWarpBtn: "ГИПЕРПРОСТРАНСТВЕННЫЙ ПРЫЖОК",
+    statPlanetTag: "ОТКРЫТЫЕ ЭКЗОПЛАНЕТЫ",
+    statNoiseTag: "РЕЛИКТОВОЕ ИЗЛУЧЕНИЕ",
+    statRedshiftTag: "КРАСНОЕ СМЕЩЕНИЕ (z)",
+    statRangeTag: "ДИАПАЗОН СВЕТОВЫХ ЛЕТ",
+    statRangeVal: "12,400 СВ. Л.",
+    simBadge: "ИНТЕРАКТИВНАЯ АСТРОФИЗИЧЕСКАЯ ЛАБОРАТОРИЯ",
+    simHeading: "Кеплеровский орбитальный движок экзопланет",
+    simDesc: "Управляйте гравитационными параметрами, скоростью орбит и исследуйте атмосферы планет в реальном времени.",
+    simHint: "Нажмите на планету для спектрального анализа",
+    simPanelTitle: "ПАРАМЕТРЫ СИСТЕМЫ",
+    lblSpeed: "МНОЖИТЕЛЬ СКОРОСТИ ОРБИТ",
+    lblGrav: "ГРАВИТАЦИОННАЯ СИЛА ЗВЕЗДЫ",
+    compGas1: "АЗОТ (N₂)",
+    compGas2: "ВОДЯНОЙ ПАР (H₂O)",
+    compGas3: "УГЛЕКИСЛЫЙ ГАЗ (CO₂)",
+    catBadge: "СПЕКТРАЛЬНЫЙ АРХИВ",
+    catHeading: "Приоритетные экзомиры",
+    catDesc: "Снимки высокого разрешения, полученные нашей спутниковой интерферометрической группировкой.",
+    p1Badge: "КУЗИН ЗЕМЛИ // ЗВЕЗДА ТИПА G",
+    p1Desc: "Обращается вокруг звезды класса G2, идентичной нашему Солнцу. Радиус в 1.6 раз больше земного, геологическая активность и плотная облачность.",
+    p1Stat1Lbl: "РАССТОЯНИЕ",
+    p1Stat1Val: "1,400 СВ. Л.",
+    p1Stat2Lbl: "ПЕРИОД",
+    p1Stat2Val: "385 ДНЕЙ",
+    p1Stat3Lbl: "МАССА",
+    p2Badge: "ЗОНА ЗЛАТОВЛАСКИ",
+    p2Desc: "Ультракомпактная система красного карлика из 7 планет. Получает сопоставимый с Землей звездный поток с умеренным климатом.",
+    p2Stat1Lbl: "РАССТОЯНИЕ",
+    p2Stat1Val: "39.5 СВ. Л.",
+    p2Stat2Lbl: "ПЕРИОД",
+    p2Stat2Val: "6.1 ДНЕЙ",
+    p2Stat3Lbl: "МАССА",
+    p3Badge: "БЛИЖАЙШАЯ ЭКЗОПЛАНЕТА",
+    p3Desc: "Наш ближайший межзвездный сосед. Каменистый мир в приливном захвате, подверженный периодическим вспышкам родительской звезды.",
+    p3Stat1Lbl: "РАССТОЯНИЕ",
+    p3Stat1Val: "4.24 СВ. Л.",
+    p3Stat2Lbl: "ПЕРИОД",
+    p3Stat2Val: "11.2 ДНЕЙ",
+    p3Stat3Lbl: "МАССА",
+    ftBrandDesc: "Интерферометрическая обсерватория астрофизики и инициатива исследований глубокого космоса.",
+    ftArrayStatus: "СТАТУС МАССИВА: ЗАФИКСИРОВАН НА СТРЕЛЬЦЕ A*",
+    ftHStations: "СТАНЦИИ ОБСЕРВАТОРИИ",
+    ftHProtocols: "ПРОТОКОЛЫ ДАННЫХ",
+    ftCopy: "© 2026 ИНИЦИАТИВА ГЛУБОКОГО КОСМОСА ASTRONEX. В ПОИСКАХ ЖИЗНИ СРЕДИ ЗВЕЗД.",
+    planets: {
+      trappist: {
+        name: "TRAPPIST-1e",
+        type: "ЗЕМЛЕПОДОБНАЯ / ЗОНА ОБИТАЕМОСТИ",
+        desc: "Высокая вероятность жидких океанов. Атмосферный спектр показывает равновесие азота и углекислого газа с мощной защитной магнитосферой."
+      },
+      kepler: {
+        name: "Kepler-452b",
+        type: "СУПЕРЗЕМЛЯ / ЗВЕЗДА КЛАССА G2",
+        desc: "Радиус 1.63 R⊕. Оптимальная плотность атмосферы со следами водяного пара и плотным стратосферным облачным покровом."
+      },
+      proxima: {
+        name: "Proxima Centauri b",
+        type: "ПРИЛИВНОЙ ЗАХВАТ / КАМЕНИСТЫЙ МИР",
+        desc: "Ближайшая к Земле экзопланета (4.24 св. л.). Потенциальная умеренная кольцевая зона сумерек между освещенным и темным полушариями."
+      }
+    }
+  },
+  en: {
+    docTitle: "ASTRONEX // Deep Space Observatory & Exoplanet Telemetry",
+    navObs: "OBSERVATORY",
+    navSim: "ORBITAL_SIM",
+    navExo: "EXOPLANETS",
+    navSpectro: "SPECTROGRAPH",
+    pulsarOn: "PULSAR: ON",
+    pulsarOff: "PULSAR: OFF",
+    hub: "HUB",
+    hudArrayStatus: "DEEP SPACE ARRAY // ARRAY 09 ONLINE",
+    hudAperture: "APERTURE: 30.5M",
+    heroTitle: "UNVEILING THE <br><span class='cosmic-gradient'>OUTER RIM WORLDS</span>",
+    heroDesc: "Mapping terrestrial exoplanets, atmospheric biosignatures, and gravitational wave echoes across the Perseus Arm with autonomous interferometer satellites.",
+    btnEnterSim: "ENTER ORBITAL SIMULATOR",
+    galaxyWarpBtn: "HYPERDRIVE JUMP",
+    statPlanetTag: "OBSERVED EXOPLANETS",
+    statNoiseTag: "COSMIC BACKGROUND NOISE",
+    statRedshiftTag: "REDSHIFT PARAMETER (z)",
+    statRangeTag: "LIGHT-YEAR RANGE",
+    statRangeVal: "12,400 LY",
+    simBadge: "INTERACTIVE ASTROPHYSICS LABORATORY",
+    simHeading: "Kepler Exoplanetary Orbital Engine",
+    simDesc: "Control gravitational parameters, orbital velocity, and inspect planetary atmospheres in real time.",
+    simHint: "Drag or click planets to focus spectral analysis",
+    simPanelTitle: "SYSTEM PARAMETERS",
+    lblSpeed: "ORBITAL SPEED MULTIPLIER",
+    lblGrav: "STELLAR GRAVITY FORCE",
+    compGas1: "NITROGEN (N₂)",
+    compGas2: "WATER VAPOR (H₂O)",
+    compGas3: "CARBON DIOXIDE (CO₂)",
+    catBadge: "SPECTRAL ARCHIVE",
+    catHeading: "Prime Target Exoworlds",
+    catDesc: "High-resolution interferometric captures processed by our orbital space telemetry array.",
+    p1Badge: "EARTH'S COUSIN // G-STAR",
+    p1Desc: "Orbits a G2-type star identical to our Sun. 1.6x Earth radius with geological activity and dense cloud formations.",
+    p1Stat1Lbl: "DISTANCE",
+    p1Stat1Val: "1,400 LY",
+    p1Stat2Lbl: "PERIOD",
+    p1Stat2Val: "385 DAYS",
+    p1Stat3Lbl: "MASS",
+    p2Badge: "GOLDILOCKS ZONE",
+    p2Desc: "Ultra-compact 7-planet red dwarf system. Receives comparable stellar flux to Earth with potential temperate climate.",
+    p2Stat1Lbl: "DISTANCE",
+    p2Stat1Val: "39.5 LY",
+    p2Stat2Lbl: "PERIOD",
+    p2Stat2Val: "6.1 DAYS",
+    p2Stat3Lbl: "MASS",
+    p3Badge: "CLOSEST EXOPLANET",
+    p3Desc: "Our nearest interstellar neighbor. Tidally locked rocky world subjected to periodic high-energy stellar flares.",
+    p3Stat1Lbl: "DISTANCE",
+    p3Stat1Val: "4.24 LY",
+    p3Stat2Lbl: "PERIOD",
+    p3Stat2Val: "11.2 DAYS",
+    p3Stat3Lbl: "MASS",
+    ftBrandDesc: "Interferometric Astrophysics Observatory & Deep Space Planetary Research Initiative.",
+    ftArrayStatus: "ARRAY STATUS: LOCKED TO SAGITTARIUS A*",
+    ftHStations: "OBSERVATORY STATIONS",
+    ftHProtocols: "DATA PROTOCOLS",
+    ftCopy: "© 2026 ASTRONEX DEEP SPACE INITIATIVE. SEARCHING FOR LIFE AMONG THE STARS.",
+    planets: {
+      trappist: {
+        name: "TRAPPIST-1e",
+        type: "TERRESTRIAL / HABITABLE ZONE",
+        desc: "High probability of liquid oceans. Atmospheric spectrum reveals strong nitrogen-carbon dioxide equilibrium with protective magnetosphere."
+      },
+      kepler: {
+        name: "Kepler-452b",
+        type: "SUPER-EARTH / G2 HOST STAR",
+        desc: "1.63x Earth radius. Optimal atmospheric density with detected water vapor lines and dense stratospheric cloud deck."
+      },
+      proxima: {
+        name: "Proxima Centauri b",
+        type: "TIDAL LOCK / ROCKY WORLD",
+        desc: "Earth's closest interstellar neighbor (4.24 LY). Potential temperate ring twilight zone between irradiated day and subzero night sides."
+      }
+    }
+  }
+};
+
+let currentLang = localStorage.getItem('site_lang') || 'ru';
+
+function applyLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('site_lang', lang);
+  document.documentElement.lang = lang;
+
+  const d = i18n[lang] || i18n.ru;
+  document.title = d.docTitle;
+
+  const nO = document.getElementById('navObs');
+  if (nO) nO.textContent = d.navObs;
+  const nS = document.getElementById('navSim');
+  if (nS) nS.textContent = d.navSim;
+  const nE = document.getElementById('navExo');
+  if (nE) nE.textContent = d.navExo;
+  const nSp = document.getElementById('navSpectro');
+  if (nSp) nSp.textContent = d.navSpectro;
+
+  const pLbl = document.getElementById('pulsarLabel');
+  if (pLbl) pLbl.textContent = isAudioPlaying ? d.pulsarOn : d.pulsarOff;
+
+  const hLbl = document.getElementById('hubLabel');
+  if (hLbl) hLbl.textContent = d.hub;
+
+  const hArr = document.getElementById('hudArrayStatus');
+  if (hArr) hArr.textContent = d.hudArrayStatus;
+  const hAp = document.getElementById('hudAperture');
+  if (hAp) hAp.textContent = d.hudAperture;
+
+  const hT = document.getElementById('heroTitle');
+  if (hT) hT.innerHTML = d.heroTitle;
+  const hD = document.getElementById('heroDesc');
+  if (hD) hD.textContent = d.heroDesc;
+
+  const bES = document.getElementById('btnEnterSim');
+  if (bES) bES.textContent = d.btnEnterSim;
+  const gWp = document.getElementById('galaxyWarpBtn');
+  if (gWp) gWp.textContent = d.galaxyWarpBtn;
+
+  const sPT = document.getElementById('statPlanetTag');
+  if (sPT) sPT.textContent = d.statPlanetTag;
+  const sNT = document.getElementById('statNoiseTag');
+  if (sNT) sNT.textContent = d.statNoiseTag;
+  const sRT = document.getElementById('statRedshiftTag');
+  if (sRT) sRT.textContent = d.statRedshiftTag;
+  const sRngT = document.getElementById('statRangeTag');
+  if (sRngT) sRngT.textContent = d.statRangeTag;
+  const sRngV = document.getElementById('statRangeVal');
+  if (sRngV) sRngV.textContent = d.statRangeVal;
+
+  const sBdg = document.getElementById('simBadge');
+  if (sBdg) sBdg.textContent = d.simBadge;
+  const sHead = document.getElementById('simHeading');
+  if (sHead) sHead.textContent = d.simHeading;
+  const sDc = document.getElementById('simDesc');
+  if (sDc) sDc.textContent = d.simDesc;
+  const sHnt = document.getElementById('simHint');
+  if (sHnt) sHnt.textContent = d.simHint;
+  const sPTt = document.getElementById('simPanelTitle');
+  if (sPTt) sPTt.textContent = d.simPanelTitle;
+
+  const lSpd = document.getElementById('lblSpeed');
+  if (lSpd) lSpd.textContent = d.lblSpeed;
+  const lGrv = document.getElementById('lblGrav');
+  if (lGrv) lGrv.textContent = d.lblGrav;
+
+  const cG1 = document.getElementById('compGas1');
+  if (cG1) cG1.textContent = d.compGas1;
+  const cG2 = document.getElementById('compGas2');
+  if (cG2) cG2.textContent = d.compGas2;
+  const cG3 = document.getElementById('compGas3');
+  if (cG3) cG3.textContent = d.compGas3;
+
+  const cBdg = document.getElementById('catBadge');
+  if (cBdg) cBdg.textContent = d.catBadge;
+  const cHd = document.getElementById('catHeading');
+  if (cHd) cHd.textContent = d.catHeading;
+  const cDc2 = document.getElementById('catDesc');
+  if (cDc2) cDc2.textContent = d.catDesc;
+
+  const p1B = document.getElementById('p1Badge');
+  if (p1B) p1B.textContent = d.p1Badge;
+  const p1D = document.getElementById('p1Desc');
+  if (p1D) p1D.textContent = d.p1Desc;
+  const p1S1L = document.getElementById('p1Stat1Lbl');
+  if (p1S1L) p1S1L.textContent = d.p1Stat1Lbl;
+  const p1S1V = document.getElementById('p1Stat1Val');
+  if (p1S1V) p1S1V.textContent = d.p1Stat1Val;
+  const p1S2L = document.getElementById('p1Stat2Lbl');
+  if (p1S2L) p1S2L.textContent = d.p1Stat2Lbl;
+  const p1S2V = document.getElementById('p1Stat2Val');
+  if (p1S2V) p1S2V.textContent = d.p1Stat2Val;
+  const p1S3L = document.getElementById('p1Stat3Lbl');
+  if (p1S3L) p1S3L.textContent = d.p1Stat3Lbl;
+
+  const p2B = document.getElementById('p2Badge');
+  if (p2B) p2B.textContent = d.p2Badge;
+  const p2D = document.getElementById('p2Desc');
+  if (p2D) p2D.textContent = d.p2Desc;
+  const p2S1L = document.getElementById('p2Stat1Lbl');
+  if (p2S1L) p2S1L.textContent = d.p2Stat1Lbl;
+  const p2S1V = document.getElementById('p2Stat1Val');
+  if (p2S1V) p2S1V.textContent = d.p2Stat1Val;
+  const p2S2L = document.getElementById('p2Stat2Lbl');
+  if (p2S2L) p2S2L.textContent = d.p2Stat2Lbl;
+  const p2S2V = document.getElementById('p2Stat2Val');
+  if (p2S2V) p2S2V.textContent = d.p2Stat2Val;
+  const p2S3L = document.getElementById('p2Stat3Lbl');
+  if (p2S3L) p2S3L.textContent = d.p2Stat3Lbl;
+
+  const p3B = document.getElementById('p3Badge');
+  if (p3B) p3B.textContent = d.p3Badge;
+  const p3D = document.getElementById('p3Desc');
+  if (p3D) p3D.textContent = d.p3Desc;
+  const p3S1L = document.getElementById('p3Stat1Lbl');
+  if (p3S1L) p3S1L.textContent = d.p3Stat1Lbl;
+  const p3S1V = document.getElementById('p3Stat1Val');
+  if (p3S1V) p3S1V.textContent = d.p3Stat1Val;
+  const p3S2L = document.getElementById('p3Stat2Lbl');
+  if (p3S2L) p3S2L.textContent = d.p3Stat2Lbl;
+  const p3S2V = document.getElementById('p3Stat2Val');
+  if (p3S2V) p3S2V.textContent = d.p3Stat2Val;
+  const p3S3L = document.getElementById('p3Stat3Lbl');
+  if (p3S3L) p3S3L.textContent = d.p3Stat3Lbl;
+
+  const ftB = document.getElementById('ftBrandDesc');
+  if (ftB) ftB.textContent = d.ftBrandDesc;
+  const ftA = document.getElementById('ftArrayStatus');
+  if (ftA) ftA.textContent = d.ftArrayStatus;
+  const ftS = document.getElementById('ftHStations');
+  if (ftS) ftS.textContent = d.ftHStations;
+  const ftP = document.getElementById('ftHProtocols');
+  if (ftP) ftP.textContent = d.ftHProtocols;
+  const ftC = document.getElementById('ftCopy');
+  if (ftC) ftC.textContent = d.ftCopy;
+
+  document.querySelectorAll('#langToggle .lang-opt').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.langOpt === lang);
+  });
+
+  if (window.updateActivePlanetCard) {
+    window.updateActivePlanetCard();
+  }
+}
+
+function initLanguage() {
+  const toggleBtn = document.getElementById('langToggle');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      applyLanguage(currentLang === 'ru' ? 'en' : 'ru');
+      playPulsarChirp(600);
+    });
+  }
+  applyLanguage(currentLang);
+}
+
+// ------------------------------------------
+// 3. Kepler Orbital Mechanics Simulator
+// ------------------------------------------
+let selectedPlanetKey = 'trappist';
+
 function initOrbitalSimulator() {
   const canvas = document.getElementById('orbitSimCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  const width = canvas.width;
-  const height = canvas.height;
-  const cx = width / 2;
-  const cy = height / 2;
+  const width = canvas.width = 600;
+  const height = canvas.height = 460;
+  const center = { x: width / 2, y: height / 2 };
 
   const speedSlider = document.getElementById('speedSlider');
   const gravSlider = document.getElementById('gravSlider');
@@ -165,224 +509,256 @@ function initOrbitalSimulator() {
 
   speedSlider?.addEventListener('input', (e) => {
     speedMult = parseFloat(e.target.value);
-    speedVal.innerText = speedMult.toFixed(1) + 'x';
-    playPulsarTone(350 + speedMult * 100, 0.05);
+    if (speedVal) speedVal.innerText = speedMult.toFixed(1) + 'x';
   });
 
   gravSlider?.addEventListener('input', (e) => {
     gravityMult = parseFloat(e.target.value);
-    gravVal.innerText = gravityMult.toFixed(1) + ' G';
-    playPulsarTone(200 + gravityMult * 100, 0.05);
+    if (gravVal) gravVal.innerText = gravityMult.toFixed(1) + ' G';
   });
 
   const planets = [
-    {
-      name: 'TRAPPIST-1e',
-      type: 'TERRESTRIAL / HABITABLE ZONE',
-      desc: 'High probability of liquid oceans. Atmospheric spectrum reveals strong nitrogen-carbon dioxide equilibrium with protective magnetosphere.',
-      radius: 65,
-      size: 7,
-      color: '#38bdf8',
-      angle: 0,
-      baseSpeed: 0.025,
-      comp: { n2: '78%', h2o: '18%', co2: '4%' }
-    },
-    {
-      name: 'Kepler-452b',
-      type: 'SUPER-EARTH / G-STAR ORBIT',
-      desc: 'Super-Earth with 1.6x Earth radius. Thicker atmosphere with intense volcanic activity, cloud belts, and high surface pressure.',
-      radius: 125,
-      size: 11,
-      color: '#818cf8',
-      angle: 2,
-      baseSpeed: 0.015,
-      comp: { n2: '65%', h2o: '12%', co2: '23%' }
-    },
-    {
-      name: 'Proxima Centauri b',
-      type: 'TIDALLY LOCKED ROCKY WORLD',
-      desc: 'Orbits a tempestuous flare star. Dayside features scorched regolith; terminator zone harbors liquid subsurface aquifers.',
-      radius: 185,
-      size: 9,
-      color: '#fb7185',
-      angle: 4.2,
-      baseSpeed: 0.009,
-      comp: { n2: '45%', h2o: '5%', co2: '50%' }
-    }
+    { name: 'TRAPPIST-1e', key: 'trappist', semiMajor: 90, semiMinor: 85, speed: 0.035, angle: 0, radius: 6, color: '#38bdf8' },
+    { name: 'Kepler-452b', key: 'kepler', semiMajor: 160, semiMinor: 145, speed: 0.018, angle: 2, radius: 9, color: '#00f0b5' },
+    { name: 'Proxima Centauri b', key: 'proxima', semiMajor: 225, semiMinor: 200, speed: 0.009, angle: 4, radius: 7, color: '#f87171' }
   ];
 
-  function updatePlanetInfo(planet) {
-    document.getElementById('focusPlanetName').innerText = planet.name;
-    document.getElementById('focusPlanetType').innerText = planet.type;
-    document.getElementById('focusPlanetDesc').innerText = planet.desc;
-  }
+  window.updateActivePlanetCard = function() {
+    const d = i18n[currentLang] || i18n.ru;
+    const pInfo = d.planets[selectedPlanetKey] || d.planets.trappist;
+    const nameEl = document.getElementById('focusPlanetName');
+    const typeEl = document.getElementById('focusPlanetType');
+    const descEl = document.getElementById('focusPlanetDesc');
+    if (nameEl) nameEl.textContent = pInfo.name;
+    if (typeEl) typeEl.textContent = pInfo.type;
+    if (descEl) descEl.textContent = pInfo.desc;
+  };
 
-  // Click on planet detection
   canvas.addEventListener('click', (e) => {
     const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    const mx = (e.clientX - rect.left) * scaleX;
-    const my = (e.clientY - rect.top) * scaleY;
+    const clickX = (e.clientX - rect.left) * (width / rect.width);
+    const clickY = (e.clientY - rect.top) * (height / rect.height);
 
     planets.forEach(p => {
-      const px = cx + Math.cos(p.angle) * p.radius;
-      const py = cy + Math.sin(p.angle) * p.radius;
-      const dist = Math.hypot(mx - px, my - py);
-      if (dist < p.size + 12) {
-        updatePlanetInfo(p);
-        playPulsarTone(600, 0.15);
+      const px = center.x + Math.cos(p.angle) * p.semiMajor;
+      const py = center.y + Math.sin(p.angle) * p.semiMinor;
+      const dist = Math.hypot(clickX - px, clickY - py);
+      if (dist < p.radius + 14) {
+        selectedPlanetKey = p.key;
+        window.updateActivePlanetCard();
+        playPulsarChirp(880);
       }
     });
   });
 
-  let starPulse = 0;
+  // Clicking cards also switches active planet
+  document.querySelectorAll('[data-planet]').forEach(card => {
+    card.addEventListener('click', () => {
+      selectedPlanetKey = card.dataset.planet;
+      window.updateActivePlanetCard();
+      playPulsarChirp(660);
+    });
+  });
 
-  function renderSim() {
+  function drawOrbits() {
     ctx.clearRect(0, 0, width, height);
 
-    // Host Star (Kepler Sun)
-    starPulse += 0.03;
-    const sunGlow = 22 + Math.sin(starPulse) * 2;
-    const gradSun = ctx.createRadialGradient(cx, cy, 5, cx, cy, sunGlow * 1.8);
-    gradSun.addColorStop(0, '#ffffff');
-    gradSun.addColorStop(0.3, '#fbbf24');
-    gradSun.addColorStop(0.7, '#f97316');
-    gradSun.addColorStop(1, 'transparent');
-
-    ctx.fillStyle = gradSun;
+    // Central Host Star (G-type or Red Dwarf)
+    const starGlow = ctx.createRadialGradient(center.x, center.y, 4, center.x, center.y, 40);
+    starGlow.addColorStop(0, '#ffffff');
+    starGlow.addColorStop(0.25, '#fbbf24');
+    starGlow.addColorStop(1, 'transparent');
+    ctx.fillStyle = starGlow;
     ctx.beginPath();
-    ctx.arc(cx, cy, sunGlow * 1.8, 0, Math.PI * 2);
+    ctx.arc(center.x, center.y, 40, 0, Math.PI * 2);
     ctx.fill();
 
-    // Orbital Rings & Planets
+    ctx.fillStyle = '#fffae0';
+    ctx.beginPath();
+    ctx.arc(center.x, center.y, 14, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Draw planetary orbits & planets
     planets.forEach(p => {
-      // Ring
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-      ctx.lineWidth = 1;
-      ctx.setLineDash([4, 4]);
+      // Elliptical orbit line
       ctx.beginPath();
-      ctx.arc(cx, cy, p.radius, 0, Math.PI * 2);
+      ctx.strokeStyle = p.key === selectedPlanetKey ? 'rgba(56, 189, 248, 0.45)' : 'rgba(148, 163, 184, 0.15)';
+      ctx.lineWidth = p.key === selectedPlanetKey ? 1.8 : 1;
+      ctx.ellipse(center.x, center.y, p.semiMajor, p.semiMinor, 0, 0, Math.PI * 2);
       ctx.stroke();
-      ctx.setLineDash([]);
 
-      // Movement calculation with gravity multiplier
-      p.angle += p.baseSpeed * speedMult * Math.sqrt(gravityMult);
+      // Update position based on Keplerian velocity (faster when closer / higher gravity)
+      p.angle += p.speed * speedMult * gravityMult;
 
-      const px = cx + Math.cos(p.angle) * p.radius;
-      const py = cy + Math.sin(p.angle) * p.radius;
+      const px = center.x + Math.cos(p.angle) * p.semiMajor;
+      const py = center.y + Math.sin(p.angle) * p.semiMinor;
 
-      // Glow halo
-      ctx.fillStyle = p.color;
-      ctx.shadowColor = p.color;
-      ctx.shadowBlur = 12;
+      // Planet Glow
+      const pGlow = ctx.createRadialGradient(px, py, 1, px, py, p.radius * 2.5);
+      pGlow.addColorStop(0, p.color);
+      pGlow.addColorStop(1, 'transparent');
+      ctx.fillStyle = pGlow;
       ctx.beginPath();
-      ctx.arc(px, py, p.size, 0, Math.PI * 2);
+      ctx.arc(px, py, p.radius * 2.5, 0, Math.PI * 2);
       ctx.fill();
-      ctx.shadowBlur = 0;
+
+      // Planet Body
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(px, py, p.radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Selection ring
+      if (p.key === selectedPlanetKey) {
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(px, py, p.radius + 6, 0, Math.PI * 2);
+        ctx.stroke();
+      }
     });
 
-    requestAnimationFrame(renderSim);
+    requestAnimationFrame(drawOrbits);
   }
-  renderSim();
+  drawOrbits();
 }
 
 // ------------------------------------------
-// 3. Web Audio Deep Space Pulsar Drone
+// 4. Web Audio Deep Space Pulsar Drone
 // ------------------------------------------
-let spaceAudioCtx = null;
-let isSpaceAudioActive = false;
+let audioCtx = null;
+let isAudioPlaying = false;
 let pulsarInterval = null;
-let subDroneOsc = null;
 
 function initPulsarAudio() {
   const btn = document.getElementById('pulsarAudioBtn');
-  if (!btn) return;
+  const label = document.getElementById('pulsarLabel');
 
-  btn.addEventListener('click', () => {
-    if (!spaceAudioCtx) {
-      spaceAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  btn?.addEventListener('click', () => {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     }
-    if (spaceAudioCtx.state === 'suspended') {
-      spaceAudioCtx.resume();
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
     }
 
-    isSpaceAudioActive = !isSpaceAudioActive;
-    if (isSpaceAudioActive) {
-      btn.classList.add('active');
-      btn.querySelector('.btn-label').innerText = 'PULSAR: ON';
-      startSpaceDrone();
+    isAudioPlaying = !isAudioPlaying;
+    const d = i18n[currentLang] || i18n.ru;
+    if (isAudioPlaying) {
+      btn.style.borderColor = 'var(--blue-glow)';
+      if (label) label.innerText = d.pulsarOn;
+      startPulsarDrone();
     } else {
-      btn.classList.remove('active');
-      btn.querySelector('.btn-label').innerText = 'PULSAR: OFF';
-      stopSpaceDrone();
+      btn.style.borderColor = '';
+      if (label) label.innerText = d.pulsarOff;
+      stopPulsarDrone();
     }
   });
 }
 
-function startSpaceDrone() {
-  if (!spaceAudioCtx) return;
-  const now = spaceAudioCtx.currentTime;
-
-  subDroneOsc = spaceAudioCtx.createOscillator();
-  const subGain = spaceAudioCtx.createGain();
-
-  subDroneOsc.type = 'sine';
-  subDroneOsc.frequency.setValueAtTime(65.4, now); // Low C
-
-  subGain.gain.setValueAtTime(0.01, now);
-  subGain.gain.exponentialRampToValueAtTime(0.06, now + 2);
-
-  subDroneOsc.connect(subGain);
-  subGain.connect(spaceAudioCtx.destination);
-  subDroneOsc.start(now);
-
-  // Periodic pulsar click
+function startPulsarDrone() {
+  playPulsarChirp(440);
   pulsarInterval = setInterval(() => {
-    playPulsarTone(1450, 0.04);
-  }, 1200);
+    playPulsarChirp(320);
+  }, 1300);
 }
 
-function stopSpaceDrone() {
-  if (subDroneOsc) {
-    try {
-      subDroneOsc.stop();
-      subDroneOsc.disconnect();
-    } catch (e) {}
-  }
-  if (pulsarInterval) clearInterval(pulsarInterval);
+function stopPulsarDrone() {
+  clearInterval(pulsarInterval);
 }
 
-function playPulsarTone(freq, duration) {
-  if (!spaceAudioCtx) return;
-  const now = spaceAudioCtx.currentTime;
-
-  const osc = spaceAudioCtx.createOscillator();
-  const gain = spaceAudioCtx.createGain();
+function playPulsarChirp(freq) {
+  if (!audioCtx) return;
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
 
   osc.type = 'sine';
   osc.frequency.setValueAtTime(freq, now);
+  osc.frequency.exponentialRampToValueAtTime(80, now + 0.35);
 
-  gain.gain.setValueAtTime(0.03, now);
-  gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+  gain.gain.setValueAtTime(0.08, now);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
 
   osc.connect(gain);
-  gain.connect(spaceAudioCtx.destination);
+  gain.connect(audioCtx.destination);
 
   osc.start(now);
-  osc.stop(now + duration);
+  osc.stop(now + 0.35);
+}
+
+function playPulsarWarpChirp() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+
+  osc.type = 'sawtooth';
+  osc.frequency.setValueAtTime(90, now);
+  osc.frequency.exponentialRampToValueAtTime(1400, now + 0.6);
+  osc.frequency.exponentialRampToValueAtTime(60, now + 1.2);
+
+  gain.gain.setValueAtTime(0.12, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 1.3);
+
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  osc.start(now);
+  osc.stop(now + 1.3);
 }
 
 // ------------------------------------------
-// 4. Telemetry Real-time Ticker
+// 5. Telemetry Real-time & Rolling Tickers
 // ------------------------------------------
 function initTelemetryTicker() {
-  const redshiftVal = document.getElementById('redshiftVal');
-  const planetCount = document.getElementById('planetCount');
+  const planetEl = document.getElementById('planetCount');
+  const redshiftEl = document.getElementById('redshiftVal');
 
+  // Rolling counter on page entrance
+  if (planetEl) {
+    let current = 5400;
+    const target = 5632;
+    const interval = setInterval(() => {
+      current += 8;
+      if (current >= target) {
+        planetEl.innerText = target.toLocaleString();
+        clearInterval(interval);
+      } else {
+        planetEl.innerText = current.toLocaleString();
+      }
+    }, 25);
+  }
+
+  // Periodic subtle telemetry update
   setInterval(() => {
-    if (redshiftVal) {
-      redshiftVal.innerText = (1.480 + (Math.random() - 0.5) * 0.006).toFixed(3);
+    if (redshiftEl) {
+      redshiftEl.innerText = (1.480 + Math.random() * 0.006).toFixed(3);
     }
-  }, 1800);
+  }, 3000);
+}
+
+// Aerospace HUD Telemetry Scroll Reveal Observer
+function initSpaceScrollReveal() {
+  const elements = document.querySelectorAll('.planet-card, .simulator-card, .spectroscopy-card, .mission-log, .space-footer');
+  if (!('IntersectionObserver' in window)) {
+    elements.forEach(el => el.classList.add('is-revealed'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-revealed');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  elements.forEach(el => {
+    el.classList.add('scroll-reveal-space');
+    observer.observe(el);
+  });
 }

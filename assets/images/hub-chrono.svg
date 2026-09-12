@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgChrono" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0d11"/>
+      <stop offset="50%" stop-color="#141720"/>
+      <stop offset="100%" stop-color="#08090d"/>
+    </linearGradient>
+    <linearGradient id="goldSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffedd5"/>
+      <stop offset="40%" stop-color="#dfb17b"/>
+      <stop offset="100%" stop-color="#9a6e3a"/>
+    </linearGradient>
+  </defs>
+  <rect width="700" height="450" fill="url(#bgChrono)"/>
+  <!-- Circular Geneva Watch Dial Outline -->
+  <circle cx="350" cy="225" r="160" fill="#0e1017" stroke="url(#goldSheen)" stroke-width="4"/>
+  <circle cx="350" cy="225" r="145" fill="none" stroke="#dfb17b" stroke-opacity="0.3" stroke-dasharray="4 6" stroke-width="2"/>
+  <circle cx="350" cy="225" r="130" fill="none" stroke="#dfb17b" stroke-opacity="0.5" stroke-width="1"/>
+  <!-- Hour Markers -->
+  <g stroke="url(#goldSheen)" stroke-width="3" stroke-linecap="round">
+    <line x1="350" y1="85" x2="350" y2="105"/>
+    <line x1="350" y1="345" x2="350" y2="365"/>
+    <line x1="210" y1="225" x2="230" y2="225"/>
+    <line x1="470" y1="225" x2="490" y2="225"/>
+  </g>
+  <!-- Mechanical Gears and Tourbillon Cage -->
+  <g transform="translate(350, 225)" stroke="url(#goldSheen)" fill="none" stroke-width="2">
+    <!-- Big Gear -->
+    <circle cx="-35" cy="-20" r="45" stroke-dasharray="10 8" stroke-width="3"/>
+    <circle cx="-35" cy="-20" r="20" stroke-width="1.5"/>
+    <!-- Interlocking Small Gear -->
+    <circle cx="45" cy="30" r="35" stroke-dasharray="8 6" stroke-width="2.5"/>
+    <circle cx="45" cy="30" r="15" stroke-width="1.5"/>
+    <!-- Central Tourbillon Bridge -->
+    <circle cx="0" cy="50" r="40" stroke="#fef08a" stroke-width="2"/>
+    <path d="M-30 50 L30 50 M0 20 L0 80" stroke="#fef08a" stroke-width="2.5"/>
+    <circle cx="0" cy="50" r="10" fill="#d97706"/>
+    <!-- Watch Hands -->
+    <line x1="0" y1="0" x2="45" y2="-65" stroke="#fef08a" stroke-width="4" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="-80" y2="-20" stroke="url(#goldSheen)" stroke-width="5" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="60" y2="30" stroke="#ef4444" stroke-width="1.5"/>
+    <circle cx="0" cy="0" r="7" fill="url(#goldSheen)"/>
+  </g>
+  <!-- Horology Label -->
+  <text x="350" y="145" text-anchor="middle" fill="url(#goldSheen)" font-family="serif" font-size="13" letter-spacing="5">CHRONOCRAFT // 1888</text>
+  <text x="350" y="162" text-anchor="middle" fill="#9ca3af" font-family="serif" font-size="9" letter-spacing="3">GENÈVE • HAUTE HORLOGERIE 03</text>
+</svg>

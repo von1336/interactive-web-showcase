@@ -702,3 +702,106 @@ body {
   .space-nav { padding: 1rem 1.5rem; }
   .footer-wrap { grid-template-columns: 1fr; }
 }
+
+/* Aerospace HUD Language Switcher */
+.space-lang-btn {
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #fff;
+  font-family: var(--font-tech);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  padding: 0.45rem 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.3s ease;
+}
+
+.space-lang-btn:hover {
+  border-color: var(--blue-glow);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+.space-lang-btn .lang-opt {
+  opacity: 0.45;
+  transition: opacity 0.2s, color 0.2s;
+}
+
+.space-lang-btn .lang-opt.active {
+  opacity: 1;
+  color: var(--blue-glow);
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.7);
+}
+
+.space-lang-btn .lang-sep {
+  opacity: 0.3;
+}
+
+/* Atmospheric Coronal Halo Breathing */
+.planet-img-halo {
+  animation: coronaPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes coronaPulse {
+  0% { opacity: 0.35; transform: scale(0.98); }
+  100% { opacity: 0.75; transform: scale(1.05); }
+}
+
+/* Warp Jump Camera Shake */
+body.warp-shake {
+  animation: warpShake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes warpShake {
+  10%, 90% { transform: translate3d(-2px, 1px, 0); }
+  20%, 80% { transform: translate3d(3px, -2px, 0); }
+  30%, 50%, 70% { transform: translate3d(-3px, 2px, 0); }
+  40%, 60% { transform: translate3d(3px, -1px, 0); }
+}
+
+/* Aerospace HUD Telemetry Scroll-Down Reveal */
+.scroll-reveal-space {
+  opacity: 0;
+  transform: translateY(45px) scale(0.96);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.4s;
+  will-change: transform, opacity;
+  position: relative;
+}
+
+.scroll-reveal-space.is-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.scroll-reveal-space.is-revealed::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+  animation: hudLineScan 1s ease-out forwards;
+}
+
+@keyframes hudLineScan {
+  0% { transform: scaleX(0); opacity: 0; }
+  50% { transform: scaleX(1); opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.planets-grid .planet-card:nth-child(1) { transition-delay: 0.1s; }
+.planets-grid .planet-card:nth-child(2) { transition-delay: 0.22s; }
+.planets-grid .planet-card:nth-child(3) { transition-delay: 0.34s; }
+
+.planet-img {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+}
+.planet-card:hover .planet-img {
+  transform: scale(1.08);
+  filter: brightness(1.15);
+}

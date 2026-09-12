@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 800" width="100%" height="100%">
+  <defs>
+    <linearGradient id="heroBioBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d1b14"/>
+      <stop offset="100%" stop-color="#1b3327"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ecfdf5"/>
+      <stop offset="30%" stop-color="#6ee7b7"/>
+      <stop offset="70%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#064e3b"/>
+    </linearGradient>
+  </defs>
+  <rect width="700" height="800" fill="url(#heroBioBg)"/>
+  <!-- Layered Monstera Leaves -->
+  <g transform="translate(350, 420) scale(1.7)" fill="url(#leafGrad)" stroke="#10b981" stroke-width="2">
+    <path d="M0 -150 C-90 -110 -150 0 -120 100 C-90 170 0 200 0 200 C0 200 90 170 120 100 C150 0 90 -110 0 -150 Z"/>
+    <line x1="0" y1="-140" x2="0" y2="190" stroke="#fef08a" stroke-width="3.5"/>
+    <path d="M0 -60 C-50 -45 -100 -20 -110 15" stroke="#fef08a" stroke-width="2"/>
+    <path d="M0 -15 C-55 0 -105 30 -105 75" stroke="#fef08a" stroke-width="2"/>
+    <path d="M0 35 C-45 50 -90 90 -80 130" stroke="#fef08a" stroke-width="2"/>
+    <path d="M0 -60 C50 -45 100 -20 110 15" stroke="#fef08a" stroke-width="2"/>
+    <path d="M0 -15 C55 0 105 30 105 75" stroke="#fef08a" stroke-width="2"/>
+    <path d="M0 35 C45 50 90 90 80 130" stroke="#fef08a" stroke-width="2"/>
+  </g>
+  <text x="350" y="730" text-anchor="middle" fill="#d4af37" font-family="serif" font-size="18" letter-spacing="6">MONSTERA DELICIOSA VARIEGATA</text>
+</svg>

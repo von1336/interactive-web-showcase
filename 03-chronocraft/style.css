@@ -305,24 +305,45 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  perspective: 1000px;
 }
 
 #watchCanvas {
   border-radius: 50%;
-  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(223, 177, 123, 0.15);
-  background: radial-gradient(circle, #10131a 0%, #08090c 70%);
+  box-shadow: 
+    0 25px 60px -10px rgba(0, 0, 0, 0.9),
+    0 0 40px rgba(223, 177, 123, 0.2),
+    inset 0 0 20px rgba(0, 0, 0, 0.95);
+  background: radial-gradient(circle, #10131a 0%, #050608 75%);
+  cursor: crosshair;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+#watchCanvas:hover {
+  box-shadow: 
+    0 35px 80px -10px rgba(0, 0, 0, 0.95),
+    0 0 60px rgba(223, 177, 123, 0.35),
+    inset 0 0 25px rgba(0, 0, 0, 0.95);
 }
 
 .chassis-ring {
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
+  top: -14px;
+  left: -14px;
+  right: -14px;
+  bottom: -14px;
   border-radius: 50%;
-  border: 2px solid rgba(223, 177, 123, 0.35);
+  border: 1px dashed rgba(223, 177, 123, 0.3);
   pointer-events: none;
-  box-shadow: inset 0 0 20px rgba(223, 177, 123, 0.1);
+  box-shadow: 
+    0 0 35px rgba(223, 177, 123, 0.12),
+    inset 0 0 25px rgba(223, 177, 123, 0.08);
+  animation: chassisRingPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes chassisRingPulse {
+  0% { transform: rotate(0deg) scale(1); opacity: 0.7; }
+  100% { transform: rotate(360deg) scale(1.015); opacity: 1; }
 }
 
 /* Complications Section */
@@ -663,4 +684,147 @@ body {
   .footer-inner { grid-template-columns: 1fr; }
   .watch-chassis-container { width: 340px; height: 340px; }
   #watchCanvas { width: 340px; height: 340px; }
+}
+
+/* Language Switcher */
+.horology-lang-btn {
+  background: rgba(18, 20, 28, 0.7);
+  border: 1px solid rgba(223, 177, 123, 0.35);
+  color: var(--text-pure);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 0.45rem 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.3s ease;
+}
+
+.horology-lang-btn:hover {
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 15px rgba(223, 177, 123, 0.3);
+}
+
+.horology-lang-btn .lang-opt {
+  opacity: 0.45;
+  transition: opacity 0.2s, color 0.2s;
+}
+
+.horology-lang-btn .lang-opt.active {
+  opacity: 1;
+  color: var(--gold-primary);
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(223, 177, 123, 0.5);
+}
+
+.horology-lang-btn .lang-sep {
+  opacity: 0.3;
+}
+
+/* Background Rotating Gears */
+.mechanical-gears-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.gear {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px dashed rgba(223, 177, 123, 0.06);
+  opacity: 0.7;
+}
+
+.gear::after {
+  content: '';
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  right: 15%;
+  bottom: 15%;
+  border: 1px solid rgba(223, 177, 123, 0.04);
+  border-radius: 50%;
+}
+
+.gear-1 {
+  width: 480px;
+  height: 480px;
+  top: -120px;
+  right: -100px;
+  animation: rotateGearClockwise 60s linear infinite;
+}
+
+.gear-2 {
+  width: 320px;
+  height: 320px;
+  bottom: -60px;
+  left: -80px;
+  animation: rotateGearCounter 45s linear infinite;
+}
+
+@keyframes rotateGearClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotateGearCounter {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+/* Gold Shimmer Text Sweep */
+.gold-shimmer {
+  background: linear-gradient(135deg, #fce0ad 0%, #dfb17b 30%, #ffffff 50%, #dfb17b 70%, #8c602a 100%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldSheen 6s linear infinite;
+  display: inline-block;
+}
+
+@keyframes goldSheen {
+  to { background-position: 250% center; }
+}
+
+/* Lap slide-in animation */
+.lap-item {
+  animation: lapSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes lapSlideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Horological Mechanical Scroll-Down Reveal */
+.scroll-reveal-chrono {
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+  will-change: transform, opacity;
+}
+
+.scroll-reveal-chrono.is-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.timepieces-grid .timepiece-card:nth-child(1) { transition-delay: 0.1s; }
+.timepieces-grid .timepiece-card:nth-child(2) { transition-delay: 0.22s; }
+.timepieces-grid .timepiece-card:nth-child(3) { transition-delay: 0.34s; }
+
+.timepiece-img {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.timepiece-card:hover .timepiece-img {
+  transform: scale(1.06);
 }

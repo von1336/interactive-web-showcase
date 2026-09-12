@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <rect width="800" height="500" fill="#ffde59"/>
+  <!-- Checkered Pattern -->
+  <g fill="#121212">
+    <rect x="50" y="50" width="40" height="40"/>
+    <rect x="130" y="50" width="40" height="40"/>
+    <rect x="90" y="90" width="40" height="40"/>
+    <rect x="670" y="370" width="40" height="40"/>
+    <rect x="750" y="370" width="40" height="40"/>
+    <rect x="710" y="410" width="40" height="40"/>
+  </g>
+  <!-- Skateboard Deck Graphic -->
+  <g transform="translate(400, 250) rotate(-15)">
+    <!-- Shadow -->
+    <rect x="-170" y="-40" width="360" height="100" rx="50" fill="#000"/>
+    <rect x="-180" y="-50" width="360" height="100" rx="50" fill="#ff5376" stroke="#000" stroke-width="6"/>
+    <!-- Wheels -->
+    <circle cx="-110" cy="65" r="22" fill="#38bdf8" stroke="#000" stroke-width="4"/>
+    <circle cx="90" cy="65" r="22" fill="#38bdf8" stroke="#000" stroke-width="4"/>
+    <text x="0" y="15" text-anchor="middle" fill="#fff" font-family="'Archivo Black', sans-serif" font-size="32">SKATE*</text>
+  </g>
+  <text x="400" y="440" text-anchor="middle" fill="#000" font-family="'Archivo Black', sans-serif" font-size="22">RADICAL SKATEBOARDS CUSTOMIZER</text>
+</svg>

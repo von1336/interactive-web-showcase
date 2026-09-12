@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="100%" height="100%">
+  <rect width="600" height="450" fill="#18221d"/>
+  <!-- Orchid Petals Vector -->
+  <g transform="translate(300, 220)">
+    <circle cx="0" cy="-60" r="45" fill="#fbcfe8" opacity="0.8"/>
+    <circle cx="-55" cy="15" r="50" fill="#f472b6" opacity="0.8"/>
+    <circle cx="55" cy="15" r="50" fill="#f472b6" opacity="0.8"/>
+    <circle cx="0" cy="20" r="25" fill="#d946ef"/>
+    <circle cx="0" cy="20" r="10" fill="#fde047"/>
+  </g>
+  <text x="300" y="390" text-anchor="middle" fill="#fef08a" font-family="serif" font-size="14" letter-spacing="4">PHALAENOPSIS BELLINA ORCHID</text>
+</svg>

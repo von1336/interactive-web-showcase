@@ -37,7 +37,7 @@ A curated, production-grade portfolio hub presenting **22+ open-source repositor
 | **Contact Manager CLI** | CLI Tool | Python, PostgreSQL, Psycopg2, unittest | Parameterized SQL queries (zero SQLi), regex validation, exports | [GitHub](https://github.com/von1336/contact-manager-cli) |
 | **Flask Notes JWT API** | Microservice | Flask, Flask-JWT-Extended, Flask-Limiter | Rate-limited protected API, multi-tag categorization | [GitHub](https://github.com/von1336/flask-notes-jwt-api) |
 | **Flask URL Shortener** | Web Utility | Flask, SQLAlchemy, Base62, SSRF Defense | Base62 short links, RFC 1918 loopback SSRF firewall, click tracking | [GitHub](https://github.com/von1336/flask-url-shortener) |
-| **6 Creative Worlds Suite** | Creative Web | Canvas 2D/3D, Web Audio API, Vanilla JS | Six complete interactive worlds with zero external build tools | [GitHub](https://github.com/von1336/interactive-web-showcase) |
+| **5 Creative Worlds Suite** | Creative Web | Canvas 2D/3D, Web Audio API, Vanilla JS | Five complete interactive worlds with zero external build tools | [GitHub](https://github.com/von1336/interactive-web-showcase) |
 
 ---
 
@@ -45,13 +45,12 @@ A curated, production-grade portfolio hub presenting **22+ open-source repositor
 
 | ID | Project Name | Art Direction | Core Interactive Engine | Audio Synthesis | Direct Link |
 | :---: | :--- | :--- | :--- | :--- | :---: |
-| `00` | **Master Launchpad Hub** | Cyber-Minimalist Portal | Live photography cards, filter matrix, shortcuts (`1`–`6`) | Navigation UI clicks | [Launch Portal](https://von1336.github.io/interactive-web-showcase/) |
+| `00` | **Master Launchpad Hub** | Cyber-Minimalist Portal | Live photography cards, filter matrix, shortcuts (`1`–`5`) | Navigation UI clicks | [Launch Portal](https://von1336.github.io/interactive-web-showcase/) |
 | `01` | **Neon Nexus** | Cyberpunk Augmentation | 3D Particle Warp Speed Canvas & CLI Command Terminal | Multi-oscillator ambient synth drone | [Launch Nexus](https://von1336.github.io/interactive-web-showcase/01-neon-nexus/) |
 | `02` | **Lumina Botanica** | Luxury Biophilic Editorial | Spore & Pollen Brownian physics, magnetic cursor & mood switch | Solfeggio 528Hz wind chimes | [Launch Botanica](https://von1336.github.io/interactive-web-showcase/02-lumina-botanica/) |
 | `03` | **ChronoCraft** | Swiss Haute Horlogerie | 4Hz mechanical tourbillon escapement & precision stopwatch | Escapement pallet strike ticks | [Launch ChronoCraft](https://von1336.github.io/interactive-web-showcase/03-chronocraft/) |
 | `04` | **NeoPop Creative Studio** | Neo-Brutalist Agency | Interactive budget slider, confetti engine & physics stickers | 8-bit retro arcade blips & fanfares | [Launch NeoPop](https://von1336.github.io/interactive-web-showcase/04-neopop-creative/) |
 | `05` | **Astronex Deep Space** | Astrophysics & Exoplanets | 3D Rotatable starfield & Keplerian orbital mechanics | Cosmic radio pulse telemetry | [Launch Astronex](https://von1336.github.io/interactive-web-showcase/05-astronex-space/) |
-| `06` | **Zenith Studio** | Tilda Zero-Block & 3D Avatar | Procedural 3D Character with scroll-reactive farewell wave | Procedural cyber chirps & synthesizer chords | [Launch Zenith](https://von1336.github.io/interactive-web-showcase/06-zenith-studio/) |
 
 ---
 
@@ -129,21 +128,6 @@ A curated, production-grade portfolio hub presenting **22+ open-source repositor
 
 ---
 
-### 06. Zenith Studio (`06-zenith-studio/`)
-- **Direct Link:** [https://von1336.github.io/interactive-web-showcase/06-zenith-studio/](https://von1336.github.io/interactive-web-showcase/06-zenith-studio/)
-- **Theme:** Tilda Zero-Block & Awwwards 3D Interactive Agency
-- **Art Direction:** Deep obsidian canvas, fluid cyan/violet aurora mesh, high-contrast editorial typography (Syne + Plus Jakarta Sans + JetBrains Mono), and 3D card tilt physics.
-- **Technical Architecture:**
-  - **Living 3D Character Canvas:** Procedural Canvas 2D/3D robot avatar tracking cursor in 3D perspective with smooth lerp physics.
-  - **Scroll-Reactive Farewell Gesture:** As user scrolls down the page, character dynamically raises arm, tracks scroll velocity, waves goodbye enthusiastically (`Math.sin(t * 13)`), and updates speech bubbles.
-  - **Sticky Corner Companion:** Floating mini-companion avatar mirroring farewell waving animations when deep in page.
-  - **Interactive Jump Physics:** Click or tap triggers 360° jump/spin with procedural synthesizer chimes.
-  - **Real-Time Project Budget Estimator:** Tilda-style interactive estimator with live calculation of costs, timelines, and feature toggles.
-  - **Bilingual Switcher:** Instant runtime RU / EN dictionary switching without page reload.
-  - **Procedural Web Audio:** Interactive sound feedback synthesized on the fly via Web Audio API.
-
----
-
 ## Interactive Controls Matrix
 
 | Input / Action | Result | Scope |
@@ -153,10 +137,7 @@ A curated, production-grade portfolio hub presenting **22+ open-source repositor
 | **Key `3`** | Launch ChronoCraft | Global Launchpad |
 | **Key `4`** | Launch NeoPop Studio | Global Launchpad |
 | **Key `5`** | Launch Astronex Space | Global Launchpad |
-| **Key `6`** | Launch Zenith 3D Studio | Global Launchpad |
 | **Key `ESC`** | Smooth Scroll to Top | Global Launchpad |
-| **Page Scroll** | 3D character waves goodbye with dynamic intensity | Zenith 3D Studio |
-| **Click Avatar** | Character performs 360° jump & spin with chime | Zenith 3D Studio |
 | **Drag & Toss** | Physics sticker drag with inertia | NeoPop Studio |
 | **Stepper Buttons** | Micro-adjust project scope & complexity | NeoPop Studio |
 | **Mouse Orbit Drag** | Rotate 3D starfield camera orientation | Astronex Space |

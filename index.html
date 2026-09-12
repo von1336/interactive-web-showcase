@@ -9,11 +9,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Cinzel:wght@600;700&family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #07090e;
-      --bg-surface: rgba(15, 20, 32, 0.72);
-      --bg-surface-hover: rgba(22, 30, 48, 0.88);
+      --bg: #06080d;
+      --bg-surface: rgba(13, 18, 30, 0.72);
+      --bg-surface-hover: rgba(20, 28, 46, 0.88);
       --card-border: rgba(255, 255, 255, 0.08);
-      --card-border-glow: rgba(99, 102, 241, 0.35);
+      --card-border-glow: rgba(99, 102, 241, 0.4);
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --text-dim: #64748b;
@@ -24,6 +24,7 @@
       --accent-rose: #f43f5e;
       --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
+      --spring-ease: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * {
@@ -40,6 +41,7 @@
       min-height: 100vh;
       overflow-x: hidden;
       position: relative;
+      perspective: 1200px;
     }
 
     /* Ambient Canvas Waves */
@@ -67,13 +69,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 1.75rem;
-      background: rgba(13, 17, 26, 0.75);
+      padding: 0.9rem 1.75rem;
+      background: rgba(11, 15, 25, 0.78);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 9999px;
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(18px);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
       margin-bottom: 3.5rem;
+      position: relative;
     }
 
     .brand-logo {
@@ -105,7 +108,7 @@
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.75rem;
     }
 
     .github-profile-btn {
@@ -129,6 +132,39 @@
       border-color: #38bdf8;
       box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
       transform: translateY(-1px);
+    }
+
+    .sound-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #94a3b8;
+      padding: 0.45rem 0.85rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      transition: all 0.25s ease;
+    }
+
+    .sound-toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    .sound-toggle-btn.sound-active {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: #6366f1;
+      color: #a5b4fc;
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.35);
+    }
+
+    .sound-icon {
+      flex-shrink: 0;
     }
 
     .lang-toggle-btn {
@@ -169,19 +205,46 @@
       margin-bottom: 4rem;
     }
 
+    /* 21st.dev Animated Border Beam on Hero Badge */
+    .badge-beam-wrapper {
+      position: relative;
+      display: inline-flex;
+      border-radius: 9999px;
+      padding: 1px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .badge-beam-wrapper::before {
+      content: '';
+      position: absolute;
+      width: 250%;
+      height: 250%;
+      top: -75%;
+      left: -75%;
+      background: conic-gradient(transparent, #6366f1, #38bdf8, #ec4899, transparent 60%);
+      animation: beamRotate 4s linear infinite;
+    }
+
+    @keyframes beamRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
     .badge-pill {
+      position: relative;
+      z-index: 1;
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      background: rgba(99, 102, 241, 0.12);
-      border: 1px solid rgba(99, 102, 241, 0.35);
-      padding: 0.4rem 1.3rem;
+      background: rgba(11, 15, 25, 0.94);
+      padding: 0.45rem 1.4rem;
       border-radius: 9999px;
       font-family: var(--font-mono);
       font-size: 0.78rem;
       letter-spacing: 1.5px;
       color: #a5b4fc;
-      margin-bottom: 1.5rem;
     }
 
     .master-title {
@@ -226,17 +289,24 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      background: rgba(18, 24, 38, 0.7);
+      background: rgba(16, 22, 36, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 0.6rem 1.25rem;
-      border-radius: 12px;
+      padding: 0.65rem 1.35rem;
+      border-radius: 14px;
       backdrop-filter: blur(12px);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      transition: all 0.3s ease;
+    }
+
+    .stat-pill:hover {
+      transform: translateY(-2px);
+      border-color: rgba(99, 102, 241, 0.35);
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
     }
 
     .stat-num {
       font-family: var(--font-mono);
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       font-weight: 800;
       color: #38bdf8;
     }
@@ -246,7 +316,7 @@
       color: #94a3b8;
     }
 
-    /* Featured Creative Labs Banner */
+    /* Featured Creative Labs Section */
     .section-title-wrap {
       display: flex;
       justify-content: space-between;
@@ -291,25 +361,45 @@
     }
 
     .lab-card {
-      background: rgba(18, 24, 38, 0.75);
+      background: rgba(16, 22, 36, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 14px;
+      border-radius: 16px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      backdrop-filter: blur(12px);
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(14px);
+      transition: transform 0.15s ease-out, border-color 0.3s ease, box-shadow 0.35s ease;
       position: relative;
+      transform-style: preserve-3d;
+    }
+
+    .lab-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: radial-gradient(
+        280px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+        rgba(255, 255, 255, 0.12),
+        transparent 70%
+      );
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 5;
+    }
+
+    .lab-card:hover::after {
+      opacity: 1;
     }
 
     .lab-card:hover {
-      transform: translateY(-5px);
       border-color: #38bdf8;
       box-shadow: 0 16px 36px rgba(56, 189, 248, 0.22);
     }
 
     .lab-thumb {
-      height: 150px;
+      height: 155px;
       position: relative;
       background: #000;
       overflow: hidden;
@@ -320,12 +410,12 @@
       height: 100%;
       object-fit: cover;
       transition: transform 0.5s ease;
-      filter: brightness(0.7) contrast(1.1);
+      filter: brightness(0.75) contrast(1.1);
     }
 
     .lab-card:hover .lab-thumb img {
       transform: scale(1.08);
-      filter: brightness(0.9);
+      filter: brightness(0.95);
     }
 
     .lab-badge {
@@ -340,6 +430,7 @@
       border-radius: 4px;
       border: 1px solid rgba(255, 255, 255, 0.15);
       color: #fff;
+      backdrop-filter: blur(8px);
     }
 
     .lab-body {
@@ -347,6 +438,8 @@
       display: flex;
       flex-direction: column;
       flex: 1;
+      position: relative;
+      z-index: 2;
     }
 
     .lab-title {
@@ -374,69 +467,57 @@
       align-items: center;
       justify-content: center;
       gap: 0.4rem;
-      background: #ffffff;
-      color: #07090e;
-      text-decoration: none;
+      background: linear-gradient(135deg, #6366f1 0%, #38bdf8 100%);
+      color: #fff;
+      font-family: var(--font-mono);
       font-size: 0.78rem;
       font-weight: 700;
-      padding: 0.55rem 0.75rem;
+      text-decoration: none;
+      padding: 0.5rem 0.8rem;
       border-radius: 8px;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
     }
 
     .btn-lab-demo:hover {
-      background: #38bdf8;
-      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.5);
+      transform: translateY(-1px);
     }
 
-    .btn-lab-arch {
+    .btn-lab-code {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #cbd5e1;
-      cursor: pointer;
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 0.55rem 0.75rem;
-      border-radius: 8px;
+      color: #fff;
+      text-decoration: none;
       transition: all 0.2s ease;
     }
 
-    .btn-lab-arch:hover {
-      background: rgba(99, 102, 241, 0.25);
-      border-color: #6366f1;
-      color: #fff;
+    .btn-lab-code:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #38bdf8;
     }
 
-    /* 21st.dev Style Search & Filter Controls */
-    .controls-panel {
-      position: sticky;
-      top: 1rem;
-      z-index: 50;
-      background: rgba(12, 17, 26, 0.88);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 1rem 1.5rem;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
-      margin-bottom: 2.5rem;
+    /* Filter & Search Bar */
+    .controls-bar {
       display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .controls-top {
-      display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+      background: rgba(13, 18, 30, 0.7);
+      padding: 1.1rem 1.5rem;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
     }
 
-    /* Search Bar */
-    .search-wrapper {
+    .search-box {
       position: relative;
       flex: 1;
       min-width: 280px;
@@ -548,34 +629,32 @@
       position: relative;
     }
 
-    /* 21st.dev Bento Card with Spotlight */
+    /* 21st.dev Bento Card with 3D Tilt & Spotlight */
     .bento-card {
       position: relative;
-      background: rgba(15, 20, 32, 0.75);
+      background: rgba(14, 19, 32, 0.76);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 18px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       backdrop-filter: blur(16px);
-      transition: border-color 0.3s ease, box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      cursor: default;
+      transition: transform 0.12s ease-out, border-color 0.3s ease, box-shadow 0.35s ease;
+      cursor: pointer;
+      transform-style: preserve-3d;
     }
 
-    /* Radial Spotlight layer tracking mouse */
+    /* Spotlight Border Glow */
     .bento-card::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      inset: 0;
       border-radius: 18px;
       padding: 1px;
       background: radial-gradient(
-        400px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
-        rgba(99, 102, 241, 0.45),
-        transparent 60%
+        380px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+        rgba(99, 102, 241, 0.5),
+        transparent 65%
       );
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
@@ -586,14 +665,31 @@
       z-index: 3;
     }
 
-    .bento-card:hover::before {
+    /* Specular Light Reflection (21st.dev / Magic UI pattern) */
+    .bento-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      background: radial-gradient(
+        260px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+        rgba(255, 255, 255, 0.12),
+        transparent 70%
+      );
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 2;
+    }
+
+    .bento-card:hover::before,
+    .bento-card:hover::after {
       opacity: 1;
     }
 
     .bento-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 0 25px rgba(99, 102, 241, 0.12);
-      border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(99, 102, 241, 0.16);
+      border-color: rgba(99, 102, 241, 0.35);
     }
 
     /* Card Internal Content */
@@ -604,6 +700,8 @@
       justify-content: space-between;
       align-items: flex-start;
       gap: 1rem;
+      position: relative;
+      z-index: 4;
     }
 
     .cat-pill {
@@ -625,6 +723,7 @@
     .cat-bots { background: rgba(59, 130, 246, 0.18); border: 1px solid rgba(59, 130, 246, 0.45); color: #93c5fd; }
     .cat-desktop { background: rgba(245, 158, 11, 0.18); border: 1px solid rgba(245, 158, 11, 0.45); color: #fcd34d; }
     .cat-creative { background: rgba(244, 63, 94, 0.18); border: 1px solid rgba(244, 63, 94, 0.45); color: #fda4af; }
+    .cat-apis { background: rgba(139, 92, 246, 0.18); border: 1px solid rgba(139, 92, 246, 0.45); color: #c4b5fd; }
 
     .card-git-link {
       display: inline-flex;
@@ -644,92 +743,96 @@
     .card-git-link:hover {
       background: rgba(255, 255, 255, 0.15);
       color: #fff;
+      border-color: #38bdf8;
       transform: scale(1.08);
     }
 
     .card-main {
       padding: 1.5rem 1.75rem;
+      flex: 1;
       display: flex;
       flex-direction: column;
-      flex: 1;
+      position: relative;
+      z-index: 4;
     }
 
     .card-title {
       font-size: 1.35rem;
       font-weight: 700;
-      margin-bottom: 0.4rem;
-      line-height: 1.3;
-      color: #f1f5f9;
+      margin-bottom: 0.35rem;
+      color: #fff;
+      transition: color 0.25s ease;
+    }
+
+    .bento-card:hover .card-title {
+      color: #38bdf8;
     }
 
     .card-tagline {
       font-family: var(--font-mono);
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: #38bdf8;
-      margin-bottom: 1rem;
-      line-height: 1.4;
+      margin-bottom: 0.85rem;
     }
 
     .card-desc {
-      font-size: 0.88rem;
       color: var(--text-muted);
+      font-size: 0.92rem;
       line-height: 1.55;
-      margin-bottom: 1.35rem;
+      margin-bottom: 1.25rem;
       flex: 1;
     }
 
-    /* Stack Pills */
     .stack-wrap {
       display: flex;
       flex-wrap: wrap;
       gap: 0.4rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .tech-pill {
       font-family: var(--font-mono);
       font-size: 0.72rem;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #cbd5e1;
       padding: 0.2rem 0.55rem;
       border-radius: 6px;
+      color: #cbd5e1;
     }
 
-    /* Features List */
     .mini-features {
-      background: rgba(0, 0, 0, 0.25);
-      border-radius: 10px;
-      padding: 0.85rem 1rem;
-      margin-bottom: 1.5rem;
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+      padding-top: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
+      gap: 0.45rem;
     }
 
     .mf-item {
+      font-size: 0.82rem;
+      color: #94a3b8;
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      font-size: 0.78rem;
-      color: #94a3b8;
     }
 
     .mf-dot {
-      width: 4px;
-      height: 4px;
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
-      background: #38bdf8;
+      background: #6366f1;
       flex-shrink: 0;
     }
 
-    /* Card Footer Actions */
     .card-footer {
       padding: 1.25rem 1.75rem;
-      background: rgba(10, 14, 22, 0.5);
+      background: rgba(8, 12, 20, 0.5);
       border-top: 1px solid rgba(255, 255, 255, 0.06);
       display: flex;
       gap: 0.75rem;
+      align-items: center;
+      position: relative;
+      z-index: 4;
     }
 
     .btn-detail {
@@ -737,164 +840,163 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.45rem;
-      background: rgba(99, 102, 241, 0.15);
-      border: 1px solid rgba(99, 102, 241, 0.35);
-      color: #c7d2fe;
-      padding: 0.65rem 1rem;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #f1f5f9;
+      padding: 0.6rem 1rem;
       border-radius: 10px;
-      font-size: 0.82rem;
+      font-family: var(--font-main);
+      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.25s ease;
     }
 
     .btn-detail:hover {
-      background: #6366f1;
+      background: rgba(99, 102, 241, 0.2);
       border-color: #6366f1;
-      color: #ffffff;
-      box-shadow: 0 4px 18px rgba(99, 102, 241, 0.4);
-      transform: translateY(-1px);
+      color: #fff;
+      box-shadow: 0 0 16px rgba(99, 102, 241, 0.3);
     }
 
     .btn-demo-link {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 0.4rem;
-      background: #ffffff;
-      color: #07090e;
-      text-decoration: none;
-      padding: 0.65rem 1rem;
-      border-radius: 10px;
-      font-size: 0.82rem;
+      background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
       font-weight: 700;
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+      text-decoration: none;
       transition: all 0.25s ease;
+      white-space: nowrap;
     }
 
     .btn-demo-link:hover {
-      background: #38bdf8;
-      box-shadow: 0 4px 18px rgba(56, 189, 248, 0.4);
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+      transform: translateY(-1px);
     }
 
-    /* Deep-Dive Interactive Modal */
+    /* Modal Deep Dive */
     .modal-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(4, 7, 12, 0.82);
-      backdrop-filter: blur(24px);
-      z-index: 999;
+      inset: 0;
+      background: rgba(2, 4, 8, 0.85);
+      backdrop-filter: blur(16px);
+      z-index: 9999;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 1.5rem;
       opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .modal-overlay.active {
       opacity: 1;
-      pointer-events: auto;
+      visibility: visible;
     }
 
-    .modal-container {
-      background: #0d121c;
+    .modal-window {
+      background: rgba(14, 18, 30, 0.95);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 24px;
+      border-radius: 22px;
+      max-width: 820px;
       width: 100%;
-      max-width: 880px;
       max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(99, 102, 241, 0.2);
-      transform: scale(0.95) translateY(20px);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(99, 102, 241, 0.25);
+      transform: scale(0.95) translateY(20px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
     }
 
-    .modal-overlay.active .modal-container {
+    .modal-overlay.active .modal-window {
       transform: scale(1) translateY(0);
     }
 
     .modal-header {
-      padding: 2rem 2.25rem 1.5rem;
+      padding: 1.75rem 2rem 1.25rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      position: relative;
-      background: rgba(18, 24, 38, 0.6);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    .modal-title-area h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.35rem;
+    }
+
+    .modal-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #38bdf8;
     }
 
     .modal-close-btn {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.75rem;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #94a3b8;
       width: 36px;
       height: 36px;
-      border-radius: 50%;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #94a3b8;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: all 0.2s ease;
+      flex-shrink: 0;
     }
 
     .modal-close-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.15);
       color: #fff;
-      transform: rotate(90deg);
-    }
-
-    .modal-title {
-      font-size: 1.8rem;
-      font-weight: 800;
-      margin-bottom: 0.4rem;
-      color: #fff;
-    }
-
-    .modal-tagline {
-      font-family: var(--font-mono);
-      color: #38bdf8;
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-    }
-
-    .modal-badges-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      align-items: center;
+      transform: scale(1.05);
     }
 
     .modal-body {
-      padding: 2rem 2.25rem;
+      padding: 1.75rem 2rem;
+      overflow-y: auto;
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 1.75rem;
+    }
+
+    .modal-body::-webkit-scrollbar {
+      width: 6px;
+    }
+    .modal-body::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 9999px;
     }
 
     .modal-section {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.65rem;
     }
 
     .msec-header {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #a5b4fc;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #f1f5f9;
-    }
-
-    .msec-header svg {
-      color: #6366f1;
+      gap: 0.5rem;
     }
 
     .msec-text {
@@ -903,46 +1005,44 @@
       line-height: 1.65;
     }
 
-    /* Architecture Flow Box */
     .arch-flow-box {
-      background: #080c14;
-      border: 1px solid rgba(99, 102, 241, 0.25);
-      border-radius: 14px;
-      padding: 1.25rem 1.5rem;
+      background: rgba(7, 10, 18, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 1.25rem;
       font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: #a5b4fc;
+      font-size: 0.83rem;
+      color: #e2e8f0;
       line-height: 1.6;
       white-space: pre-wrap;
     }
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 0.75rem;
     }
 
     .feat-card-item {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 0.75rem 1rem;
       border-radius: 10px;
-      padding: 0.85rem 1rem;
-      font-size: 0.88rem;
-      color: #cbd5e1;
+      font-size: 0.85rem;
+      color: #e2e8f0;
       display: flex;
-      align-items: center;
-      gap: 0.6rem;
+      align-items: flex-start;
+      gap: 0.65rem;
     }
 
     .feat-card-item svg {
       color: #10b981;
       flex-shrink: 0;
+      margin-top: 2px;
     }
 
-    /* Code Snippet Box */
     .code-snippet-wrap {
-      position: relative;
-      background: #06090e;
+      background: rgba(5, 7, 12, 0.9);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 12px;
       overflow: hidden;
@@ -952,29 +1052,33 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.5rem 1rem;
+      padding: 0.6rem 1rem;
       background: rgba(255, 255, 255, 0.04);
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       font-family: var(--font-mono);
       font-size: 0.75rem;
-      color: #64748b;
+      color: #94a3b8;
     }
 
     .btn-copy-code {
-      background: transparent;
-      border: none;
-      color: #94a3b8;
-      cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      font-size: 0.75rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #e2e8f0;
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
       font-family: var(--font-mono);
-      transition: color 0.2s;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
 
     .btn-copy-code:hover {
-      color: #38bdf8;
+      background: rgba(99, 102, 241, 0.25);
+      border-color: #6366f1;
+      color: #fff;
     }
 
     .code-snippet-body {
@@ -984,11 +1088,12 @@
       color: #38bdf8;
       overflow-x: auto;
       white-space: pre-wrap;
+      word-break: break-all;
     }
 
     .modal-footer {
-      padding: 1.5rem 2.25rem;
-      background: rgba(14, 20, 32, 0.8);
+      padding: 1.25rem 2rem;
+      background: rgba(8, 12, 20, 0.8);
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       justify-content: flex-end;
@@ -999,52 +1104,131 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: #ffffff;
-      color: #07090e;
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 700;
-      padding: 0.75rem 1.5rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      padding: 0.65rem 1.25rem;
       border-radius: 10px;
-      transition: all 0.25s ease;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
     }
 
     .btn-modal-github:hover {
-      background: #38bdf8;
-      box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #38bdf8;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
     }
 
     .btn-modal-demo {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: linear-gradient(135deg, #6366f1, #38bdf8);
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 700;
-      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+      color: #fff;
+      padding: 0.65rem 1.35rem;
       border-radius: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
       transition: all 0.25s ease;
     }
 
     .btn-modal-demo:hover {
-      box-shadow: 0 6px 22px rgba(99, 102, 241, 0.5);
+      box-shadow: 0 0 25px rgba(6, 182, 212, 0.5);
       transform: translateY(-1px);
+    }
+
+    /* Toast Notification Container */
+    #toastContainer {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      pointer-events: none;
+    }
+
+    .toast-bubble {
+      background: rgba(14, 20, 34, 0.95);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #fff;
+      padding: 0.85rem 1.35rem;
+      border-radius: 14px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(99, 102, 241, 0.3);
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transform: translateY(20px) scale(0.92);
+      opacity: 0;
+      transition: all 0.28s var(--spring-ease);
+      pointer-events: auto;
+      min-width: 260px;
+    }
+
+    .toast-bubble.toast-show {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .toast-content {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .toast-icon {
+      color: #10b981;
+      flex-shrink: 0;
+    }
+
+    .toast-progress {
+      height: 2px;
+      background: linear-gradient(90deg, #6366f1, #38bdf8);
+      border-radius: 2px;
+      width: 100%;
+      animation: toastProgress 2.4s linear forwards;
+    }
+
+    @keyframes toastProgress {
+      0% { width: 100%; }
+      100% { width: 0%; }
     }
 
     /* Footer */
     .master-footer {
-      text-align: center;
-      margin-top: 6rem;
-      padding-top: 3rem;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--text-dim);
-      font-size: 0.85rem;
+      padding-top: 3.5rem;
+      margin-top: 5rem;
       display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .footer-brand {
+      display: flex;
       align-items: center;
       gap: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .footer-desc {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
     }
 
     .footer-links {
@@ -1052,47 +1236,62 @@
       gap: 1.5rem;
     }
 
-    .footer-links a {
-      color: #94a3b8;
+    .footer-link {
+      color: var(--text-muted);
       text-decoration: none;
       font-size: 0.85rem;
-      transition: color 0.2s;
+      font-family: var(--font-mono);
+      transition: color 0.2s ease;
     }
 
-    .footer-links a:hover {
+    .footer-link:hover {
       color: #38bdf8;
     }
 
-    /* Empty Search State */
+    /* Empty state */
     .empty-state {
-      grid-column: 1 / -1;
       text-align: center;
       padding: 4rem 2rem;
-      background: rgba(18, 24, 38, 0.4);
-      border: 1px dashed rgba(255, 255, 255, 0.12);
-      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px dashed rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
       display: none;
     }
 
-    .empty-title {
-      font-size: 1.3rem;
-      font-weight: 700;
+    .empty-state h3 {
+      font-size: 1.25rem;
       margin-bottom: 0.5rem;
-      color: #f1f5f9;
+      color: #fff;
     }
 
-    .empty-desc {
-      color: #64748b;
+    .empty-state p {
+      color: var(--text-muted);
       font-size: 0.9rem;
     }
 
     @media (max-width: 768px) {
-      .master-container { padding: 1.25rem 1rem 4rem; }
-      .bento-grid { grid-template-columns: 1fr; }
-      .top-nav { flex-direction: column; gap: 1rem; border-radius: 16px; }
-      .controls-panel { border-radius: 14px; padding: 1rem; }
-      .modal-container { max-height: 95vh; border-radius: 16px; }
-      .modal-header, .modal-body, .modal-footer { padding: 1.25rem; }
+      .master-container {
+        padding: 1.25rem 1rem 4rem;
+      }
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+      .controls-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .filter-tabs {
+        width: 100%;
+      }
+      .top-nav {
+        flex-direction: column;
+        gap: 1rem;
+        border-radius: 20px;
+      }
+      .nav-actions {
+        width: 100%;
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -1101,15 +1300,23 @@
   <canvas id="bgCanvas"></canvas>
 
   <div class="master-container">
-
     <!-- Top Navigation Bar -->
-    <nav class="top-nav">
-      <a href="https://github.com/von1336" target="_blank" class="brand-logo">
+    <header class="top-nav">
+      <a href="https://github.com/von1336" class="brand-logo" target="_blank">
         <span class="pulse-dot"></span>
-        <span>VON1336 // DEV PORTFOLIO</span>
+        <span>VON1336 // HUB</span>
       </a>
 
       <div class="nav-actions">
+        <!-- SFX Procedural Web Audio Button -->
+        <button class="sound-toggle-btn" id="soundToggleBtn" title="Toggle Procedural Audio FX">
+          <svg class="sound-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path id="soundWaves" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <span id="soundLabel">SFX: ON</span>
+        </button>
+
         <a href="https://github.com/von1336" target="_blank" class="github-profile-btn">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
@@ -1117,251 +1324,254 @@
           <span id="navGithubText">GitHub Profile</span>
         </a>
 
-        <!-- Language Switcher -->
-        <button class="lang-toggle-btn" id="langToggleBtn" title="Переключить язык / Switch Language">
-          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="2" y1="12" x2="22" y2="12"></line>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-          </svg>
-          <span class="lang-opt" data-lang-opt="ru">RU</span>
-          <span style="opacity:0.3;font-size:0.75rem;">/</span>
+        <button class="lang-toggle-btn" id="langToggleBtn" title="Сменить язык / Switch language">
+          <span class="lang-opt active" data-lang-opt="ru">RU</span>
+          <span>/</span>
           <span class="lang-opt" data-lang-opt="en">EN</span>
         </button>
       </div>
-    </nav>
+    </header>
 
-    <!-- Header Hero -->
-    <header class="master-header">
-      <div class="badge-pill">
-        <span class="pulse-dot"></span>
-        <span id="txtHeroBadge">PORTFOLIO & ARCHITECTURE LAB // 22+ PRODUCTION REPOSITORIES</span>
+    <!-- Master Hero Header -->
+    <section class="master-header">
+      <div class="badge-beam-wrapper">
+        <div class="badge-pill">
+          <span class="pulse-dot"></span>
+          <span id="txtHeroBadge">ПОРТФОЛИО И АРХИТЕКТУРА // 22+ РЕПОЗИТОРИЯ</span>
+        </div>
       </div>
-
       <h1 class="master-title" id="txtHeroTitle">
         Инженерные проекты и архитектура <br>
         <span class="gradient-title">Full-Stack & Systems Showcase</span>
       </h1>
-
       <p class="master-desc" id="txtHeroDesc">
         Интерактивный хаб всех моих разработок: от распределенных бэкендов на FastAPI и Django, ИИ-ассистентов с RAG-поиском и реалтайм WebSockets до нативного C# десктопа и 5 креативных веб-миров на чистом Canvas 2D/3D.
       </p>
 
-      <!-- Stats Bar -->
+      <!-- Quick Stats with Animated Rolling Numbers -->
       <div class="stats-bar">
         <div class="stat-pill">
-          <span class="stat-num">22+</span>
+          <span class="stat-num" data-target="23" data-suffix="+">23+</span>
           <span class="stat-label" id="statRepos">Репозиториев на GitHub</span>
         </div>
         <div class="stat-pill">
-          <span class="stat-num">6+</span>
-          <span class="stat-label" id="statStacks">Ключевых направлений</span>
+          <span class="stat-num" data-target="4" data-suffix="">4</span>
+          <span class="stat-label" id="statStacks">Ключевых направления</span>
         </div>
         <div class="stat-pill">
-          <span class="stat-num">100%</span>
-          <span class="stat-label" id="statType">Архитектура и чистый код</span>
+          <span class="stat-num" data-target="5" data-suffix="">5</span>
+          <span class="stat-label" id="statLabs">Креативных лабораторий</span>
         </div>
         <div class="stat-pill">
-          <span class="stat-num">0</span>
-          <span class="stat-label" id="statDeps">Лишних зависимостей</span>
+          <span class="stat-num" data-target="100" data-suffix="%">100%</span>
+          <span class="stat-label" id="statBuild">Zero Build (Vanilla/Native)</span>
         </div>
       </div>
-    </header>
+    </section>
 
-    <!-- Section 1: Featured 5 Creative Web Labs -->
-    <div class="section-title-wrap">
-      <div>
+    <!-- Featured 5 Creative Worlds Section -->
+    <section>
+      <div class="section-title-wrap">
         <h2 class="section-title">
-          <span id="txtLabsTitle">5 Интерактивных Веб-Лабораторий</span>
-          <span class="tag">LIVE 60FPS</span>
+          <span id="txtLabsTitle">Креативные Веб-Миры (Live Suite)</span>
+          <span class="tag">5 LABS</span>
         </h2>
-        <div class="section-subtitle" id="txtLabsSubtitle">// Canvas 2D/3D, Web Audio API, процедурная физика и Zero Build</div>
+        <div class="section-subtitle" id="txtLabsSubtitle">Canvas 2D/3D · Web Audio API · Zero External Build</div>
       </div>
-    </div>
 
-    <div class="creative-labs-grid">
-      <!-- Lab 1: Neon-Nexus -->
-      <article class="lab-card">
-        <div class="lab-thumb">
-          <img src="assets/images/hub-neon.jpg" onerror="this.src='assets/images/hub-neon.svg'" alt="Neo Nexus" loading="lazy">
-          <span class="lab-badge">01 // CYBERPUNK</span>
-        </div>
-        <div class="lab-body">
-          <h3 class="lab-title" style="font-family:'Orbitron', sans-serif;">NEO-NEXUS</h3>
-          <p class="lab-desc" id="lab1Desc">3D варп-туннель частиц, хакерский CLI-терминал (`help`, `matrix`), CRT-развертка и синтезатор процедурного дрона.</p>
-          <div class="lab-actions">
-            <a href="01-neon-nexus/index.html" class="btn-lab-demo" id="lab1Launch">Запустить Demo ↗</a>
-            <button class="btn-lab-arch" onclick="openModal('interactive-web-showcase')">Архитектура</button>
+      <div class="creative-labs-grid">
+        <!-- Lab 1 -->
+        <article class="lab-card" data-tilt>
+          <div class="lab-thumb">
+            <img src="assets/images/hub-neon.svg" alt="Neo-Nexus Cyberpunk HUD" loading="lazy">
+            <span class="lab-badge">01 // CYBERPUNK</span>
           </div>
-        </div>
-      </article>
-
-      <!-- Lab 2: Lumina Botanica -->
-      <article class="lab-card">
-        <div class="lab-thumb">
-          <img src="assets/images/hub-botanica.jpg" onerror="this.src='assets/images/hub-botanica.svg'" alt="Lumina Botanica" loading="lazy">
-          <span class="lab-badge">02 // BIOPHILIC</span>
-        </div>
-        <div class="lab-body">
-          <h3 class="lab-title" style="font-family:'Cinzel', serif;">LUMINA BOTANICA</h3>
-          <p class="lab-desc" id="lab2Desc">Органическая физика спор и пыльцы, магнитный курсор, смена световых настроений и колокольчики 528 Гц.</p>
-          <div class="lab-actions">
-            <a href="02-lumina-botanica/index.html" class="btn-lab-demo" id="lab2Launch">Запустить Demo ↗</a>
-            <button class="btn-lab-arch" onclick="openModal('interactive-web-showcase')">Архитектура</button>
+          <div class="lab-body">
+            <h3 class="lab-title">01. Neo-Nexus HUD</h3>
+            <p class="lab-desc" id="txtLab1Desc">Тактический киберпанк-интерфейс с 3D-варпом пространства, терминалом и синтезом звуков.</p>
+            <div class="lab-actions">
+              <a href="01-neon-nexus/index.html" class="btn-lab-demo" id="btnLaunch1">ОТКРЫТЬ МИР ↗</a>
+              <a href="https://github.com/von1336/interactive-web-showcase/tree/main/01-neon-nexus" target="_blank" class="btn-lab-code" title="Code">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              </a>
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
 
-      <!-- Lab 3: ChronoCraft -->
-      <article class="lab-card">
-        <div class="lab-thumb">
-          <img src="assets/images/hub-chrono.jpg" onerror="this.src='assets/images/hub-chrono.svg'" alt="ChronoCraft" loading="lazy">
-          <span class="lab-badge">03 // HOROLOGY</span>
-        </div>
-        <div class="lab-body">
-          <h3 class="lab-title">CHRONOCRAFT</h3>
-          <p class="lab-desc" id="lab3Desc">Математическая симуляция турбийона 4 Гц (28 800 пк/ч), секундомер и процедурный звук спуска часового механизма.</p>
-          <div class="lab-actions">
-            <a href="03-chronocraft/index.html" class="btn-lab-demo" id="lab3Launch">Запустить Demo ↗</a>
-            <button class="btn-lab-arch" onclick="openModal('interactive-web-showcase')">Архитектура</button>
+        <!-- Lab 2 -->
+        <article class="lab-card" data-tilt>
+          <div class="lab-thumb">
+            <img src="assets/images/hub-botanica.svg" alt="Lumina Botanica" loading="lazy">
+            <span class="lab-badge">02 // BOTANICAL</span>
           </div>
-        </div>
-      </article>
-
-      <!-- Lab 4: NeoPop Studio -->
-      <article class="lab-card">
-        <div class="lab-thumb">
-          <img src="assets/images/hub-pop.jpg" onerror="this.src='assets/images/hub-pop.svg'" alt="NeoPop Creative" loading="lazy">
-          <span class="lab-badge">04 // NEO-BRUTALISM</span>
-        </div>
-        <div class="lab-body">
-          <h3 class="lab-title">NEOPOP STUDIO</h3>
-          <p class="lab-desc" id="lab4Desc">Интерактивный лоток стикеров с физикой броска и инерцией, полноэкранное конфетти и 8-битные аудио-эффекты.</p>
-          <div class="lab-actions">
-            <a href="04-neopop-creative/index.html" class="btn-lab-demo" id="lab4Launch">Запустить Demo ↗</a>
-            <button class="btn-lab-arch" onclick="openModal('interactive-web-showcase')">Архитектура</button>
+          <div class="lab-body">
+            <h3 class="lab-title">02. Lumina Botanica</h3>
+            <p class="lab-desc" id="txtLab2Desc">Премиальный ботанический салон: процедурные золотые споры, стеклянные карточки и релакс-аудио.</p>
+            <div class="lab-actions">
+              <a href="02-lumina-botanica/index.html" class="btn-lab-demo" id="btnLaunch2">ОТКРЫТЬ МИР ↗</a>
+              <a href="https://github.com/von1336/interactive-web-showcase/tree/main/02-lumina-botanica" target="_blank" class="btn-lab-code" title="Code">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              </a>
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
 
-      <!-- Lab 5: Astronex Space -->
-      <article class="lab-card">
-        <div class="lab-thumb">
-          <img src="assets/images/hub-space.jpg" onerror="this.src='assets/images/hub-space.svg'" alt="Astronex Space" loading="lazy">
-          <span class="lab-badge">05 // ASTROPHYSICS</span>
-        </div>
-        <div class="lab-body">
-          <h3 class="lab-title">ASTRONEX SPACE</h3>
-          <p class="lab-desc" id="lab5Desc">3D вращаемое звездное поле, кеплеровский симулятор орбит экзопланет и синтезатор космической телеметрии пульсаров.</p>
-          <div class="lab-actions">
-            <a href="05-astronex-space/index.html" class="btn-lab-demo" id="lab5Launch">Запустить Demo ↗</a>
-            <button class="btn-lab-arch" onclick="openModal('interactive-web-showcase')">Архитектура</button>
+        <!-- Lab 3 -->
+        <article class="lab-card" data-tilt>
+          <div class="lab-thumb">
+            <img src="assets/images/hub-chrono.svg" alt="ChronoCraft Watchmaker" loading="lazy">
+            <span class="lab-badge">03 // HOROLOGY</span>
           </div>
-        </div>
-      </article>
-    </div>
+          <div class="lab-body">
+            <h3 class="lab-title">03. ChronoCraft Studio</h3>
+            <p class="lab-desc" id="txtLab3Desc">Высокое часовое искусство: симуляция зубчатых передач, турбийон на Canvas и хронограф.</p>
+            <div class="lab-actions">
+              <a href="03-chronocraft/index.html" class="btn-lab-demo" id="btnLaunch3">ОТКРЫТЬ МИР ↗</a>
+              <a href="https://github.com/von1336/interactive-web-showcase/tree/main/03-chronocraft" target="_blank" class="btn-lab-code" title="Code">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
 
-    <!-- Section 2: All Repositories Bento Grid -->
-    <div class="section-title-wrap" id="allReposSection">
-      <div>
-        <h2 class="section-title">
-          <span id="txtReposTitle">Все репозитории и проекты</span>
-          <span class="tag" id="txtTotalBadge">22 ПРОЕКТА</span>
-        </h2>
-        <div class="section-subtitle" id="txtReposSubtitle">// Интерактивный каталог: кликайте на любую карточку для полного разбора архитектуры</div>
+        <!-- Lab 4 -->
+        <article class="lab-card" data-tilt>
+          <div class="lab-thumb">
+            <img src="assets/images/hub-pop.svg" alt="NeoPop Creative Studio" loading="lazy">
+            <span class="lab-badge">04 // BRUTALISM</span>
+          </div>
+          <div class="lab-body">
+            <h3 class="lab-title">04. NeoPop Creative</h3>
+            <p class="lab-desc" id="txtLab4Desc">Необрутализм и поп-арт: физика стикеров, пружинящие кнопки и взрывной интерактив.</p>
+            <div class="lab-actions">
+              <a href="04-neopop-creative/index.html" class="btn-lab-demo" id="btnLaunch4">ОТКРЫТЬ МИР ↗</a>
+              <a href="https://github.com/von1336/interactive-web-showcase/tree/main/04-neopop-creative" target="_blank" class="btn-lab-code" title="Code">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Lab 5 -->
+        <article class="lab-card" data-tilt>
+          <div class="lab-thumb">
+            <img src="assets/images/hub-space.svg" alt="Astronex Deep Space" loading="lazy">
+            <span class="lab-badge">05 // DEEP SPACE</span>
+          </div>
+          <div class="lab-body">
+            <h3 class="lab-title">05. Astronex Space</h3>
+            <p class="lab-desc" id="txtLab5Desc">Космическая обсерватория: 3D-планетарий, варп-скорость звездного поля и телеметрия.</p>
+            <div class="lab-actions">
+              <a href="05-astronex-space/index.html" class="btn-lab-demo" id="btnLaunch5">ОТКРЫТЬ МИР ↗</a>
+              <a href="https://github.com/von1336/interactive-web-showcase/tree/main/05-astronex-space" target="_blank" class="btn-lab-code" title="Code">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
       </div>
-    </div>
+    </section>
 
-    <!-- 21st.dev Style Sticky Controls Panel -->
-    <div class="controls-panel">
-      <div class="controls-top">
-        <!-- Search Input -->
-        <div class="search-wrapper">
-          <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+    <!-- Filter & Search Controls -->
+    <section>
+      <div class="controls-bar">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
-          <input type="text" id="projectSearchInput" class="search-input" placeholder="Поиск по технологиям, названию или задачам (напр. Redis, RAG, WebSockets, C#)...">
+          <input type="text" class="search-input" id="projectSearchInput" placeholder="Поиск по проектам, стеку или архитектуре... (/ или Ctrl+K)" autocomplete="off">
           <span class="search-shortcut">/</span>
         </div>
-        <div class="result-count" id="resultCount">Найдено: 22 проектов</div>
+
+        <div class="filter-tabs" id="filterTabs">
+          <button class="tab-btn active" data-filter="all">
+            <span class="tab-label" id="tabAll">Все</span>
+            <span class="tab-badge" id="badgeAll">23</span>
+          </button>
+          <button class="tab-btn" data-filter="ai">
+            <span class="tab-label">AI & RAG</span>
+            <span class="tab-badge">1</span>
+          </button>
+          <button class="tab-btn" data-filter="fastapi">
+            <span class="tab-label">FastAPI</span>
+            <span class="tab-badge">3</span>
+          </button>
+          <button class="tab-btn" data-filter="django">
+            <span class="tab-label">Django</span>
+            <span class="tab-badge">3</span>
+          </button>
+          <button class="tab-btn" data-filter="bots">
+            <span class="tab-label" id="tabBots">Боты & Парсинг</span>
+            <span class="tab-badge">6</span>
+          </button>
+          <button class="tab-btn" data-filter="desktop">
+            <span class="tab-label" id="tabDesktop">Desktop C# / Py</span>
+            <span class="tab-badge">3</span>
+          </button>
+          <button class="tab-btn" data-filter="creative">
+            <span class="tab-label" id="tabCreative">Creative Web</span>
+            <span class="tab-badge">3</span>
+          </button>
+          <button class="tab-btn" data-filter="apis">
+            <span class="tab-label">APIs & CLI</span>
+            <span class="tab-badge">4</span>
+          </button>
+        </div>
+
+        <div class="result-count" id="resultCount">Показано 23 проектов</div>
       </div>
 
-      <!-- Filter Matrix Tabs -->
-      <div class="filter-tabs" id="filterTabs">
-        <button class="tab-btn active" data-filter="all">
-          <span id="tabAll">Все проекты</span>
-          <span class="tab-badge" id="badgeAll">22</span>
-        </button>
-        <button class="tab-btn" data-filter="ai">
-          <span>AI & RAG</span>
-          <span class="tab-badge">1</span>
-        </button>
-        <button class="tab-btn" data-filter="fastapi">
-          <span>FastAPI & Async</span>
-          <span class="tab-badge">4</span>
-        </button>
-        <button class="tab-btn" data-filter="django">
-          <span>Django & High-Load</span>
-          <span class="tab-badge">3</span>
-        </button>
-        <button class="tab-btn" data-filter="bots">
-          <span id="tabBots">Telegram & Парсеры</span>
-          <span class="tab-badge">5</span>
-        </button>
-        <button class="tab-btn" data-filter="desktop">
-          <span id="tabDesktop">Desktop & Systems</span>
-          <span class="tab-badge">3</span>
-        </button>
-        <button class="tab-btn" data-filter="creative">
-          <span id="tabCreative">Creative & Frontend</span>
-          <span class="tab-badge">2</span>
-        </button>
-        <button class="tab-btn" data-filter="apis">
-          <span>REST APIs & Tools</span>
-          <span class="tab-badge">4</span>
-        </button>
+      <!-- Bento Grid of Projects -->
+      <div class="bento-grid" id="bentoGrid">
+        <!-- Rendered dynamically via JavaScript -->
       </div>
-    </div>
 
-    <!-- Bento Grid Container with Spotlight Tracking -->
-    <div class="bento-grid" id="bentoGrid">
-      <!-- Rendered dynamically by JavaScript -->
-    </div>
-
-    <!-- Empty Search State -->
-    <div class="empty-state" id="emptyState">
-      <div class="empty-title" id="emptyTitle">Ничего не найдено</div>
-      <div class="empty-desc" id="emptyDesc">Попробуйте изменить поисковый запрос или переключить категорию фильтра.</div>
-    </div>
+      <!-- Empty Search State -->
+      <div class="empty-state" id="emptyState">
+        <h3 id="txtEmptyTitle">Ничего не найдено</h3>
+        <p id="txtEmptyDesc">Попробуйте изменить поисковый запрос или выбрать другую категорию в фильтре.</p>
+      </div>
+    </section>
 
     <!-- Master Footer -->
     <footer class="master-footer">
-      <div>© 2026 von1336. Crafted with engineering precision and zero build dependencies.</div>
+      <div>
+        <div class="footer-brand">
+          <span class="pulse-dot"></span>
+          <span>VON1336 // ENGINEERING PORTFOLIO</span>
+        </div>
+        <div class="footer-desc" id="txtFooterDesc">Разработка распределенных backend-систем, прикладного ИИ и высоконагруженных веб-платформ.</div>
+      </div>
       <div class="footer-links">
-        <a href="https://github.com/von1336" target="_blank">GitHub Profile</a>
-        <a href="https://github.com/von1336/interactive-web-showcase" target="_blank">Source Code</a>
-        <a href="https://von1336.github.io/interactive-web-showcase/" target="_blank">Live Hub</a>
+        <a href="https://github.com/von1336" target="_blank" class="footer-link">GitHub</a>
+        <a href="https://github.com/von1336/interactive-web-showcase" target="_blank" class="footer-link">Repository</a>
+        <a href="https://github.com/von1336/fastapi-rag-ai-assistant" target="_blank" class="footer-link">FastAPI RAG</a>
+        <a href="https://github.com/von1336/tg-ads-parser" target="_blank" class="footer-link">Telegram Parser</a>
       </div>
     </footer>
   </div>
 
-  <!-- Deep-Dive Interactive Architecture Modal -->
+  <!-- Deep Dive Architecture Modal -->
   <div class="modal-overlay" id="archModalOverlay">
-    <div class="modal-container" id="archModalContainer">
+    <div class="modal-window">
       <div class="modal-header">
-        <button class="modal-close-btn" id="modalCloseBtn" aria-label="Закрыть">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
+        <div class="modal-title-area">
+          <h2 id="modalTitle">Project Title</h2>
+          <div class="modal-tagline" id="modalTagline">// Project Tagline</div>
+        </div>
+        <button class="modal-close-btn" id="modalCloseBtn" title="Закрыть (Esc)">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
         </button>
-        <div class="modal-badges-row" id="modalBadgesRow"></div>
-        <h2 class="modal-title" id="modalTitle">Project Title</h2>
-        <div class="modal-tagline" id="modalTagline">// Project Tagline</div>
       </div>
 
       <div class="modal-body">
+        <!-- Badges row -->
+        <div id="modalBadgesRow" style="display: flex; flex-wrap: wrap; gap: 0.5rem;"></div>
+
         <!-- Section 1: What is it -->
         <div class="modal-section">
           <div class="msec-header">
@@ -1436,9 +1646,12 @@
     </div>
   </div>
 
-  <!-- Projects Database and Scripts -->
+  <!-- Toast Notification Container -->
+  <div id="toastContainer"></div>
+
+  <!-- Projects Database and Interactive Scripts -->
   <script>
-    // All 22 repositories of @von1336 with rich metadata, RU/EN translations, architecture & key features
+    // All 23 repositories of @von1336 with rich metadata, RU/EN translations, architecture & key features
     const PROJECTS_DATA = [
   {
     "id": "fastapi-rag-ai-assistant",
@@ -2322,96 +2535,234 @@
         txtHeroTitle: 'Инженерные проекты и архитектура <br><span class="gradient-title">Full-Stack & Systems Showcase</span>',
         txtHeroDesc: "Интерактивный хаб всех моих разработок: от распределенных бэкендов на FastAPI и Django, ИИ-ассистентов с RAG-поиском и реалтайм WebSockets до нативного C# десктопа и 5 креативных веб-миров на чистом Canvas 2D/3D.",
         statRepos: "Репозиториев на GitHub",
-        statStacks: "Ключевых направлений",
-        statType: "Архитектура и чистый код",
-        statDeps: "Лишних зависимостей",
-        txtLabsTitle: "5 Интерактивных Веб-Лабораторий",
-        txtLabsSubtitle: "// Canvas 2D/3D, Web Audio API, процедурная физика и Zero Build",
-        lab1Desc: "3D варп-туннель частиц, хакерский CLI-терминал (`help`, `matrix`), CRT-развертка и синтезатор процедурного дрона.",
-        lab2Desc: "Органическая физика спор и пыльцы, магнитный курсор, смена световых настроений и колокольчики 528 Гц.",
-        lab3Desc: "Математическая симуляция турбийона 4 Гц (28 800 пк/ч), секундомер и процедурный звук спуска часового механизма.",
-        lab4Desc: "Интерактивный лоток стикеров с физикой броска и инерцией, полноэкранное конфетти и 8-битные аудио-эффекты.",
-        lab5Desc: "3D вращаемое звездное поле, кеплеровский симулятор орбит экзопланет и синтезатор космической телеметрии пульсаров.",
-        lab1Launch: "Запустить Demo ↗",
-        lab2Launch: "Запустить Demo ↗",
-        lab3Launch: "Запустить Demo ↗",
-        lab4Launch: "Запустить Demo ↗",
-        lab5Launch: "Запустить Demo ↗",
-        txtReposTitle: "Все репозитории и проекты",
-        txtTotalBadge: "22 ПРОЕКТА",
-        txtReposSubtitle: "// Интерактивный каталог: кликайте на любую карточку для полного разбора архитектуры",
-        searchPlaceholder: "Поиск по технологиям, названию или задачам (напр. Redis, RAG, WebSockets, C#)...",
-        foundProjects: "Найдено: {count} проектов",
-        tabAll: "Все проекты",
-        tabBots: "Telegram & Парсеры",
-        tabDesktop: "Desktop & Systems",
-        tabCreative: "Creative & Frontend",
-        emptyTitle: "Ничего не найдено",
-        emptyDesc: "Попробуйте изменить поисковый запрос или переключить категорию фильтра.",
-        btnDetailText: "Что это такое и как сделано ↗",
-        btnDemoText: "Запустить Demo ↗",
+        statStacks: "Ключевых направления",
+        statLabs: "Креативных лабораторий",
+        statBuild: "Zero Build (Vanilla/Native)",
+        txtLabsTitle: "Креативные Веб-Миры (Live Suite)",
+        txtLabsSubtitle: "Canvas 2D/3D · Web Audio API · Zero External Build",
+        txtLab1Desc: "Тактический киберпанк-интерфейс с 3D-варпом пространства, терминалом и синтезом звуков.",
+        txtLab2Desc: "Премиальный ботанический салон: процедурные золотые споры, стеклянные карточки и релакс-аудио.",
+        txtLab3Desc: "Высокое часовое искусство: симуляция зубчатых передач, турбийон на Canvas и хронограф.",
+        txtLab4Desc: "Необрутализм и поп-арт: физика стикеров, пружинящие кнопки и взрывной интерактив.",
+        txtLab5Desc: "Космическая обсерватория: 3D-планетарий, варп-скорость звездного поля и телеметрия.",
+        btnLaunch1: "ОТКРЫТЬ МИР ↗",
+        btnLaunch2: "ОТКРЫТЬ МИР ↗",
+        btnLaunch3: "ОТКРЫТЬ МИР ↗",
+        btnLaunch4: "ОТКРЫТЬ МИР ↗",
+        btnLaunch5: "ОТКРЫТЬ МИР ↗",
+        searchPlaceholder: "Поиск по проектам, стеку или архитектуре... (/ или Ctrl+K)",
+        tabAll: "Все",
+        tabBots: "Боты & Парсинг",
+        tabDesktop: "Desktop C# / Py",
+        tabCreative: "Creative Web",
+        foundProjects: "Показано {count} проектов",
+        btnDetailText: "Архитектура & Детали ↗",
+        btnDemoText: "Live Demo ⚡",
+        txtEmptyTitle: "Ничего не найдено",
+        txtEmptyDesc: "Попробуйте изменить поисковый запрос или выбрать другую категорию в фильтре.",
+        txtFooterDesc: "Разработка распределенных backend-систем, прикладного ИИ и высоконагруженных веб-платформ.",
         txtModalWhatTitle: "1. Что это такое (Обзор и решаемая задача)",
         txtModalHowTitle: "2. Как это сделано (Архитектура и технические решения)",
         txtModalFeatTitle: "3. Ключевые возможности",
         txtModalQuickTitle: "4. Локальный запуск",
         txtCopyBtn: "Копировать",
-        txtCopiedBtn: "Скопировано!",
-        txtModalOpenGithub: "Открыть репозиторий на GitHub ↗",
-        txtModalLaunchDemo: "Запустить Live Demo ↗"
+        txtCopiedBtn: "Скопировано! ✓",
+        txtModalOpenGithub: "Открыть на GitHub ↗",
+        txtModalLaunchDemo: "Запустить Live Demo ⚡",
+        toastCopied: "Команда скопирована в буфер обмена!"
       },
       en: {
         navGithubText: "GitHub Profile",
-        txtHeroBadge: "PORTFOLIO & ARCHITECTURE LAB // 22+ PRODUCTION REPOSITORIES",
-        txtHeroTitle: 'Systems Engineering & Architecture <br><span class="gradient-title">Full-Stack Showcase</span>',
-        txtHeroDesc: "Interactive hub of all engineering repositories: from distributed backends in FastAPI & Django, RAG AI assistants, and real-time WebSockets to native C# desktop apps and 5 creative Canvas 2D/3D laboratories.",
+        txtHeroBadge: "PORTFOLIO & ARCHITECTURE // 22+ REPOSITORIES",
+        txtHeroTitle: 'Engineering Systems & Architecture <br><span class="gradient-title">Full-Stack & Systems Showcase</span>',
+        txtHeroDesc: "Interactive engineering portfolio hub: from distributed FastAPI & Django backends, enterprise RAG AI assistants and real-time WebSockets to native C# desktop suites and 5 creative web worlds built with zero dependencies.",
         statRepos: "GitHub Repositories",
-        statStacks: "Core Engineering Tracks",
-        statType: "Clean Code & Architecture",
-        statDeps: "Unnecessary Dependencies",
-        txtLabsTitle: "5 Interactive Web Laboratories",
-        txtLabsSubtitle: "// Canvas 2D/3D, Web Audio API, procedural physics & Zero Build",
-        lab1Desc: "3D particle warp tunnel, hacker CLI terminal (`help`, `matrix`), CRT scanlines, and ambient procedural drone synth.",
-        lab2Desc: "Organic spore and pollen physics, magnetic cursor, daylight mood switches, and 528Hz pentatonic wind chimes.",
-        lab3Desc: "Mathematical 4Hz (28,800 bph) tourbillon escapement simulation, precision stopwatch, and procedural pallet click audio.",
-        lab4Desc: "Interactive physics sticker tray with toss inertia, fullscreen confetti explosion, and 8-bit retro arcade Web Audio.",
-        lab5Desc: "3D rotatable celestial starfield, Keplerian exoplanet orbital mechanics, and cosmic radio telemetry synthesizer.",
-        lab1Launch: "Launch Demo ↗",
-        lab2Launch: "Launch Demo ↗",
-        lab3Launch: "Launch Demo ↗",
-        lab4Launch: "Launch Demo ↗",
-        lab5Launch: "Launch Demo ↗",
-        txtReposTitle: "All Repositories & Engineering Work",
-        txtTotalBadge: "22 PROJECTS",
-        txtReposSubtitle: "// Interactive catalog: click on any card for full architecture breakdown",
-        searchPlaceholder: "Search by tech stack, title, or keywords (e.g. Redis, RAG, WebSockets, C#)...",
-        foundProjects: "Found: {count} projects",
-        tabAll: "All Projects",
-        tabBots: "Telegram & Parsers",
-        tabDesktop: "Desktop & Systems",
-        tabCreative: "Creative & Frontend",
-        emptyTitle: "No projects found",
-        emptyDesc: "Try adjusting your search query or switching the category filter tab.",
-        btnDetailText: "Architecture & Breakdown ↗",
-        btnDemoText: "Launch Demo ↗",
-        txtModalWhatTitle: "1. What It Is (Overview & Problem Solved)",
-        txtModalHowTitle: "2. How It Was Built (Architecture & Engineering)",
-        txtModalFeatTitle: "3. Key Features",
-        txtModalQuickTitle: "4. Quick Start & Execution",
+        statStacks: "Core Competencies",
+        statLabs: "Interactive Labs",
+        statBuild: "Zero Build (Vanilla/Native)",
+        txtLabsTitle: "Interactive Creative Worlds (Live Suite)",
+        txtLabsSubtitle: "Canvas 2D/3D · Web Audio API · Zero External Build",
+        txtLab1Desc: "Tactical cyberpunk HUD featuring 3D hyperspace warp canvas, neural terminal, and audio synthesis.",
+        txtLab2Desc: "Luxury botanical sanctuary: procedural floating gold spores, glassmorphic cards, and soothing audio.",
+        txtLab3Desc: "Haute horlogerie studio: mechanical gear simulation, tourbillon on Canvas, and chronograph.",
+        txtLab4Desc: "Neo-brutalist pop art studio: draggable sticker physics, bouncy buttons, and vibrant interactions.",
+        txtLab5Desc: "Cosmic planetary observatory: 3D planetary rendering, starfield warp speed, and telemetry.",
+        btnLaunch1: "LAUNCH WORLD ↗",
+        btnLaunch2: "LAUNCH WORLD ↗",
+        btnLaunch3: "LAUNCH WORLD ↗",
+        btnLaunch4: "LAUNCH WORLD ↗",
+        btnLaunch5: "LAUNCH WORLD ↗",
+        searchPlaceholder: "Search projects, tech stack, or architecture... (/ or Ctrl+K)",
+        tabAll: "All",
+        tabBots: "Bots & Scraping",
+        tabDesktop: "Desktop C# / Py",
+        tabCreative: "Creative Web",
+        foundProjects: "Showing {count} projects",
+        btnDetailText: "Architecture & Specs ↗",
+        btnDemoText: "Live Demo ⚡",
+        txtEmptyTitle: "No projects found",
+        txtEmptyDesc: "Try adjusting your search query or selecting a different category filter.",
+        txtFooterDesc: "Engineering scalable backend systems, applied AI engines, and high-performance applications.",
+        txtModalWhatTitle: "1. Overview & Problem Solved",
+        txtModalHowTitle: "2. Architecture & Technical Breakdown",
+        txtModalFeatTitle: "3. Key Engineering Highlights",
+        txtModalQuickTitle: "4. Quick Start / Installation",
         txtCopyBtn: "Copy",
-        txtCopiedBtn: "Copied!",
-        txtModalOpenGithub: "Open Repository on GitHub ↗",
-        txtModalLaunchDemo: "Launch Live Demo ↗"
+        txtCopiedBtn: "Copied! ✓",
+        txtModalOpenGithub: "Open on GitHub ↗",
+        txtModalLaunchDemo: "Launch Live Demo ⚡",
+        toastCopied: "Command copied to clipboard!"
       }
     };
 
+    // --- Web Audio API Procedural Synthesizer (21st.dev inspired audio) ---
+    class SoundFX {
+      constructor() {
+        this.ctx = null;
+        this.enabled = localStorage.getItem('von_sfx') !== 'false';
+      }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+      toggle() {
+        this.enabled = !this.enabled;
+        localStorage.setItem('von_sfx', this.enabled);
+        if (this.enabled) {
+          this.init();
+          this.tone(640, 'sine', 0.07, 0.04);
+        }
+        return this.enabled;
+      }
+      tone(freq, type = 'sine', duration = 0.06, vol = 0.025) {
+        if (!this.enabled) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {}
+      }
+      hover() {
+        this.tone(880, 'sine', 0.035, 0.015);
+      }
+      click() {
+        this.tone(480, 'triangle', 0.06, 0.03);
+      }
+      modalOpen() {
+        if (!this.enabled) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(330, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(660, this.ctx.currentTime + 0.12);
+          gain.gain.setValueAtTime(0.035, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.14);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.14);
+        } catch (e) {}
+      }
+      success() {
+        this.tone(523.25, 'sine', 0.07, 0.03);
+        setTimeout(() => this.tone(783.99, 'sine', 0.1, 0.035), 65);
+      }
+    }
+
+    const soundFX = new SoundFX();
+
+    // UI Sound Toggle Button setup
+    const soundBtn = document.getElementById('soundToggleBtn');
+    const soundLabel = document.getElementById('soundLabel');
+    const soundWaves = document.getElementById('soundWaves');
+
+    function updateSoundUI() {
+      if (soundFX.enabled) {
+        soundBtn.classList.add('sound-active');
+        soundLabel.textContent = 'SFX: ON';
+        soundWaves.style.display = 'block';
+      } else {
+        soundBtn.classList.remove('sound-active');
+        soundLabel.textContent = 'SFX: OFF';
+        soundWaves.style.display = 'none';
+      }
+    }
+    updateSoundUI();
+
+    soundBtn.addEventListener('click', () => {
+      soundFX.toggle();
+      updateSoundUI();
+    });
+
+    // Toast Notification System
+    function showToast(msg) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-bubble';
+      toast.innerHTML = `
+        <div class="toast-content">
+          <svg class="toast-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>${msg}</span>
+        </div>
+        <div class="toast-progress"></div>
+      `;
+      container.appendChild(toast);
+      soundFX.success();
+
+      setTimeout(() => toast.classList.add('toast-show'), 15);
+      setTimeout(() => {
+        toast.classList.remove('toast-show');
+        setTimeout(() => toast.remove(), 320);
+      }, 2500);
+    }
+
+    // Rolling Numbers Stats Animation
+    function animateStats() {
+      const nums = document.querySelectorAll('.stat-num[data-target]');
+      nums.forEach(el => {
+        const target = parseInt(el.getAttribute('data-target'), 10);
+        const suffix = el.getAttribute('data-suffix') || '';
+        const duration = 1200;
+        const start = performance.now();
+
+        function step(now) {
+          const progress = Math.min((now - start) / duration, 1);
+          const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+          el.textContent = Math.floor(ease * target) + suffix;
+          if (progress < 1) requestAnimationFrame(step);
+          else el.textContent = target + suffix;
+        }
+        requestAnimationFrame(step);
+      });
+    }
+
+    // State
     let currentLang = localStorage.getItem('von1336_lang') || 'ru';
     let currentFilter = 'all';
     let searchQuery = '';
 
-    // Render Bento Grid
     const bentoGrid = document.getElementById('bentoGrid');
-    const emptyState = document.getElementById('emptyState');
     const resultCount = document.getElementById('resultCount');
+    const emptyState = document.getElementById('emptyState');
 
     function getCatClass(cat) {
       if (cat === 'ai') return 'cat-ai';
@@ -2420,7 +2771,7 @@
       if (cat === 'bots') return 'cat-bots';
       if (cat === 'desktop') return 'cat-desktop';
       if (cat === 'creative') return 'cat-creative';
-      return 'cat-fastapi';
+      return 'cat-apis';
     }
 
     function renderProjects() {
@@ -2452,7 +2803,7 @@
 
       emptyState.style.display = 'none';
 
-      bentoGrid.innerHTML = filtered.map(p => {
+      bentoGrid.innerHTML = filtered.map((p, idx) => {
         const title = (currentLang === 'ru' ? p.title_ru : p.title_en) || p.title;
         const tagline = (currentLang === 'ru' ? p.tagline_ru : p.tagline_en) || '';
         const desc = (currentLang === 'ru' ? p.desc_ru : p.desc_en) || '';
@@ -2468,16 +2819,16 @@
         `).join('');
 
         const demoBtnHtml = p.demo_url ? `
-          <a href="${p.demo_url}" class="btn-demo-link" target="_blank">
+          <a href="${p.demo_url}" class="btn-demo-link" target="_blank" onclick="event.stopPropagation(); soundFX.click();">
             ${I18N[currentLang].btnDemoText}
           </a>
         ` : '';
 
         return `
-          <article class="bento-card" data-id="${p.id}" onclick="handleCardClick(event, '${p.id}')">
+          <article class="bento-card" data-id="${p.id}" data-tilt onclick="handleCardClick(event, '${p.id}')">
             <div class="card-top">
               <span class="cat-pill ${getCatClass(p.category)}">${catLabel}</span>
-              <a href="${p.github}" target="_blank" class="card-git-link" title="GitHub" onclick="event.stopPropagation()">
+              <a href="${p.github}" target="_blank" class="card-git-link" title="GitHub" onclick="event.stopPropagation(); soundFX.click();">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                   <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
                 </svg>
@@ -2500,7 +2851,7 @@
         `;
       }).join('');
 
-      initSpotlight();
+      init3DTilt();
     }
 
     function handleCardClick(e, id) {
@@ -2508,17 +2859,51 @@
       openModal(id);
     }
 
-    // 21st.dev Bento Grid Spotlight: Tracks mouse coordinates across cards
-    function initSpotlight() {
-      const cards = document.querySelectorAll('.bento-card');
-      cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-          const rect = card.getBoundingClientRect();
+    // 21st.dev 3D Tilt & Light Specular Reflection Engine
+    function init3DTilt() {
+      const tiltCards = document.querySelectorAll('[data-tilt]');
+      tiltCards.forEach(card => {
+        let isHovered = false;
+        let rect = card.getBoundingClientRect();
+
+        function handleEnter() {
+          rect = card.getBoundingClientRect();
+          isHovered = true;
+          card.style.transition = 'transform 0.1s ease-out, border-color 0.3s ease, box-shadow 0.35s ease';
+          soundFX.hover();
+        }
+
+        function handleMove(e) {
+          if (!isHovered) return;
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -7;
+          const rotateY = ((x - centerX) / centerX) * 7;
+
           card.style.setProperty('--mouse-x', `${x}px`);
           card.style.setProperty('--mouse-y', `${y}px`);
-        });
+          card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(8px) scale3d(1.02, 1.02, 1.02)`;
+        }
+
+        function handleLeave() {
+          isHovered = false;
+          card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.35s ease';
+          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale3d(1, 1, 1)';
+        }
+
+        card.removeEventListener('mouseenter', card._onMouseEnter);
+        card.removeEventListener('mousemove', card._onMouseMove);
+        card.removeEventListener('mouseleave', card._onMouseLeave);
+
+        card._onMouseEnter = handleEnter;
+        card._onMouseMove = handleMove;
+        card._onMouseLeave = handleLeave;
+
+        card.addEventListener('mouseenter', handleEnter);
+        card.addEventListener('mousemove', handleMove);
+        card.addEventListener('mouseleave', handleLeave);
       });
     }
 
@@ -2531,6 +2916,7 @@
       const p = PROJECTS_DATA.find(item => item.id === id);
       if (!p) return;
       activeModalProject = p;
+      soundFX.modalOpen();
 
       const title = (currentLang === 'ru' ? p.title_ru : p.title_en) || p.title;
       const tagline = (currentLang === 'ru' ? p.tagline_ru : p.tagline_en) || '';
@@ -2569,7 +2955,7 @@
       // Footer actions
       const modalFooter = document.getElementById('modalFooterActions');
       let footerHtml = `
-        <a href="${p.github}" target="_blank" class="btn-modal-github">
+        <a href="${p.github}" target="_blank" class="btn-modal-github" onclick="soundFX.click();">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
           </svg>
@@ -2579,7 +2965,7 @@
 
       if (p.demo_url) {
         footerHtml = `
-          <a href="${p.demo_url}" target="_blank" class="btn-modal-demo">
+          <a href="${p.demo_url}" target="_blank" class="btn-modal-demo" onclick="soundFX.click();">
             <span>${I18N[currentLang].txtModalLaunchDemo}</span>
           </a>
         ` + footerHtml;
@@ -2594,6 +2980,7 @@
       modalOverlay.classList.remove('active');
       document.body.style.overflow = '';
       activeModalProject = null;
+      soundFX.click();
     }
 
     modalCloseBtn.addEventListener('click', closeModal);
@@ -2622,6 +3009,7 @@
         const copyTxt = document.getElementById('txtCopyBtn');
         const orig = copyTxt.textContent;
         copyTxt.textContent = I18N[currentLang].txtCopiedBtn;
+        showToast(I18N[currentLang].toastCopied);
         setTimeout(() => { copyTxt.textContent = orig; }, 2000);
       });
     });
@@ -2638,6 +3026,7 @@
     filterTabs.addEventListener('click', (e) => {
       const btn = e.target.closest('.tab-btn');
       if (!btn) return;
+      soundFX.click();
       filterTabs.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentFilter = btn.dataset.filter;
@@ -2672,6 +3061,7 @@
     }
 
     langBtn.addEventListener('click', () => {
+      soundFX.click();
       applyLanguage(currentLang === 'ru' ? 'en' : 'ru');
     });
 
@@ -2719,6 +3109,7 @@
 
     // Initial load
     applyLanguage(currentLang);
+    animateStats();
   </script>
 </body>
 </html>

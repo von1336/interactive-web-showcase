@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initOrbitalSimulator();
   initPulsarAudio();
   initTelemetryTicker();
+  initPlanetTilt();
 });
 
 // ------------------------------------------
@@ -760,5 +761,31 @@ function initSpaceScrollReveal() {
   elements.forEach(el => {
     el.classList.add('scroll-reveal-space');
     observer.observe(el);
+  });
+}
+
+// ------------------------------------------
+// 6. 21st.dev Cosmic 3D Planet Tilt
+// ------------------------------------------
+function initPlanetTilt() {
+  const cards = document.querySelectorAll('.planet-card');
+  cards.forEach(card => {
+    let rect = card.getBoundingClientRect();
+    card.addEventListener('mouseenter', () => {
+      rect = card.getBoundingClientRect();
+      if (typeof playPulsarTone === 'function') playPulsarTone(440);
+    });
+    card.addEventListener('mousemove', (e) => {
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const rx = ((y - rect.height / 2) / (rect.height / 2)) * -8;
+      const ry = ((x - rect.width / 2) / (rect.width / 2)) * 8;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+      card.style.transform = `perspective(1000px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-8px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+    });
   });
 }

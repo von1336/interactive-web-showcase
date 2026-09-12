@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAudioSystem();
   initMatrixMode();
   initCardScrollReveal();
+  initCardTilt();
 });
 
 // ------------------------------------------
@@ -772,5 +773,31 @@ function initMatrixMode() {
 
   canvas.addEventListener('click', () => {
     window.toggleMatrixMode();
+  });
+}
+
+// ------------------------------------------
+// 9. 21st.dev 3D Card Tilt & Audio Synthesis
+// ------------------------------------------
+function initCardTilt() {
+  const cards = document.querySelectorAll('.cyber-card');
+  cards.forEach(card => {
+    let rect = card.getBoundingClientRect();
+    card.addEventListener('mouseenter', () => {
+      rect = card.getBoundingClientRect();
+      playSound('beep');
+    });
+    card.addEventListener('mousemove', (e) => {
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const rx = ((y - rect.height / 2) / (rect.height / 2)) * -9;
+      const ry = ((x - rect.width / 2) / (rect.width / 2)) * 9;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+      card.style.transform = `perspective(1000px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateZ(8px) scale3d(1.02, 1.02, 1.02)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale3d(1, 1, 1)';
+    });
   });
 }

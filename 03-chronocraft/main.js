@@ -1249,6 +1249,8 @@ function init3DCardTilt() {
       const rotateX = ((y - centerY) / centerY) * -10;
       const rotateY = ((x - centerX) / centerX) * 10;
 
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
       card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-8px)`;
     });
 

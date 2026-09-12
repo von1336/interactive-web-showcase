@@ -805,3 +805,30 @@ body.warp-shake {
   transform: scale(1.08);
   filter: brightness(1.15);
 }
+
+/* 21st.dev 3D Cosmic Card Tilt & Reflection */
+.planet-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  position: relative;
+}
+
+.planet-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: radial-gradient(
+    280px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+    rgba(56, 189, 248, 0.15),
+    transparent 70%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 5;
+}
+
+.planet-card:hover::after {
+  opacity: 1;
+}

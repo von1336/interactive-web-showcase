@@ -883,3 +883,29 @@ body {
 .cyber-grid .cyber-card:nth-child(2) { transition-delay: 0.2s; }
 .cyber-grid .cyber-card:nth-child(3) { transition-delay: 0.3s; }
 .cyber-grid .cyber-card:nth-child(4) { transition-delay: 0.4s; }
+
+/* 21st.dev 3D Tilt & Specular Glare Layer */
+.cyber-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  position: relative;
+}
+
+.cyber-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    280px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+    rgba(0, 243, 255, 0.2),
+    transparent 70%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 5;
+}
+
+.cyber-card:hover::after {
+  opacity: 1;
+}

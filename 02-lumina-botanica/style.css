@@ -911,3 +911,30 @@ body.mood-night .editorial-nav {
 .specimen-card:hover .specimen-img, .art-frame:hover .art-photo {
   transform: scale(1.05);
 }
+
+/* 21st.dev 3D Tilt & Botanical Specular Glare */
+.specimen-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  position: relative;
+}
+
+.specimen-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: radial-gradient(
+    280px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+    rgba(218, 165, 32, 0.16),
+    transparent 70%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 5;
+}
+
+.specimen-card:hover::after {
+  opacity: 1;
+}

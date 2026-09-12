@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initChimeAudio();
   initInquiryForm();
   initScrollReveal();
+  initSpecimenTilt();
 });
 
 // ------------------------------------------
@@ -691,5 +692,31 @@ function initBotanicaScrollReveal() {
   elements.forEach(el => {
     el.classList.add('scroll-reveal-botanica');
     observer.observe(el);
+  });
+}
+
+// ------------------------------------------
+// 9. 21st.dev Botanical 3D Card Tilt
+// ------------------------------------------
+function initSpecimenTilt() {
+  const cards = document.querySelectorAll('.specimen-card');
+  cards.forEach(card => {
+    let rect = card.getBoundingClientRect();
+    card.addEventListener('mouseenter', () => {
+      rect = card.getBoundingClientRect();
+      if (typeof playChime === 'function') playChime(640, 0.3);
+    });
+    card.addEventListener('mousemove', (e) => {
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const rx = ((y - rect.height / 2) / (rect.height / 2)) * -7;
+      const ry = ((x - rect.width / 2) / (rect.width / 2)) * 7;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+      card.style.transform = `perspective(1000px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-6px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+    });
   });
 }
